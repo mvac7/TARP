@@ -1,0 +1,20 @@
+<msxdevtools app="SDCC MSX devTool" version="0.5.4.8b">
+  <project name="TARP" version="" author="" type="0">
+    <mainFile name="tarp.c" path="src" />
+    <startup name="crt0msx.16k.4000.rel" path="libs" />
+    <ProjectDescription>
+    </ProjectDescription>
+    <OutputName>TARP</OutputName>
+    <BuildFolder>build</BuildFolder>
+    <DistributionFolder>dist</DistributionFolder>
+    <HeaderFolder>include</HeaderFolder>
+    <ObjectExtension>REL</ObjectExtension>
+    <ROMsize>1</ROMsize>
+    <CodeLoc>4020</CodeLoc>
+    <DataLoc>C000</DataLoc>
+    <Objects DefaultFolder="libs">
+      <item name="functions.rel" path="libs" />
+      <item name="VDP_TMS9918_BIOS.rel" path="libs" />
+    </Objects>
+  </project>
+</msxdevtools>
