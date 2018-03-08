@@ -1,0 +1,67 @@
+The Alan Randoms Project
+Version: v0.9.2
+Autor: mvac7/303bcn
+Arquitectura: MSX
+Formato: ROM 16K (h4000)
+Lenguaje de programación: C
+Requisitos: 
+ * SDCC v3.6 http://sdcc.sourceforge.net/ 
+ * Hex2bin v2.2 http://hex2bin.sourceforge.net/
+
+WEB: http://psged.blogspot.com.es/2012/05/alan-randoms-project-v09b.html
+mail: mvac7303b@gmail.com
+
+Para el eXperimental Sound Mini-compo 2012
+http://karoshi.auic.es/index.php/topic,2294.0.html
+
+Descripción:
+Este software es un generador aleatorio de patrones de ritmo y melodía.
+
+Para ejecutar:
+Requiere de un ordenador MSX estándar.
+ 
+  - grabar a una flashRom, 
+  - desde disco utilizando la herramienta: ODO, loadrom, execrom, etc.
+  - desde casete mediante WAVeR u otra herramienta similar. 
+
+
+Cómo funciona?
+
+  En la pantalla principal encontraremos a la parte izquierda, el área de control, 
+  donde se pueden modificar parámetros usando las teclas de cursor y activar 
+  algunas funciones mediante teclas de control. A la derecha disponemos de un 
+  vumeter giratorio para el canal de percusión y de melodía y un visualizador de 
+  los datos de los patrones.
+  
+  El área de control se divide en tres partes:
+  
+  Song: 
+  Contiene controlador de tempo y generador de patrones aleatorios (ritmo y 
+  melodia).
+  
+  Drums: 
+  Control del patrón de percusión. Incluye generador aleatorio y conmutador 
+  para cambiar de set de percusión. El set, se compone de tres instrumentos: 
+  Kick (verde), Snare (rojo) y Hi (cían).
+  
+  Tone: 
+  Control del generador de tonos, basado en dos osciladores de onda cuadrada
+  y un control de desfase de la frecuencia. Contiene un generador de envolventes 
+  por software, con 8 formas diferentes, al que podemos modificar sus parámetros 
+  de velocidad o si es cíclico. También incluye un generador de notas aleatorio, 
+  un control para cambiar de octava y un control para incrementar o reducir las 
+  notas del patrón.
+  
+  Lista de teclas y funciones:
+  [F1] Generador de patrones de Ritmo y Melodía.
+  [F2] Generador del patrón de Ritmo .
+  [F3] Generador del patrón y Melodía.
+  [F4] Activa/desactiva el audio del canal de Ritmo.
+  [F5] Activa/desactiva el audio del canal de melodía.
+  [SELECT] Interruptor indicador del set de percusión (Normal/Casio).
+  [STOP] Desactiva los dos canales (ritmo y melodía)
+  [Arriba] Sube el cursor del menú.
+  [Abajo] Baja el cursor del menú.
+  [Izquierda] Cambia el interruptor a la izquierda o reduce el valor.
+  [Derecha] Cambia el interruptor a la derecha o aumenta el valor.  
+ 
