@@ -20,6 +20,7 @@
 #include "../include/newTypes.h"
 #include "../include/VDP_TMS9918.h"
 #include "../include/VDP_sprites.h"
+#include "../include/AY38910.h"
 #include "../include/joystick.h"
 #include "../include/keyboard.h"
 #include "../include/memory.h"
@@ -82,9 +83,7 @@ void checkMSX();
 char Rnd(char value);
 
 void play();
-char sound_get(char reg);
-void sound_set(char reg, char val);
-void setChannel(char NumChannel, boolean isTone, boolean isNoise);
+void setChannelRAM(char NumChannel, boolean isTone, boolean isNoise);
 
 uint GetVAddressByPosition(char column, char line);
 void VPrintNumber(char posx, char posy, uint aNumber, char aLength);
@@ -358,8 +357,8 @@ void WorkWin()
     FillRAM(PSG_RAM,13,0);  //borra el area del buffer de registros del PSG
     
     // activa los canales A y B del AY (registro 7)  
-    setChannel(0,true,false);
-    setChannel(1,true,false);
+    setChannelRAM(0,true,false);
+    setChannelRAM(1,true,false);
     
     VPrintNumber(8,2, Tempo, 1);
     
@@ -384,7 +383,7 @@ void WorkWin()
     {
       HALT;
       play();
-      if (PEEK(PSG_RAM+13)>0 && isDrum==true) sound_set(13,PEEK(PSG_RAM+13)); //lanza envolvente · dispara sonido percusion    && isDrum==true
+      if (PEEK(PSG_RAM+13)>0 && isDrum==true) Sound(13,PEEK(PSG_RAM+13)); //lanza envolvente · dispara sonido percusion    && isDrum==true
       
       if (tempoStep>=Tempo) //control de tempo por ciclos de Vblank 
       {
@@ -404,7 +403,7 @@ void WorkWin()
           if(isCasio==true) tmp_INST= &Percu_casio[drum_type-1];
           else tmp_INST= &Percu_basic[drum_type-1];
           
-          setChannel(2,tmp_INST->isTone,tmp_INST->isNoise);
+          setChannelRAM(2,tmp_INST->isTone,tmp_INST->isNoise);
           POKE(PSG_RAM+4,tmp_INST->Tone & 0xFF);      
           POKE(PSG_RAM+5,(tmp_INST->Tone & 0xFF00)/255);      
           POKE(PSG_RAM+6,tmp_INST->Noise); //noise
@@ -841,11 +840,11 @@ __endasm;
 
 
 // activa tono y ruido de uno de los tres canales del PSG
-void setChannel(char NumChannel, boolean isTone, boolean isNoise)
+void setChannelRAM(char NumChannel, boolean isTone, boolean isNoise)
 {
   char newValue;
   
-  newValue = sound_get(7);
+  newValue = GetSound(7);
   
   if(NumChannel==0) 
   {
@@ -864,43 +863,6 @@ void setChannel(char NumChannel, boolean isTone, boolean isNoise)
   }
   //sound_set(7,newValue);
   POKE(PSG_RAM+7,newValue);
-}
-
-
-
-void sound_set(char reg, char val)
-{
-reg;
-val;
-__asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
-  
-  ld   A,4(ix)
-  ld   E,5(ix)
-  call WRTPSG
-  
-  pop  IX
-__endasm;
-}
-
-
-
-char sound_get(char reg)
-{
-reg;
-__asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
-  
-  ld   A,4(ix)
-  call RDPSG
-  
-  ld   L,A
-  pop  IX
-__endasm;
 }
 
 

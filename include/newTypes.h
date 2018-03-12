@@ -1,3 +1,4 @@
+// newtypes v1.0 - 12march2018
 #ifndef  __NEWTYPES_H__
 #define  __NEWTYPES_H__
 
@@ -7,8 +8,9 @@
 #endif
 
 // boolean
-#ifndef boolean
-typedef enum {false = 0, true = 1} boolean;
+#ifndef _BOOLEAN
+#define _BOOLEAN
+  typedef enum {false = 0, true = 1} boolean;
 #endif
 
 // unsigned integer
