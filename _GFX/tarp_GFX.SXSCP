@@ -1,0 +1,1197 @@
+<msxOpenDocument app="tMSgfX devtool" version="0.9.2.0">
+  <info name="The Alan Random Project (TARP)" group="303bcn" version="0.9b" author="mvac7" startDate="637308864000000000" lastUpdate="637309728000000000">
+    <description>
+    </description>
+  </info>
+  <screens name="">
+    <screen name="scr_02" ScreenMode="2" SpriteSize="2" SpriteZoom="0" PaletteID="60384317" ForegroundColor="15" BackgroundColor="4" MapID="6444509" TilesetA_ID="27717712" TilesetB_ID="27717712" TilesetC_ID="27717712" SpritesetID="0" OAMID="0" />
+    <screen name="TARP_titlescreen_BG" ScreenMode="2" SpriteSize="2" SpriteZoom="0" PaletteID="52313669" ForegroundColor="15" BackgroundColor="4" MapID="4410728" TilesetA_ID="9487824" TilesetB_ID="18281552" TilesetC_ID="30316242" SpritesetID="0" OAMID="0" />
+  </screens>
+  <palettes>
+    <palette id="52313669" name="title_msx2">
+      <color index="1" red="0" green="0" blue="0" />
+      <color index="2" red="0" green="6" blue="1" />
+      <color index="3" red="0" green="7" blue="3" />
+      <color index="4" red="2" green="3" blue="4" />
+      <color index="5" red="2" green="3" blue="7" />
+      <color index="6" red="5" green="1" blue="1" />
+      <color index="7" red="2" green="6" blue="7" />
+      <color index="8" red="7" green="1" blue="1" />
+      <color index="9" red="7" green="3" blue="3" />
+      <color index="10" red="6" green="6" blue="1" />
+      <color index="11" red="6" green="6" blue="4" />
+      <color index="12" red="0" green="5" blue="1" />
+      <color index="13" red="6" green="2" blue="5" />
+      <color index="14" red="5" green="5" blue="5" />
+      <color index="15" red="7" green="7" blue="7" />
+    </palette>
+    <palette id="60384317" name="main_msx2">
+      <color index="1" red="0" green="0" blue="0" />
+      <color index="2" red="4" green="4" blue="4" />
+      <color index="3" red="3" green="7" blue="3" />
+      <color index="4" red="1" green="3" blue="7" />
+      <color index="5" red="3" green="3" blue="3" />
+      <color index="6" red="6" green="1" blue="1" />
+      <color index="7" red="2" green="6" blue="7" />
+      <color index="8" red="7" green="1" blue="1" />
+      <color index="9" red="7" green="3" blue="3" />
+      <color index="10" red="6" green="6" blue="1" />
+      <color index="11" red="6" green="6" blue="4" />
+      <color index="12" red="1" green="4" blue="1" />
+      <color index="13" red="6" green="2" blue="5" />
+      <color index="14" red="6" green="6" blue="6" />
+      <color index="15" red="7" green="7" blue="7" />
+    </palette>
+    <palette id="17271312" name="Default Palette">
+      <color index="1" red="0" green="0" blue="0" />
+      <color index="2" red="2" green="5" blue="2" />
+      <color index="3" red="3" green="6" blue="3" />
+      <color index="4" red="2" green="2" blue="5" />
+      <color index="5" red="3" green="3" blue="7" />
+      <color index="6" red="5" green="2" blue="1" />
+      <color index="7" red="2" green="6" blue="7" />
+      <color index="8" red="6" green="2" blue="2" />
+      <color index="9" red="7" green="3" blue="3" />
+      <color index="10" red="6" green="6" blue="3" />
+      <color index="11" red="6" green="6" blue="4" />
+      <color index="12" red="1" green="4" blue="1" />
+      <color index="13" red="5" green="3" blue="5" />
+      <color index="14" red="6" green="6" blue="6" />
+      <color index="15" red="7" green="7" blue="7" />
+    </palette>
+  </palettes>
+  <gfx>
+    <tileset id="27717712" name="BANK0" mode="2" foregroundColor="15" backgroundColor="4">
+      <tile index="0" gfxData="FFC19C9C9CC1FF00" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="1" gfxData="FFE7C7E7E7C3FF00" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="2" gfxData="FF81FCC19F80FFFF" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="3" gfxData="FF81FCE1FC81FFFF" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="4" gfxData="FF9C9C80FCFCFFFF" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="5" gfxData="FF809F81FC81FFFF" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="6" gfxData="FFC19F819CC1FFFF" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="7" gfxData="FF80FCF9F3F3FFFF" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="8" gfxData="FFC19CC19CC1FFFF" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="9" gfxData="FFC19CC0FCC1FF00" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="10" gfxData="FFFFFFFFFFFFFF00" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="11" gfxData="FFFFFFC3FFFFFF00" colorData="2F2F2F2F2F2F2FEE" />
+      <tile index="12" gfxData="000000EEA8A8EE00" colorData="4E4E4E4E4E4E4E4E" />
+      <tile index="13" gfxData="000000EE4A4E4A00" colorData="4E4E4E4E4E4E4E4E" />
+      <tile index="14" gfxData="000000AEACA84E00" colorData="4E4E4E4E4E4E4E4E" />
+      <tile index="15" gfxData="006E484E48680000" colorData="4E4E4E4E4E4E4E4E" />
+      <tile index="16" gfxData="00CC244484EC0000" colorData="4E4E4E4E4E4E4E4E" />
+      <tile index="17" gfxData="00CC244424CC0000" colorData="4E4E4E4E4E4E4E4E" />
+      <tile index="18" gfxData="00ACA4E4242C0000" colorData="4E4E4E4E4E4E4E4E" />
+      <tile index="19" gfxData="00EC84C424CC0000" colorData="4E4E4E4E4E4E4E4E" />
+      <tile index="20" gfxData="0066666666660000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="21" gfxData="0060787E78600000" colorData="848484848484848E" />
+      <tile index="22" gfxData="0060787E78600000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="23" gfxData="007E7E7E7E7E0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="24" gfxData="000F080800000000" colorData="4E4E4E4E4E4E4E4E" />
+      <tile index="25" gfxData="0080808888F80000" colorData="4E4E4E4E4E4E4E4E" />
+      <tile index="26" gfxData="0000007B0A7A0A7B" colorData="E1E1E1E1E1E1E1E1" />
+      <tile index="27" gfxData="000000DE425E42DE" colorData="E1E1E1E1E1E1E1E1" />
+      <tile index="28" gfxData="00000080F79494F7" colorData="4141414141414141" />
+      <tile index="29" gfxData="00000000B82424A4" colorData="4141414141414141" />
+      <tile index="30" gfxData="FFFF9C9CC9E3FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="31" gfxData="FF9F819C9C81FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="32" gfxData="FFFFFFFFFFFFFFFF" colorData="E1E1E1E1E1E1E1E1" />
+      <tile index="33" gfxData="FFF3F3F3F3FFF3FF" colorData="E1E0E0E0E1E0E0E1" />
+      <tile index="34" gfxData="FFEBEBFFFFFFFFFF" colorData="E1E0E0E1E1E1E1E1" />
+      <tile index="35" gfxData="FFEBC1EBC1EBFFFF" colorData="E1E0E0E0E0E0E1E0" />
+      <tile index="36" gfxData="F7C197C1F4C1F7FF" colorData="E0E0E0E0E0E0E0E1" />
+      <tile index="37" gfxData="FFCCC9F3E4CCFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="38" gfxData="FFC793C299C2FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="39" gfxData="FFE7CFFFFFFFFFFF" colorData="E1E1E1E1E1E1E1E1" />
+      <tile index="40" gfxData="F9F3F3F3F3F3F9FF" colorData="E0E0E0E0E0E0E0E1" />
+      <tile index="41" gfxData="CFE7E7E7E7E7CFFF" colorData="E0E0E0E0E0E0E0E1" />
+      <tile index="42" gfxData="FFA5C381C3A5FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="43" gfxData="FFE7E781E7E7FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="44" gfxData="FFFFFFFFE7E7EFFF" colorData="E1E1E1E1E0E0E0E1" />
+      <tile index="45" gfxData="FFFFFF81FFFFFFFF" colorData="E1E1E1E0E1E1E1E1" />
+      <tile index="46" gfxData="FFFFFFFFE7E7FFFF" colorData="E1E1E1E1E0E0E1E1" />
+      <tile index="47" gfxData="FFF9F3E7CF9FFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="48" gfxData="FFC198948CC1FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="49" gfxData="FFE7C7E7E7C3FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="50" gfxData="FF81FCC19F80FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="51" gfxData="FF81FCE1FC81FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="52" gfxData="FF9C9C80FCFCFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="53" gfxData="FF809F81FC81FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="54" gfxData="FFC19F819CC1FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="55" gfxData="FF80FCF9F3F3FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="56" gfxData="FFC19CC19CC1FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="57" gfxData="FFC19CC0FCC1FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="58" gfxData="FFE7E7FFE7E7FFFF" colorData="E1E0E0E1E0E0E1E1" />
+      <tile index="59" gfxData="FFE7E7FFE7E7EFFF" colorData="E1E0E0E1E0E0E0E1" />
+      <tile index="60" gfxData="FFF3E7CFE7F3FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="61" gfxData="FFFFC3FFC3FFFFFF" colorData="E1E1E0E1E0E1E1E1" />
+      <tile index="62" gfxData="FFCFE7F3E7CFFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="63" gfxData="FFE1CCF9F3FFF3FF" colorData="E1E0E0E0E0E1E0E1" />
+      <tile index="64" gfxData="C1BEA2AAA0BFC1FF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="65" gfxData="FFC19C809C9CFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="66" gfxData="FF819C819C81FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="67" gfxData="FFC09F9F9FC0FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="68" gfxData="FF819C9C9C81FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="69" gfxData="FF809F839F80FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="70" gfxData="FF809F839F9FFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="71" gfxData="FFC09F989CC0FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="72" gfxData="FF9C9C809C9CFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="73" gfxData="FFE1F3F3F3E1FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="74" gfxData="FFE1F3F393C7FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="75" gfxData="FF9C9983999CFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="76" gfxData="FF9F9F9F9F80FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="77" gfxData="FF9C8880949CFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="78" gfxData="FF9C8C849098FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="79" gfxData="FFC19C9C9CC1FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="80" gfxData="FF819C9C819FFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="81" gfxData="FFC19C9499C2FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="82" gfxData="FF819C9C819CFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="83" gfxData="FFC09FC1FC81FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="84" gfxData="FF81E7E7E7E7FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="85" gfxData="FF9C9C9C9CC1FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="86" gfxData="FF9C9C9CC9E3FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="87" gfxData="FF9C9480889CFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="88" gfxData="FF9CC9E3C99CFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="89" gfxData="FF9999C3E7E7FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="90" gfxData="FF81F3E7CF81FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="91" gfxData="F1F3F3F3F3F3F1FF" colorData="E0E0E0E0E0E0E0E1" />
+      <tile index="92" gfxData="FF9FCFE7F3F9FFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="93" gfxData="C7E7E7E7E7E7C7FF" colorData="E0E0E0E0E0E0E0E1" />
+      <tile index="94" gfxData="FFFFFFFFFFFFFFFF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="95" gfxData="FFFFFFFFFFFF81FF" colorData="E1E0E0E0E0E0E1E1" />
+      <tile index="96" gfxData="FFFFFFFFFFFFFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="97" gfxData="FFC19C809C9CFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="98" gfxData="FF819C819C81FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="99" gfxData="FFC09F9F9FC0FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="100" gfxData="FF819C9C9C81FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="101" gfxData="FF809F839F80FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="102" gfxData="FF809F839F9FFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="103" gfxData="FFC09F989CC0FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="104" gfxData="FF9C9C809C9CFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="105" gfxData="FFE1F3F3F3E1FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="106" gfxData="FFE1F3F393C7FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="107" gfxData="FF9C9983999CFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="108" gfxData="FF9F9F9F9F80FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="109" gfxData="FF9C8880949CFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="110" gfxData="FF9C8C849098FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="111" gfxData="FFC19C9C9CC1FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="112" gfxData="FF819C9C819FFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="113" gfxData="FFC19C9499C2FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="114" gfxData="FF819C9C819CFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="115" gfxData="FFC09FC1FC81FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="116" gfxData="FF81E7E7E7E7FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="117" gfxData="FF9C9C9C9CC1FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="118" gfxData="FF9C9C9CC9E3FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="119" gfxData="FF9C9480889CFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="120" gfxData="FF9CC9E3C99CFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="121" gfxData="FF9999C3E7E7FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="122" gfxData="FF81F3E7CF81FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="123" gfxData="FFE7E7FFE7E7FFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="124" gfxData="FFFFFFFFFFFFFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="125" gfxData="FFFFFFFFFFFFFFFF" colorData="EDEDEDEDEDEDEDED" />
+      <tile index="126" gfxData="00F09292121E0000" colorData="D1D1D1D1D1D1D1D1" />
+      <tile index="127" gfxData="007CFEBA82827C00" colorData="D1D1D1D1D1D1D1D1" />
+      <tile index="128" gfxData="00000000000000FF" colorData="F4F4F4F4F4F4F4E4" />
+      <tile index="129" gfxData="003E637F63630000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="130" gfxData="007E637E637E0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="131" gfxData="003F6060603F0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="132" gfxData="007E6363637E0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="133" gfxData="007F607C607F0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="134" gfxData="007F607C60600000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="135" gfxData="003F6067633F0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="136" gfxData="0063637F63630000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="137" gfxData="001E0C0C0C1E0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="138" gfxData="001E0C0C6C380000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="139" gfxData="0063667C66630000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="140" gfxData="00606060607F0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="141" gfxData="0063777F6B630000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="142" gfxData="0063737B6F670000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="143" gfxData="003E6363633E0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="144" gfxData="007E63637E600000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="145" gfxData="003E636B663D0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="146" gfxData="007E63637E630000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="147" gfxData="003F603E037E0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="148" gfxData="007E181818180000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="149" gfxData="00636363633E0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="150" gfxData="00636363361C0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="151" gfxData="00636B7F77630000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="152" gfxData="0063361C36630000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="153" gfxData="0066663C18180000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="154" gfxData="007E0C18307E0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="155" gfxData="001C1118101D0080" colorData="747474747474E4EE" />
+      <tile index="156" gfxData="00E608C828C60000" colorData="747474747474747E" />
+      <tile index="157" gfxData="0072467242470080" colorData="747474747474E4EE" />
+      <tile index="158" gfxData="0076417244470080" colorData="747474747474E4EE" />
+      <tile index="159" gfxData="0076417241460080" colorData="747474747474E4EE" />
+      <tile index="160" gfxData="0000000000030707" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="161" gfxData="0000000000FFFFFF" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="162" gfxData="0000000000C0E0E0" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="163" gfxData="0707030000030707" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="164" gfxData="FFFFFF0000FFFFFF" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="165" gfxData="FFFFFF0000C3E7E7" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="166" gfxData="E0E0C00000C0E0E0" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="167" gfxData="0707070707070707" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="168" gfxData="E0E0E0E0E0E0E0E0" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="169" gfxData="E7E7E7E7E7E7E7E7" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="170" gfxData="E7E7C30000FFFFFF" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="171" gfxData="E7E7C70707C7E7E7" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="172" gfxData="0707030000000000" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="173" gfxData="FFFFFF0000000000" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="174" gfxData="E0E0C00000000000" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="175" gfxData="E7E7C70707070707" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="176" gfxData="E7E7E3E0E0E3E7E7" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="177" gfxData="0000000000C3E7E7" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="178" gfxData="E0E0C00000FFFFFF" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="179" gfxData="E7E7C30000C3E7E7" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="180" gfxData="837D7D7D7D7D83FF" colorData="1414141414141414" />
+      <tile index="181" gfxData="83010101010183FF" colorData="1C1C1C1C1C1C1C1C" />
+      <tile index="182" gfxData="83010101010183FF" colorData="1818181818181818" />
+      <tile index="183" gfxData="83010101010183FF" colorData="1717171717171717" />
+      <tile index="184" gfxData="83010101010183FF" colorData="1F1F1F1F1F1F1F1F" />
+      <tile index="185" gfxData="FFFFFFFF83C7EFFF" colorData="1717171717171717" />
+      <tile index="186" gfxData="FF8783818387FFFF" colorData="E8E8E8E8E8E8E8E8" />
+      <tile index="187" gfxData="0C14646464140C00" colorData="FEFEFEFEFEFEFEFE" />
+      <tile index="188" gfxData="0C14646464140C00" colorData="2E2E2E2E2E2E2E2E" />
+      <tile index="189" gfxData="0000182424180000" colorData="0E1E1E1E1E1E1E1E" />
+      <tile index="190" gfxData="FFFFE7C3C3E7FFFF" colorData="ECECECECECECECEC" />
+      <tile index="191" gfxData="FFFFE7C3C3E7FFFF" colorData="E9E9E9E9E9E9E9E9" />
+      <tile index="192" gfxData="FF9FE7F9FEFFFF00" colorData="F4F4F4F4F4F4F4EE" />
+      <tile index="193" gfxData="FFFFFFFF7F9FFFFF" colorData="F4F4F4F4F4F4F4E4" />
+      <tile index="194" gfxData="0000010618600000" colorData="4F4F4F4F4F4F4F4E" />
+      <tile index="195" gfxData="0060800000000000" colorData="4F4F4F4F4F4F4F4E" />
+      <tile index="196" gfxData="004020110A040000" colorData="4F4F4F4F4F4F4FEE" />
+      <tile index="197" gfxData="0040800000000000" colorData="4F4F4F4F4F4F4F0E" />
+      <tile index="198" gfxData="FFFBF5EEDFBFFF00" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="199" gfxData="0000000080400000" colorData="4F4F4F4F4F4F4F0E" />
+      <tile index="200" gfxData="FF81BDBDFDFCFF00" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="201" gfxData="FFFFFFEFEF0FFF00" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="202" gfxData="0018244201000000" colorData="4F4F4F4F4F4F4F4E" />
+      <tile index="203" gfxData="FFFFFFEFDF3FFF00" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="204" gfxData="FF8FF7FBFDFEFF00" colorData="F4F4F4F4F4F4F40E" />
+      <tile index="205" gfxData="0000000000C00000" colorData="4F4F4F4F4F4F4F0E" />
+      <tile index="206" gfxData="FFBFDFE0FFFFFF00" colorData="F4F4F4F4F4F4F40E" />
+      <tile index="207" gfxData="FFFFFF3FDFEFFF00" colorData="F4F4F4F4F4F4F40E" />
+      <tile index="208" gfxData="FFFFFFFFFFFFFF00" colorData="FEFEFEFEFEFEFEFE" />
+      <tile index="209" gfxData="E7E7C30000000000" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="210" gfxData="0000000000000000" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="211" gfxData="E0E0C00000C3E7E7" colorData="E5E5E5E5E5E5E5E5" />
+      <tile index="212" gfxData="F8F0F0F0F0F0F8FF" colorData="E4E4E4E4E4E4E4E4" />
+      <tile index="213" gfxData="003C2222223C00FF" colorData="84848484848484E4" />
+      <tile index="214" gfxData="C08080808080C0FF" colorData="E4E4E4E4E4E4E4E4" />
+      <tile index="215" gfxData="03010101010103FF" colorData="E4E4E4E4E4E4E4E4" />
+      <tile index="216" gfxData="00180038183C0000" colorData="F4F4F4F4F4F4F4FE" />
+      <tile index="217" gfxData="808080BE808080FF" colorData="E4E4E4E4E4E4E4E4" />
+      <tile index="218" gfxData="808888BE888880FF" colorData="E4E4E4E4E4E4E4E4" />
+      <tile index="219" gfxData="8080BE9C888080FF" colorData="E4E4E4E4E4E4E4E4" />
+      <tile index="220" gfxData="80BE8880889C80FF" colorData="E4E4E4E4E4E4E4E4" />
+      <tile index="221" gfxData="7F80808080807FFF" colorData="050C0C0C0C0C05E5" />
+      <tile index="222" gfxData="FE8181818181FEFF" colorData="15080808080805E5" />
+      <tile index="223" gfxData="FFABABABABFFFFFF" colorData="15151515151515E5" />
+      <tile index="224" gfxData="000000000003071F" colorData="6161616161616161" />
+      <tile index="225" gfxData="00030F7FFFFFFFFF" colorData="6161616161616161" />
+      <tile index="226" gfxData="3FFFFFFFFFFFFFFF" colorData="6161616161616161" />
+      <tile index="227" gfxData="FCFFFFFFFFFFFFFF" colorData="6161616161616161" />
+      <tile index="228" gfxData="00C0F0FEFFFFFFFF" colorData="6161616161616161" />
+      <tile index="229" gfxData="0000000000C0E0F8" colorData="6161616161616161" />
+      <tile index="230" gfxData="0000000101030707" colorData="6161616161616161" />
+      <tile index="231" gfxData="3F7FFFFFFFFFFFFF" colorData="6161616161616161" />
+      <tile index="232" gfxData="FFFFFFFFFFFFFFFF" colorData="6161616161616161" />
+      <tile index="233" gfxData="FCFEFFFFFFFFFFFF" colorData="6161616161616161" />
+      <tile index="234" gfxData="0000008080C0E0E0" colorData="6161616161616161" />
+      <tile index="235" gfxData="0F1F1F1F3F3F7F7F" colorData="6161616161616161" />
+      <tile index="236" gfxData="F0F8F8F8FCFCFEFE" colorData="6161616161616161" />
+      <tile index="237" gfxData="7F7FFFFFFFFFFFFF" colorData="6161616161616161" />
+      <tile index="238" gfxData="FEFEFFFFFFFFFFFF" colorData="6161616161616161" />
+      <tile index="239" gfxData="0000000000000000" colorData="6161616161616161" />
+      <tile index="240" gfxData="FFFFFFFFFFFF7F7F" colorData="6161616161616161" />
+      <tile index="241" gfxData="FFFFFFFFFFFFFEFE" colorData="6161616161616161" />
+      <tile index="242" gfxData="7F7F3F3F1F1F1F0F" colorData="6161616161616161" />
+      <tile index="243" gfxData="FEFEFCFCF8F8F8F0" colorData="6161616161616161" />
+      <tile index="244" gfxData="0707030101000000" colorData="6161616161616161" />
+      <tile index="245" gfxData="FFFFFFFFFFFF7F3F" colorData="6161616161616161" />
+      <tile index="246" gfxData="FFFFFFFFFFFFFEFC" colorData="6161616161616161" />
+      <tile index="247" gfxData="E0E0C08080000000" colorData="6161616161616161" />
+      <tile index="248" gfxData="1F07030000000000" colorData="6161616161616161" />
+      <tile index="249" gfxData="FFFFFFFF7F0F0300" colorData="6161616161616161" />
+      <tile index="250" gfxData="FFFFFFFFFFFFFF3F" colorData="6161616161616161" />
+      <tile index="251" gfxData="FFFFFFFFFFFFFFFC" colorData="6161616161616161" />
+      <tile index="252" gfxData="FFFFFFFFFEF0C000" colorData="6161616161616161" />
+      <tile index="253" gfxData="F8E0C00000000000" colorData="6161616161616161" />
+      <tile index="254" gfxData="0000000000000000" colorData="6161616161616161" />
+      <tile index="255" gfxData="0000000000000000" colorData="6161616161616161" />
+    </tileset>
+    <tileset id="9487824" name="TARP_titlescreen_BG_BANK0" mode="2" foregroundColor="15" backgroundColor="4">
+      <tile index="0" gfxData="FFFFFFFF03030000" colorData="41414141F4F4F4F4" />
+      <tile index="1" gfxData="00000000F6F6C7C7" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="2" gfxData="00000000000087CF" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="3" gfxData="0000000000000080" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="4" gfxData="000000001C1C3637" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="5" gfxData="0000000038381818" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="6" gfxData="000000000000393D" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="7" gfxData="000000000000E0F0" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="8" gfxData="0000000007070606" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="9" gfxData="000000008080C3E3" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="10" gfxData="0000000000009EDF" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="11" gfxData="0000000003030F1F" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="12" gfxData="000000000000387C" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="13" gfxData="000000000000C4EE" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="14" gfxData="00000000000070F0" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="15" gfxData="0000000003030303" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="16" gfxData="00000000C0C06777" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="17" gfxData="000000000000C7EF" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="18" gfxData="0000000003030083" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="19" gfxData="0000000000001C3E" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="20" gfxData="000000000000387C" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="21" gfxData="0000000030307878" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="22" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="23" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="24" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="25" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="26" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="27" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="28" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="29" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="30" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="31" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="32" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="33" gfxData="C6C6C6C6C6C6C6C6" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="34" gfxData="CD6F6F6C6C6C6F67" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="35" gfxData="8080800000C0C080" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="36" gfxData="333F3F3333333333" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="37" gfxData="1818181818187E7E" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="38" gfxData="0D7D7DCDCDCDFD7D" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="39" gfxData="B098989898989898" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="40" gfxData="0606060707060606" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="41" gfxData="606767CCCC8CCFC7" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="42" gfxData="DBD9D9D9D9D9D9D9" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="43" gfxData="1BB3B3B3B3B3BF9F" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="44" gfxData="6C66666666667E3C" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="45" gfxData="FEFEFED6D6C6C6C6" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="46" gfxData="C078780C0CCCFC78" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="47" gfxData="0303030303030303" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="48" gfxData="363636E6E6060606" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="49" gfxData="6D0C0C0C0C0C0F07" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="50" gfxData="83C3C3C3C3C3CB8B" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="51" gfxData="363E3E3030333F1E" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="52" gfxData="6460606060667E3C" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="53" gfxData="3030303030343C18" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="54" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="55" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="56" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="57" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="58" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="59" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="60" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="61" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="62" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="63" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="64" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="65" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="66" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="67" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="68" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="69" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="70" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="71" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="72" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="73" gfxData="6060000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="74" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="75" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="76" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="77" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="78" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="79" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="80" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="81" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="82" gfxData="0606000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="83" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="84" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="85" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="86" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="87" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="88" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="89" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="90" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="91" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="92" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="93" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="94" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="95" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="96" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="97" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="98" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="99" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="100" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="101" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="102" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="103" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="104" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="105" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="106" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="107" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="108" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="109" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="110" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="111" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="112" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="113" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="114" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="115" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="116" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="117" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="118" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="119" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="120" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="121" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="122" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="123" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="124" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="125" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="126" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="127" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="128" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="129" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="130" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="131" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="132" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="133" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="134" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="135" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="136" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="137" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="138" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="139" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="140" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="141" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="142" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="143" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="144" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="145" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="146" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="147" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="148" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="149" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="150" gfxData="0000000000000000" colorData="F4F4F4F4F4F4F4F4" />
+      <tile index="151" gfxData="0000000000000103" colorData="F4F4F4F4F4F47474" />
+      <tile index="152" gfxData="000000000007FFFF" colorData="7474747474747474" />
+      <tile index="153" gfxData="00000000FFFFFFFF" colorData="7474747474747474" />
+      <tile index="154" gfxData="00000000FFFFFFFF" colorData="7474747474747474" />
+      <tile index="155" gfxData="0000000000F0FFFF" colorData="7474747474747474" />
+      <tile index="156" gfxData="00000000000000C0" colorData="7474747474747474" />
+      <tile index="157" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="158" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="159" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="160" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="161" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="162" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="163" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="164" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="165" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="166" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="167" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="168" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="169" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="170" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="171" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="172" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="173" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="174" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="175" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="176" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="177" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="178" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="179" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="180" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="181" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="182" gfxData="00000003070F1F3F" colorData="7474747474747474" />
+      <tile index="183" gfxData="1F3FFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="184" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="185" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="186" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="187" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="188" gfxData="F0F8FCFEFFFFFFFF" colorData="7474747474747474" />
+      <tile index="189" gfxData="00000000008080C0" colorData="7474747474747474" />
+      <tile index="190" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="191" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="192" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="193" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="194" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="195" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="196" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="197" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="198" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="199" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="200" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="201" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="202" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="203" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="204" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="205" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="206" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="207" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="208" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="209" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="210" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="211" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="212" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="213" gfxData="0000000101030706" colorData="7474747474747474" />
+      <tile index="214" gfxData="7F7FFFFFFFFFBF3F" colorData="7474747474747474" />
+      <tile index="215" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="216" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="217" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="218" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="219" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="220" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="221" gfxData="E0E0F0F0F0F8F8FC" colorData="7474747474747474" />
+      <tile index="222" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="223" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="224" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="225" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="226" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="227" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="228" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="229" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="230" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="231" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="232" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="233" gfxData="00000000030F1F1F" colorData="7474747434343434" />
+      <tile index="234" gfxData="00000070FCFFFFFF" colorData="3434343434343434" />
+      <tile index="235" gfxData="0000000000008080" colorData="3434343434343434" />
+      <tile index="236" gfxData="0000071F3F7F7FFE" colorData="3434343434343431" />
+      <tile index="237" gfxData="FFFFE0F8FCFCFE3F" colorData="4141343434343431" />
+      <tile index="238" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="239" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="240" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="241" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="242" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="243" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="244" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="245" gfxData="0604040808080808" colorData="7474747474547454" />
+      <tile index="246" gfxData="C080808080808080" colorData="4747474747474747" />
+      <tile index="247" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="248" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="249" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="250" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="251" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="252" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="253" gfxData="0303030301010101" colorData="4747474747474747" />
+      <tile index="254" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="255" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+    </tileset>
+    <tileset id="18281552" name="TARP_titlescreen_BG_BANK1" mode="2" foregroundColor="15" backgroundColor="4">
+      <tile index="0" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="1" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="2" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="3" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="4" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="5" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="6" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="7" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="8" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="9" gfxData="C0C0C0C0C0E0E0F0" colorData="4343434343434343" />
+      <tile index="10" gfxData="008F0707078FFF01" colorData="4331313131313143" />
+      <tile index="11" gfxData="3F3F3F3F7F7FFFFF" colorData="4343434343434343" />
+      <tile index="12" gfxData="FCFCFCFE80C0E0F0" colorData="3131313143434343" />
+      <tile index="13" gfxData="1F1F1F3F01010307" colorData="3131313143434343" />
+      <tile index="14" gfxData="FFFFFFFFFFFFFFFF" colorData="4343434343434343" />
+      <tile index="15" gfxData="FFFFFFFFFFFFFFFF" colorData="4343434343434343" />
+      <tile index="16" gfxData="FFFFFFFFFFFFFFFF" colorData="4343434343434343" />
+      <tile index="17" gfxData="FFFFFFFFFFFFFFFF" colorData="4343434343434343" />
+      <tile index="18" gfxData="FFFFFFFFFFFFFFFF" colorData="4343434343434343" />
+      <tile index="19" gfxData="FFFFFFFFFFFFFFFF" colorData="4343434343434343" />
+      <tile index="20" gfxData="FFFFFFFFFFFFFFFF" colorData="4343434343434343" />
+      <tile index="21" gfxData="0800080808080008" colorData="5454545454545454" />
+      <tile index="22" gfxData="8080808080808080" colorData="4747474747474747" />
+      <tile index="23" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="24" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="25" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="26" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="27" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="28" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="29" gfxData="0100000000000000" colorData="4747474747474747" />
+      <tile index="30" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="31" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="32" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="33" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="34" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="35" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="36" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="37" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="38" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="39" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="40" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="41" gfxData="0101010101010101" colorData="3434343434343434" />
+      <tile index="42" gfxData="FCFCFCFCFCFCFC01" colorData="3434343434313123" />
+      <tile index="43" gfxData="FFFFFFFF00007FC1" colorData="414141414141C123" />
+      <tile index="44" gfxData="070707070F0F0F03" colorData="3434343434313132" />
+      <tile index="45" gfxData="0F1F1F1F3F3FC0C0" colorData="4343434343432424" />
+      <tile index="46" gfxData="0000000000000000" colorData="2424242424242424" />
+      <tile index="47" gfxData="0000000000000000" colorData="2424242424242424" />
+      <tile index="48" gfxData="0000000000000000" colorData="2424242424242424" />
+      <tile index="49" gfxData="0000000000000000" colorData="2424242424242424" />
+      <tile index="50" gfxData="0000000000000000" colorData="2424242424242424" />
+      <tile index="51" gfxData="0000000000000000" colorData="2424242424242424" />
+      <tile index="52" gfxData="0000000000000000" colorData="2424242424242424" />
+      <tile index="53" gfxData="0800000404000000" colorData="5454545454545454" />
+      <tile index="54" gfxData="808080C0C0C0E0E0" colorData="4747474747474747" />
+      <tile index="55" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="56" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="57" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="58" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="59" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="60" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="61" gfxData="0000010101010103" colorData="4747474747474747" />
+      <tile index="62" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="63" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="64" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="65" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="66" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="67" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="68" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="69" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="70" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="71" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="72" gfxData="FFFFFCF0E0E0C0C0" colorData="4747414141414141" />
+      <tile index="73" gfxData="FCF87003070F1F3F" colorData="4141413131313131" />
+      <tile index="74" gfxData="0200000000000000" colorData="2323232323232323" />
+      <tile index="75" gfxData="0000000000000000" colorData="2323232323232323" />
+      <tile index="76" gfxData="2000000000000000" colorData="2323232323232323" />
+      <tile index="77" gfxData="3F1CC0E0F0F8F8FC" colorData="4141313131313131" />
+      <tile index="78" gfxData="FF1F0F0703030101" colorData="4141414141414141" />
+      <tile index="79" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="80" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="81" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="82" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="83" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="84" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="85" gfxData="FFFFFFFFFFFFFFFF" colorData="4141414141414141" />
+      <tile index="86" gfxData="0F0F0F0707030301" colorData="7474747474747474" />
+      <tile index="87" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="88" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="89" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="90" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="91" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="92" gfxData="FFFFFFFFFFFFFFFF" colorData="7474747474747474" />
+      <tile index="93" gfxData="FCFCF8F8F0E0C080" colorData="7474747474747474" />
+      <tile index="94" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="95" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="96" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="97" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="98" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="99" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="100" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="101" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="102" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="103" gfxData="0000000000000000" colorData="7474747474747474" />
+      <tile index="104" gfxData="C0C0C0C0E0F8FE01" colorData="41414141414141C4" />
+      <tile index="105" gfxData="3F7F7F8080808000" colorData="313131C3C3C32323" />
+      <tile index="106" gfxData="0000000000FEFEFF" colorData="2323232323313131" />
+      <tile index="107" gfxData="FFFFFFFFFFFF7F3F" colorData="3131313131313131" />
+      <tile index="108" gfxData="FFFFFFFFEFEFCF9F" colorData="3131313131313131" />
+      <tile index="109" gfxData="FEFE010101000000" colorData="3131C3C323232323" />
+      <tile index="110" gfxData="01010103071FC0C0" colorData="414141414141C4C4" />
+      <tile index="111" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="112" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="113" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="114" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="115" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="116" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="117" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="118" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="119" gfxData="FF80E0F0F8FCFFFF" colorData="7147474747474747" />
+      <tile index="120" gfxData="00000000000000F0" colorData="4747474747474747" />
+      <tile index="121" gfxData="0000000000000000" colorData="4747474747474747" />
+      <tile index="122" gfxData="0000000000000001" colorData="4747474747474747" />
+      <tile index="123" gfxData="0000000000010FFF" colorData="4747474747474747" />
+      <tile index="124" gfxData="0001030F7FFFFFFF" colorData="4747474747474747" />
+      <tile index="125" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="126" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="127" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="128" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="129" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="130" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="131" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="132" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="133" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="134" gfxData="FFFFFFFFFFFFFFFF" colorData="4747474747474747" />
+      <tile index="135" gfxData="FFFFFFFFFFFF011F" colorData="474747474747C4C4" />
+      <tile index="136" gfxData="01010101031F073F" colorData="C4C4C4C4C4C43C3C" />
+      <tile index="137" gfxData="FFFFFFFFFFFFFFFF" colorData="3C3C3C3C3C3C3C3C" />
+      <tile index="138" gfxData="FFFFFFFFFFFFFFFF" colorData="3C3C3C3C3C3C3C3C" />
+      <tile index="139" gfxData="8EE0FFFFFFFFFFFF" colorData="3131313131313131" />
+      <tile index="140" gfxData="3FFFFFFFFFFFFFFF" colorData="3131313131313131" />
+      <tile index="141" gfxData="FFFFFFFFFFFFFFFF" colorData="3131313131313131" />
+      <tile index="142" gfxData="C0C0E0E0FF80FFFF" colorData="C4C4C4C4C42C3131" />
+      <tile index="143" gfxData="FFFFFFFF0700E001" colorData="414141414C4C3C23" />
+      <tile index="144" gfxData="FFFFFFFFFF80F0FC" colorData="4141414141C4C4C4" />
+      <tile index="145" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="146" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="147" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="148" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="149" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="150" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="151" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="152" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="153" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="154" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="155" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="156" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="157" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="158" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="159" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="160" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="161" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="162" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="163" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="164" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="165" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="166" gfxData="0001030303070707" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="167" gfxData="031F3F7F80000000" colorData="3C3C3C3C23232323" />
+      <tile index="168" gfxData="00000000000000C0" colorData="232323232323233C" />
+      <tile index="169" gfxData="FFFFFFFFFFFFFF80" colorData="3C3C3C3C3C3C3C23" />
+      <tile index="170" gfxData="0000000000000000" colorData="2323232323232323" />
+      <tile index="171" gfxData="0000000000000000" colorData="2323232323232323" />
+      <tile index="172" gfxData="0000000000091D14" colorData="2323232323C3C3C3" />
+      <tile index="173" gfxData="000000000010B0E0" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="174" gfxData="0000000000003F7F" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="175" gfxData="000000000000F8FE" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="176" gfxData="0F03010100000000" colorData="C3C3C32323232323" />
+      <tile index="177" gfxData="FF8080C0C0C0C0C0" colorData="41C4C4C4C4C4C4C4" />
+      <tile index="178" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="179" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="180" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="181" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="182" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="183" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="184" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="185" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="186" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="187" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="188" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="189" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="190" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="191" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="192" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="193" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="194" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="195" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="196" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="197" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="198" gfxData="0707070707070707" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="199" gfxData="FFFFFFFFFFFFFFFF" colorData="3131313131313131" />
+      <tile index="200" gfxData="80F0E0C0C0C0E0E0" colorData="2CC4C4C4C4C4C4C4" />
+      <tile index="201" gfxData="8080808080808080" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="202" gfxData="0000000000000000" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="203" gfxData="0000000000000000" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="204" gfxData="3E22220000000000" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="205" gfxData="4040400000000000" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="206" gfxData="E0E0E0E0E0E0E0E0" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="207" gfxData="0F07030303030303" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="208" gfxData="FFFFFFFFFFFFFFFF" colorData="3131313131313131" />
+      <tile index="209" gfxData="C0C0C0C0C0C0C080" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="210" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="211" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="212" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="213" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="214" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="215" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="216" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="217" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="218" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="219" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="220" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="221" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="222" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="223" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="224" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="225" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="226" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="227" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="228" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="229" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="230" gfxData="0303010100000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="231" gfxData="8080C0E1FFC0FFFF" colorData="23C3C3C3C34C4C4C" />
+      <tile index="232" gfxData="0E0E0E1E3E7EFEFE" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="233" gfxData="8080808080808080" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="234" gfxData="0000000000000000" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="235" gfxData="0000000000000000" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="236" gfxData="0000000000000000" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="237" gfxData="0000000000000000" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="238" gfxData="E0E0E0E0E0E0E0FC" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="239" gfxData="0301010000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="240" gfxData="81830187FFFFFFFF" colorData="23C34C4C4C4C4C4C" />
+      <tile index="241" gfxData="7FFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="242" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="243" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="244" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="245" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="246" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="247" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="248" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="249" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="250" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="251" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="252" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="253" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="254" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="255" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+    </tileset>
+    <tileset id="30316242" name="TARP_titlescreen_BG_BANK2" mode="2" foregroundColor="15" backgroundColor="4">
+      <tile index="0" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="1" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="2" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="3" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="4" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="5" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="6" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="7" gfxData="FFFFFFFFFFFFFFFF" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="8" gfxData="FCFCFCFCFCFCFCFC" colorData="4C4C4C4C4C4C4C4C" />
+      <tile index="9" gfxData="8000000000000000" colorData="2323232323232323" />
+      <tile index="10" gfxData="0000000000000000" colorData="2323232323232323" />
+      <tile index="11" gfxData="000000000000C080" colorData="2323232323233C3C" />
+      <tile index="12" gfxData="FFFFFFFFFFFF0701" colorData="3C3C3C3C3C3C3C3C" />
+      <tile index="13" gfxData="FFFFFFFFFFFFFFFF" colorData="3C3C3C3C3C3C3C3C" />
+      <tile index="14" gfxData="010F070303030101" colorData="4CC3C3C3C3C3C3C3" />
+      <tile index="15" gfxData="FFFFFFFF80808080" colorData="41414141C4C4C4C4" />
+      <tile index="16" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="17" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="18" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="19" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="20" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="21" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="22" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="23" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="24" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="25" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="26" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="27" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="28" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="29" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="30" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="31" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="32" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="33" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="34" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="35" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="36" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="37" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="38" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="39" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="40" gfxData="0303030303030303" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="41" gfxData="FFFFFFFFFF808080" colorData="313131313123C3C3" />
+      <tile index="42" gfxData="0001010101010101" colorData="C323C3C3C3C3C3C3" />
+      <tile index="43" gfxData="E0C0808080808080" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="44" gfxData="0F07030301010101" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="45" gfxData="FFFF808080808080" colorData="313123C3C3C3C3C3" />
+      <tile index="46" gfxData="0101010101010101" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="47" gfxData="8080808080808080" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="48" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="49" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="50" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="51" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="52" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="53" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="54" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="55" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="56" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="57" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="58" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="59" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="60" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="61" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="62" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="63" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="64" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="65" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="66" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="67" gfxData="0000000000000000" colorData="C4C4C4C4C4C4C4C4" />
+      <tile index="68" gfxData="000000000000017F" colorData="C4C4C4C4C4C46464" />
+      <tile index="69" gfxData="00000000001F03FF" colorData="6464646464649696" />
+      <tile index="70" gfxData="FFFFFFFF0F01FFFF" colorData="4141414164969696" />
+      <tile index="71" gfxData="FFFFFF0FFFFFFFFF" colorData="4141416464919191" />
+      <tile index="72" gfxData="010000FF80000000" colorData="C4C4C46169696969" />
+      <tile index="73" gfxData="C0F08000FFFFFFFF" colorData="C3C2464691919191" />
+      <tile index="74" gfxData="03C0FFFFFFFFFFFF" colorData="C32C616191919191" />
+      <tile index="75" gfxData="FFFFFFFFFFFFFFFF" colorData="4141616191919191" />
+      <tile index="76" gfxData="010101FFFFE0F8FE" colorData="C4C4C46161969696" />
+      <tile index="77" gfxData="808080808080C0E0" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="78" gfxData="0101010101010307" colorData="C3C3C3C3C3C3C3C3" />
+      <tile index="79" gfxData="8080808080030700" colorData="C4C4C4C4C4466969" />
+      <tile index="80" gfxData="FFFFFFFFFFFF0101" colorData="4141414141414669" />
+      <tile index="81" gfxData="FFFFFFFFFFFFFF01" colorData="4141414141414146" />
+      <tile index="82" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="83" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="84" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="85" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="86" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="87" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="88" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="89" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="90" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="91" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="92" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="93" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="94" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="95" gfxData="FFFFFFFFFFFFFFFF" colorData="4646464646464646" />
+      <tile index="96" gfxData="FFFFFFFFFFFFF8C0" colorData="4646464646464646" />
+      <tile index="97" gfxData="FFFFFFFFF0073FFF" colorData="4646464646969696" />
+      <tile index="98" gfxData="FFFF0F0FFFFFFFFF" colorData="4141649696969696" />
+      <tile index="99" gfxData="0FFF800000000000" colorData="6464696969696969" />
+      <tile index="100" gfxData="E000000000000000" colorData="6969696969696969" />
+      <tile index="101" gfxData="0000000000000000" colorData="6969696969696969" />
+      <tile index="102" gfxData="0000000000000000" colorData="6969696969696969" />
+      <tile index="103" gfxData="0000000000000000" colorData="6969696969696969" />
+      <tile index="104" gfxData="0000000000000000" colorData="6969696969696969" />
+      <tile index="105" gfxData="0000000000000000" colorData="6969696969696969" />
+      <tile index="106" gfxData="0000000000000000" colorData="6969696969696969" />
+      <tile index="107" gfxData="0000000000000000" colorData="6969696969696969" />
+      <tile index="108" gfxData="0100000000000000" colorData="6969696969696969" />
+      <tile index="109" gfxData="80C080FFFFFFFFFF" colorData="6C6C969696969696" />
+      <tile index="110" gfxData="01070FFFFFFFFFFF" colorData="9C9C969696969696" />
+      <tile index="111" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="112" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="113" gfxData="FEFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="114" gfxData="0707000000000000" colorData="4669696969696969" />
+      <tile index="115" gfxData="FFF0C0FEFFFFFFFF" colorData="4164969696969696" />
+      <tile index="116" gfxData="FFFFC0FE07000000" colorData="4141646469696969" />
+      <tile index="117" gfxData="FFFFFFFFF080F8FF" colorData="4141414164969696" />
+      <tile index="118" gfxData="FFFFFFFFFFFF03E0" colorData="4141414141414696" />
+      <tile index="119" gfxData="FFFFFFFFFFFFFFE0" colorData="4141414141414164" />
+      <tile index="120" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="121" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="122" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="123" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="124" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="125" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="126" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="127" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="128" gfxData="073FFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="129" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="130" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="131" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="132" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="133" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="134" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="135" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="136" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="137" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="138" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="139" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="140" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="141" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="142" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="143" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="144" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="145" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="146" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="147" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="148" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="149" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="150" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="151" gfxData="80F0FFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="152" gfxData="FFF080F0FFFFFFFF" colorData="4164969696969696" />
+      <tile index="153" gfxData="FFFFFFF0FEF0FFFF" colorData="4141416464969696" />
+      <tile index="154" gfxData="FFFFFFFFFF0701E0" colorData="4141414141464696" />
+      <tile index="155" gfxData="FFFFFFFFFFFFFF80" colorData="4141414141414164" />
+      <tile index="156" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="157" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="158" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="159" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="160" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="161" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="162" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="163" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="164" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="165" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="166" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="167" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="168" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="169" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="170" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="171" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="172" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="173" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="174" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="175" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="176" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="177" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="178" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="179" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="180" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="181" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="182" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="183" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="184" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="185" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="186" gfxData="0100000000000000" colorData="6969696969696969" />
+      <tile index="187" gfxData="03E0FCFFFFFFFFFF" colorData="4696969696969696" />
+      <tile index="188" gfxData="FF80FC80F0FEFFFF" colorData="4164649696969696" />
+      <tile index="189" gfxData="FFFFFF80F0FFC0F0" colorData="4141416464649696" />
+      <tile index="190" gfxData="FFFFFFFFFFFFE0F8" colorData="4141414141416464" />
+      <tile index="191" gfxData="0000000000000000" colorData="6464646464646464" />
+      <tile index="192" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="193" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="194" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="195" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="196" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="197" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="198" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="199" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="200" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="201" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="202" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="203" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="204" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="205" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="206" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="207" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="208" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="209" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="210" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="211" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="212" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="213" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="214" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="215" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="216" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="217" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="218" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="219" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="220" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="221" gfxData="FFFFFFFFFFFFFFFF" colorData="9191919191919191" />
+      <tile index="222" gfxData="FFC0F0FEFFFFFFFF" colorData="6196969696969696" />
+      <tile index="223" gfxData="FFF0FFFFC0F0FCFF" colorData="4164646496969696" />
+      <tile index="224" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="225" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="226" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="227" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="228" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="229" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="230" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="231" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="232" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="233" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="234" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="235" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="236" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="237" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="238" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="239" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="240" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="241" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="242" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="243" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="244" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="245" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="246" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="247" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="248" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="249" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="250" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="251" gfxData="FFFFFFFFFFFFFFFF" colorData="9696969696969696" />
+      <tile index="252" gfxData="00003C2A2A2A2A00" colorData="7979797979797979" />
+      <tile index="253" gfxData="00008B8889522100" colorData="7979797979797979" />
+      <tile index="254" gfxData="0000C728E828E700" colorData="7979797979797979" />
+      <tile index="255" gfxData="0087F7F7EFDFDFFF" colorData="E995959595959595" />
+    </tileset>
+  </gfx>
+  <maps>
+    <map id="6444509" name="main" maptype="1" tiletype="0" width="32" height="24" tileset="27717712">
+      <line index="0">A0A1A1A1A1A1A1A1A1A1A1A2EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF1A1B1C1D</line>
+      <line index="1">A7736F6E67202020202020A8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="2">A72054454D504F200AD9DAA8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="3">A720202020202020202020A8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="4">A7D49D8092818E848F8DD7A8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="5">A3A4A4A4A4A4A4A4A4A4A4A6EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="6">A76472756D7320200F12BCA8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="7">A720202020202020202020A8EFEFEFEFEFEFEFE0E1E2E3E4E5EFEFEFEFEFEFEF</line>
+      <line index="8">A720434153494F2020DFDEA8EFEFEFEFEFEFE6E7E8E8E8E8E9EAEFEFEFEFEFEF</line>
+      <line index="9">A720202020202020202020A8EFEFEFEFEFEFEBE8E8E8E8E8E8ECEFEFEFEFEFEF</line>
+      <line index="10">A7D49E8092818E848F8DD7A8EFEFEFEFEFEFEDE8E8E8E8E8E8EEEFEFEFEFEFEF</line>
+      <line index="11">A3A4A4A4A4A4A4A4A4A4A4A6EFEFEFEFEFEFF0E8E8E8E8E8E8F1EFEFEFEFEFEF</line>
+      <line index="12">A7746F6E651819200F13BCA8EFEFEFEFEFEFF2E8E8E8E8E8E8F3EFEFEFEFEFEF</line>
+      <line index="13">A720412B4220202020DFDEA8EFEFEFEFEFEFF4F5E8E8E8E8F6F7EFEFEFEFEFEF</line>
+      <line index="14">A7204F5345540A0A0AD9DAA8EFEFEFEFEFEFEFF8F9FAFBFCFDEFEFEFEFEFEFEF</line>
+      <line index="15">A720202020202020202020A8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="16">A720454E5620D0D00AD9DAA8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="17">A7205350454544200AD9DAA8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="18">A7204C4F4F50202020DFDEA8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="19">A720202020202020202020A8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="20">A7204F43544156450AD9DAA8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="21">A72055502F444F574ED9DAA8EFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEF</line>
+      <line index="22">A7D49F8092818E848F8DD7A8EF7EB4B4B4B4B4B4B4B4B4B4B4B4B4B4B4B4EFEF</line>
+      <line index="23">ACADADADADADADADADADADAEEF7FB4B4B4B4B4B4B4B4B4B4B4B4B4B4B4B4EFEF</line>
+    </map>
+    <map id="4410728" name="TARP_titlescreen_BG_MAP" maptype="0" tiletype="0" width="32" height="24" tileset="9487824" tilesetB="18281552" tilesetC="30316242">
+      <line index="0">000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F</line>
+      <line index="1">202122232425262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3F</line>
+      <line index="2">404142434445464748494A4B4C4D4E4F505152535455565758595A5B5C5D5E5F</line>
+      <line index="3">606162636465666768696A6B6C6D6E6F707172737475767778797A7B7C7D7E7F</line>
+      <line index="4">808182838485868788898A8B8C8D8E8F909192939495969798999A9B9C9D9E9F</line>
+      <line index="5">A0A1A2A3A4A5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF</line>
+      <line index="6">C0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF</line>
+      <line index="7">E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF</line>
+      <line index="8">000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F</line>
+      <line index="9">202122232425262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3F</line>
+      <line index="10">404142434445464748494A4B4C4D4E4F505152535455565758595A5B5C5D5E5F</line>
+      <line index="11">606162636465666768696A6B6C6D6E6F707172737475767778797A7B7C7D7E7F</line>
+      <line index="12">808182838485868788898A8B8C8D8E8F909192939495969798999A9B9C9D9E9F</line>
+      <line index="13">A0A1A2A3A4A5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF</line>
+      <line index="14">C0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF</line>
+      <line index="15">E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF</line>
+      <line index="16">000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F</line>
+      <line index="17">202122232425262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3F</line>
+      <line index="18">404142434445464748494A4B4C4D4E4F505152535455565758595A5B5C5D5E5F</line>
+      <line index="19">606162636465666768696A6B6C6D6E6F707172737475767778797A7B7C7D7E7F</line>
+      <line index="20">808182838485868788898A8B8C8D8E8F909192939495969798999A9B9C9D9E9F</line>
+      <line index="21">A0A1A2A3A4A5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF</line>
+      <line index="22">C0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF</line>
+      <line index="23">E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF</line>
+    </map>
+  </maps>
+  <sprites>
+    <spriteset id="21224086" name="SPRITES_DATA" size="2" mode="1" paletteID="17271312">
+      <sprite index="0" name="0" InkColor="15" BGcolor="1">
+        <gfxData>0000000000000001010000000000000000000000000000808000000000000000</gfxData>
+      </sprite>
+      <sprite index="1" name="1" InkColor="15" BGcolor="1">
+        <gfxData>0000000000000103030100000000000000000000000080C0C080000000000000</gfxData>
+      </sprite>
+      <sprite index="2" name="2" InkColor="15" BGcolor="1">
+        <gfxData>00000000000103070703010000000000000000000080C0E0E0C0800000000000</gfxData>
+      </sprite>
+      <sprite index="3" name="3" InkColor="15" BGcolor="1">
+        <gfxData>0000000003070F0F0F0F07030000000000000000C0E0F0F0F0F0E0C000000000</gfxData>
+      </sprite>
+      <sprite index="4" name="4" InkColor="15" BGcolor="1">
+        <gfxData>00000001070F0F1F1F0F0F070100000000000080E0F0F0F8F8F0F0E080000000</gfxData>
+      </sprite>
+      <sprite index="5" name="5" InkColor="15" BGcolor="1">
+        <gfxData>0000030F1F1F3F3F3F3F1F1F0F0300000000C0F0F8F8FCFCFCFCF8F8F0C00000</gfxData>
+      </sprite>
+      <sprite index="6" name="6" InkColor="15" BGcolor="1">
+        <gfxData>00030F1F3F3F7F7F7F7F3F3F1F0F030000C0F0F8FCFCFEFEFEFEFCFCF8F0C000</gfxData>
+      </sprite>
+      <sprite index="7" name="7" InkColor="15" BGcolor="1">
+        <gfxData>071F3F7F7FFFFFFFFFFFFF7F7F3F1F07E0F8FCFEFEFFFFFFFFFFFFFEFEFCF8E0</gfxData>
+      </sprite>
+    </spriteset>
+    <spriteset id="56885004" name="TARP_titlescreen_sprpatterns_SSET" size="2" mode="1" paletteID="0">
+      <sprite index="0" name="" InkColor="12" BGcolor="1">
+        <gfxData>010F386040C0C0C0C0C0406030180C06C0F01C06060303030302060408081818</gfxData>
+      </sprite>
+      <sprite index="1" name="" InkColor="12" BGcolor="1">
+        <gfxData>03030303030303020408102040408080080808080F0800000000000000000000</gfxData>
+      </sprite>
+      <sprite index="2" name="" InkColor="12" BGcolor="1">
+        <gfxData>071C306040C0C0C0C0E06030180C0406E0380C0406030303030306060C181020</gfxData>
+      </sprite>
+      <sprite index="3" name="" InkColor="12" BGcolor="1">
+        <gfxData>03030606067C0C00000000000000000010302020206040402010080404020101</gfxData>
+      </sprite>
+      <sprite index="4" name="" InkColor="2" BGcolor="1">
+        <gfxData>8800000088000000000000000000000000000000000000000000000000000000</gfxData>
+      </sprite>
+    </spriteset>
+  </sprites>
+  <OAMs />
+</msxOpenDocument>

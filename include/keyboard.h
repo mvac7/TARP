@@ -1,33 +1,69 @@
+/* =============================================================================
+   SDCC Keyboard Functions Library (object type)
+   Version: 1.0
+   Date: 7 March 2016
+   Author: mvac7/303bcn
+   Architecture: MSX
+   Format: object (.rel)
+   Programming language: C
+   WEB: 
+   mail: mvac7303b@gmail.com
+
+   Description:
+     Functions for reading the keyboard of MSX computers.
+     
+============================================================================= */
+
 #ifndef __KEYBOARD_H__
 #define __KEYBOARD_H__
 
-#include "newTypes.h"
 
 
+#ifndef  __BITVALUES__
+#define  __BITVALUES__
+#define Bit0 1
+#define Bit1 2
+#define Bit2 4
+#define Bit3 8
+#define Bit4 16
+#define Bit5 32
+#define Bit6 64
+#define Bit7 128
+#endif
 
 /* =============================================================================
-   Clear keyboard buffer
-   Borra el buffer del teclado
-   OLD name: KILBUF
+   KillBuffer
+ 
+  Function : Clear keyboard buffer
+  Input    : -
+  Output   : -
 ============================================================================= */
 void KillBuffer();
 
 
 
 /* =============================================================================
-  One character input (waiting) and return its code
-  Espera a que se pulse una tecla y devuelve su valor
+   INKEY
+  
+   Function : One character input (waiting) and return its code
+   Input    : -
+   Output   : [char] key code
 ============================================================================= */
-byte INKEY();
+char INKEY();
 
 
 
 /* =============================================================================
-   Returns the value of the specified line from the keyboard matrix
-   Devuelve el valor de la línea especificada de la matriz del teclado
-   Old name: SNSMAT 
+   GetKeyMatrix
+
+   Function : Returns the value of the specified line from the keyboard matrix.
+              Each line provides the status of 8 keys.
+              To know which keys correspond, you will need documentation that 
+              includes a keyboard table.
+   Input    : [char] line 
+   Output   : [char] state of the keys. 1 = not pressed; 0 = pressed
 ============================================================================= */
-byte GetKeyMatrix(byte line);
+char GetKeyMatrix(char line);
 
 
 

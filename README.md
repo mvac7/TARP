@@ -1,7 +1,5 @@
 # The Alan Randoms Project (TARP)
 
-Version: **v0.9b**
-
 Author: **mvac7**
 
 Architecture: **MSX** 
@@ -10,17 +8,15 @@ Format: **ROM 16K (h4000)**
 
 Programming language: **C**
 
-WEB: http://psged.blogspot.com.es/2012/05/alan-randoms-project-v09b.html
-
 mail: mvac7303b@gmail.com
 
 
 
 ## Requirements: 
 
-* SDCC v3.6 http://sdcc.sourceforge.net/ 
+* SDCC v3.9 http://sdcc.sourceforge.net/ 
 
-* Hex2bin v2.2 http://hex2bin.sourceforge.net/
+* Hex2bin v2.5 http://hex2bin.sourceforge.net/
 
 
 
@@ -75,8 +71,10 @@ octave and a control to increase or reduce notes of the pattern.
 * [F3] Random Tone pattern.
 * [F4] Drums audio On/Off.
 * [F5] Tone audio On/Off.
+* [RETRUN] Enable Drum and Tone audio channels 
+* [STOP] Disable Drum and Tone audio channels
+* [BS] Play previous pattern
 * [SELECT] Drums set: Normal/Casio.
-* [STOP] Drums & Tone audio off
 * [Up] Menu cursor up.
 * [Down] Menu cursor down.
 * [Left] Switch left or value down.

@@ -1,4 +1,4 @@
-// MSX 1 BIOS v1
+// MSX BIOS v1.2
 // definitions & descriptions by MSX Assembly Page
 // only includes descriptions. For details see the WEB document in:
 // http://map.grauw.nl/resources/msxbios.php
@@ -8,19 +8,21 @@
 
 
 
-// RST-and other routines
-#define CHKRAM  0x0000 // Check RAM and sets slot for command area.
-#define SYNCHR  0x0008 // Checks if then current character pointed by HL is one desired.
+// use RST assembler mnemonic to call
+#define CHKRAM  0x00 // RST 0x00 > Check RAM and sets slot for command area.
+#define SYNCHR  0x08 // RST	0x08 > Checks if then current character pointed by HL is one desired.
+#define CHRGTR  0x10 // RST	0x10 > Gets the next character (or token) of the Basic-text
+#define OUTDO   0x18 // RST	0x18 > Output to current outputchannel (printer, diskfile, etc.)
+#define DCOMPR  0x20 // RST	0x20 > Compares HL with DE
+#define GETYPR  0x28 // RST	0x28 > Returns Type of DAC
+#define CALLF   0x30 // RST	0x30 > Executes an interslot call
+#define KEYINT  0x38 // RST	0x38 > Executes the timer interrupt process routine
+
+// use CALL assembler mnemonic
 #define RDSLT   0x000C // Reads the value of an address in another slot
-#define CHRGTR  0x0010 // Gets the next character (or token) of the Basic-text
-#define WRSLT   0x0014 // Writes a value to an address in another slot.
-#define OUTDO   0x0018 // Output to current outputchannel (printer, diskfile, etc.)
-#define CALSLT  0x001C // Executes inter-slot call.
-#define DCOMPR  0x0020 // Compares HL with DE
+#define WRSLT   0x0014 // Writes a value to an address in another slot
+#define CALSLT  0x001C // Executes inter-slot call
 #define ENASLT  0x0024 // Switches indicated slot at indicated page on perpetual
-#define GETYPR  0x0028 // Returns Type of DAC
-#define CALLF   0x0030 // Executes an interslot call
-#define KEYINT  0x0038 // Executes the timer interrupt process routine
 
 // Initialization-routines
 #define INITIO  0x003B // Initialises the device
