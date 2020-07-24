@@ -66,11 +66,11 @@ cyclical. It also includes a generator of random notes, a control for changing
 octave and a control to increase or reduce notes of the pattern.
 
 ### List of keys:
-* [F1] Random Drums & Tone patterns.
-* [F2] Random Drums pattern.
-* [F3] Random Tone pattern.
-* [F4] Drums audio On/Off.
-* [F5] Tone audio On/Off.
+* [F1] Drums audio On/Off
+* [F2] Tone audio On/Off
+* [TAB] Random Drums & Tone patterns.
+* [CTRL] Random Drums pattern.
+* [SHIFT] Random Tone pattern.
 * [RETRUN] Enable Drum and Tone audio channels 
 * [STOP] Disable Drum and Tone audio channels
 * [BS] Play previous pattern
@@ -79,3 +79,5 @@ octave and a control to increase or reduce notes of the pattern.
 * [Down] Menu cursor down.
 * [Left] Switch left or value down.
 * [Right] Switch right or value up.
+* [,/<] Note Up
+* [./>] Note Down
