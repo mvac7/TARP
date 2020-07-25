@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/*   The Alan Randoms Project v0.92b                                           */
+/*   The Alan Randoms Project v0.93b                                           */
 /*   tarp.c                                                                   */
 /*   by mvac7/303bcn 2020                                                     */
 /*   eXperimental Sound miniCompo (XSmC)                                      */
@@ -85,6 +85,7 @@ void genTonePattern();
 void upNotePattern();
 void downNotePattern();
 int getFreq(char value);
+void setOctave(char value);
 
 void checkMSX();
 
@@ -103,7 +104,7 @@ void num2Dec16(uint aNumber, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char soft[] = "THE ALAN RANDOMS PROJECT"; 
 const char author[] = "MVAC7/303BCN";
-const char version[] = "0.92b";
+const char version[] = "0.93b";
 
 
 const char enve_data[128]={
@@ -121,7 +122,7 @@ const char enve_loop[8]={false,false,true,true,false,false,false,false};
 
 
 
-const char drumcolor[4]={4,2,8,7};
+const char drumcolor[4]={4,12,8,7};
 
 const uint vaddr_cursor[9]={0x1841,0x1901,0x19A1,0x19C1,0x1A01,0x1A21,0x1A41,0x1A81,0x1AA1};
 
@@ -145,6 +146,8 @@ const char xvalues[64]={
 char VDP_type;
 boolean _isTone=false; //_ToneEnabled
 boolean _DrumEnabled=false; //_DrumEnabled
+
+char _octave;
 
 char drum_pattern[16];
 char tone_pattern[16]; //={46,0,49,0,50,0,51,0,46,0,49,0,50,0,51,0};
@@ -217,9 +220,12 @@ void WorkWin()
     boolean isCasio=false;
     boolean isAB=true;
     
+    // key press control
+    boolean keyB0semaphore=false;
     boolean keyB2semaphore=false;
     boolean keyB6semaphore=false;
     boolean keyB7semaphore=false;
+    //
     
     boolean joybool = false;
     
@@ -245,8 +251,7 @@ void WorkWin()
     
     char drum_type;
     char tone_note;
-    char octave=2;
-    
+        
     char env_selected=0;
     char env_speed=1;    
     char env_step=0;
@@ -284,6 +289,8 @@ void WorkWin()
     
     setMainScr();
     
+    
+    _octave=2;
      
     // Instrumentos percusion - Kit Casio PT1
     // Kick
@@ -326,7 +333,7 @@ void WorkWin()
     Percu_basic[1].Tone=1000;
     Percu_basic[1].Noise=0;
     Percu_basic[1].Shape=1;
-    Percu_basic[1].Period=1200;
+    Percu_basic[1].Period=1400;
     
     // Hi
     Percu_basic[2].isTone=false;
@@ -334,7 +341,7 @@ void WorkWin()
     Percu_basic[2].Tone=0;
     Percu_basic[2].Noise=0;
     Percu_basic[2].Shape=1;
-    Percu_basic[2].Period=200;
+    Percu_basic[2].Period=400;  //200
     // end
     
     // genera las estructuras de datos de las envolventes
@@ -374,7 +381,7 @@ void WorkWin()
     VPrintNumber(8,17, env_speed, 1);
     switcher(0x1A49,env_list[env_selected].isLoop);
     
-    VPrintNumber(8,20, octave, 1);
+    setOctave(_octave);
     // end set visual controls values
        
     
@@ -431,7 +438,7 @@ void WorkWin()
         tone_note = tone_pattern[pattern_step];
         if(tone_note>0)
         {
-          freqA = getFreq(tone_note+(octave*12)); //+ variacion;
+          freqA = getFreq(tone_note+(_octave*12)); //+ variacion;
           freqB = freqA + B_offset;
           //VPrintNumber(20,0, tone_note, 3);   // TEST ##########################
           //VPrintNumber(24,0, freq1, 5);
@@ -573,9 +580,9 @@ void WorkWin()
                 env_list[env_selected].isLoop=true;
                 switcher(0x1A49,true);
                 break;
-              case 7: // octave +
-                if (octave<6) octave++;
-                VPrintNumber(8,20, octave, 1);
+              case 7: // _octave +
+                if (_octave<6) _octave++;
+                setOctave(_octave); 
                 break;
               case 8:
                 downNotePattern(); 
@@ -615,9 +622,9 @@ void WorkWin()
                 env_list[env_selected].isLoop=false;
                 switcher(0x1A49,false); 
                 break;
-              case 7: //octave -
-                if (octave>1) octave--;
-                VPrintNumber(8,20, octave, 1); 
+              case 7: //_octave -
+                if (_octave>1) _octave--;
+                setOctave(_octave); 
                 break;
               case 8:
                 upNotePattern(); 
@@ -631,6 +638,23 @@ void WorkWin()
       }
       
 
+      keyPressed = GetKeyMatrix(0);
+      if (keyPressed!=0xFF)
+      {
+        if(keyB0semaphore==false)
+        {
+          //if (!(keyPressed&Bit0)) {keyB0semaphore=true;}; // 0
+          if (!(keyPressed&Bit1)) {setOctave(1);keyB0semaphore=true;}; // 1
+          if (!(keyPressed&Bit2)) {setOctave(2);keyB0semaphore=true;}; // 2
+          if (!(keyPressed&Bit3)) {setOctave(3);keyB0semaphore=true;}; // 3
+          if (!(keyPressed&Bit4)) {setOctave(4);keyB0semaphore=true;}; // 4
+          if (!(keyPressed&Bit5)) {setOctave(5);keyB0semaphore=true;}; // 5
+          if (!(keyPressed&Bit6)) {setOctave(6);keyB0semaphore=true;}; // 6
+          //if (!(keyPressed&Bit7)) {keyB0semaphore=true;}; // 7
+        }      
+      }else keyB0semaphore=false;
+      
+      
       
       keyPressed = GetKeyMatrix(2);
       if (keyPressed!=0xFF)
@@ -698,6 +722,15 @@ void WorkWin()
     
 
 }
+
+
+
+void setOctave(char value)
+{
+    _octave = value;
+    VPrintNumber(8,20, _octave, 1);
+}
+
 
 
 
