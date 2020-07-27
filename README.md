@@ -12,18 +12,10 @@ mail: mvac7303b@gmail.com
 
 
 
-## Requirements: 
-
-* SDCC v3.9 http://sdcc.sourceforge.net/ 
-
-* Hex2bin v2.5 http://hex2bin.sourceforge.net/
-
-
-
 ## Description:
 
-This software is a random generator of rhythm and melody patterns.
-
+This software is an AY-3-8910 groovebox, with functions for random generation of 
+rhythm and melody patterns.
 
 The first version (0.9b) was presented in the Karoshi MSX Community eXperimental 
 Sound Mini-compo 2012 contest.
@@ -32,10 +24,19 @@ http://karoshi.auic.es/index.php/topic,2294.0.html
 
 
 
-## To run:
+## Requirements: 
 
-Requires a standard MSX computer.
- 
+A standard MSX computer with 16K RAM.
+
+For compile:
+
+* SDCC v3.9 http://sdcc.sourceforge.net/ 
+* Hex2bin v2.5 http://hex2bin.sourceforge.net/
+
+
+
+## For run:
+
 * you can record to a flashrom 
 * from disk using tools: ODO, loadrom, execrom, etc. 
 * from cassette using WAVeR or similar tool.
@@ -43,6 +44,9 @@ Requires a standard MSX computer.
 
 
 ## How does it work?
+
+It does not sound?
+Try pressing [Enter] and enjoy! :D
 
 On the main screen, you will see on the left, the control area, where you can 
 change settings using the cursor keys and activate some functions using a keys. 
@@ -77,18 +81,24 @@ increase or reduce notes of the pattern.
 
 ### List of keys:
 
-* [F1] Drums audio On/Off
-* [F2] Tone audio On/Off
-* [TAB] Random Drums & Tone patterns.
-* [CTRL] Random Drums pattern.
-* [SHIFT] Random Tone pattern.
 * [RETURN] Enable Drum and Tone audio channels 
 * [STOP] Disable Drum and Tone audio channels
+* [F1] Drums audio On/Off
+* [F2] Tone audio On/Off
+* [TAB] Random Drums & Tone patterns
+* [CTRL] Random Drums pattern
+* [SHIFT] Random Tone pattern
+* [1] Play the first 2 steps
+* [2] Play the first 4 steps
+* [3] Play the first 8 steps
+* [4] Restore to 16 steps
 * [BS] Play previous pattern
-* [SELECT] Drums set: Normal/Casio.
+* [SELECT] Drums set: Normal/Casio
 * [Up] Menu cursor up.
 * [Down] Menu cursor down.
-* [Left] Switch left or value down.
-* [Right] Switch right or value up.
+* [Left] Switch left or value down
+* [Right] Switch right or value up
+* [Ins] Octave Up
+* [Del] Octave Down
 * [,/<] Note Up
 * [./>] Note Down

@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/*   The Alan Randoms Project v0.93b                                           */
+/*   The Alan Randoms Project v0.94b                                           */
 /*   tarp.c                                                                   */
 /*   by mvac7/303bcn 2020                                                     */
 /*   eXperimental Sound miniCompo (XSmC)                                      */
@@ -85,7 +85,9 @@ void genTonePattern();
 void upNotePattern();
 void downNotePattern();
 int getFreq(char value);
-void setOctave(char value);
+void upOctave();
+void downOctave();
+void showOctave();
 
 void checkMSX();
 
@@ -104,7 +106,7 @@ void num2Dec16(uint aNumber, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char soft[] = "THE ALAN RANDOMS PROJECT"; 
 const char author[] = "MVAC7/303BCN";
-const char version[] = "0.93b";
+const char version[] = "0.94b";
 
 
 const char enve_data[128]={
@@ -221,10 +223,11 @@ void WorkWin()
     boolean isAB=true;
     
     // key press control
-    boolean keyB0semaphore=false;
-    boolean keyB2semaphore=false;
-    boolean keyB6semaphore=false;
-    boolean keyB7semaphore=false;
+    boolean keyB0pressed=false;
+    boolean keyB2pressed=false;
+    boolean keyB6pressed=false;
+    boolean keyB7pressed=false;
+    boolean keyB8pressed=false;
     //
     
     boolean joybool = false;
@@ -247,7 +250,10 @@ void WorkWin()
     char Tempo = 4;
     char tempoStep =4;
     char pattern_step=0;
-    char last_step=0;
+    char ENDstep = 15;  //to control the size of the pattern
+    char newENDstep = 15;
+    char last_step=0;    //to delete the last cursor position
+
     
     char drum_type;
     char tone_note;
@@ -381,7 +387,7 @@ void WorkWin()
     VPrintNumber(8,17, env_speed, 1);
     switcher(0x1A49,env_list[env_selected].isLoop);
     
-    setOctave(_octave);
+    showOctave();
     // end set visual controls values
        
     
@@ -454,7 +460,12 @@ void WorkWin()
                
         // control de posicion de pattern
         pattern_step++;
-        if(pattern_step>15)pattern_step=0;
+        if(pattern_step>ENDstep)
+        {
+          pattern_step=0;
+          ENDstep = newENDstep;
+        } 
+        
       }else{
         tempoStep++;
         POKE(PSG_RAM+13,0); //envelope wave form 
@@ -581,8 +592,7 @@ void WorkWin()
                 switcher(0x1A49,true);
                 break;
               case 7: // _octave +
-                if (_octave<6) _octave++;
-                setOctave(_octave); 
+                downOctave(); 
                 break;
               case 8:
                 downNotePattern(); 
@@ -623,8 +633,7 @@ void WorkWin()
                 switcher(0x1A49,false); 
                 break;
               case 7: //_octave -
-                if (_octave>1) _octave--;
-                setOctave(_octave); 
+                upOctave();
                 break;
               case 8:
                 upNotePattern(); 
@@ -641,54 +650,54 @@ void WorkWin()
       keyPressed = GetKeyMatrix(0);
       if (keyPressed!=0xFF)
       {
-        if(keyB0semaphore==false)
+        if(keyB0pressed==false)
         {
-          //if (!(keyPressed&Bit0)) {keyB0semaphore=true;}; // 0
-          if (!(keyPressed&Bit1)) {setOctave(1);keyB0semaphore=true;}; // 1
-          if (!(keyPressed&Bit2)) {setOctave(2);keyB0semaphore=true;}; // 2
-          if (!(keyPressed&Bit3)) {setOctave(3);keyB0semaphore=true;}; // 3
-          if (!(keyPressed&Bit4)) {setOctave(4);keyB0semaphore=true;}; // 4
-          if (!(keyPressed&Bit5)) {setOctave(5);keyB0semaphore=true;}; // 5
-          if (!(keyPressed&Bit6)) {setOctave(6);keyB0semaphore=true;}; // 6
-          //if (!(keyPressed&Bit7)) {keyB0semaphore=true;}; // 7
+          //if (!(keyPressed&Bit0)) {keyB0pressed=true;}; // 0
+          if (!(keyPressed&Bit1)) {newENDstep=1;keyB0pressed=true;}; // 1
+          if (!(keyPressed&Bit2)) {newENDstep=3;keyB0pressed=true;}; // 2
+          if (!(keyPressed&Bit3)) {newENDstep=7;keyB0pressed=true;}; // 3
+          if (!(keyPressed&Bit4)) {newENDstep=15;keyB0pressed=true;}; // 4
+          //if (!(keyPressed&Bit5)) {keyB0pressed=true;}; // 5
+          //if (!(keyPressed&Bit6)) {keyB0pressed=true;}; // 6
+          //if (!(keyPressed&Bit7)) {keyB0pressed=true;}; // 7
         }      
-      }else keyB0semaphore=false;
+      }else keyB0pressed=false;
       
       
       
       keyPressed = GetKeyMatrix(2);
       if (keyPressed!=0xFF)
       {
-        if(keyB2semaphore==false)
+        if(keyB2pressed==false)
         {
-          //if (!(keyPressed&Bit0)) {keyB2semaphore=true;}; // '
-          //if (!(keyPressed&Bit1)) {keyB2semaphore=true;}; // £
-          if (!(keyPressed&Bit2)) {upNotePattern();keyB2semaphore=true;}; // ,/<
-          if (!(keyPressed&Bit3)) {downNotePattern();keyB2semaphore=true;};   // ./>
-          //if (!(keyPressed&Bit4)) {keyB2semaphore=true;}; // /
-          //if (!(keyPressed&Bit5)) {keyB2semaphore=true;}; // DEAD
-          //if (!(keyPressed&Bit6)) {keyB2semaphore=true;}; // A
-          //if (!(keyPressed&Bit7)) {keyB2semaphore=true;}; // B
+          //if (!(keyPressed&Bit0)) {keyB2pressed=true;}; // '
+          //if (!(keyPressed&Bit1)) {keyB2pressed=true;}; // £
+          if (!(keyPressed&Bit2)) {upNotePattern();keyB2pressed=true;}; // ,/<
+          if (!(keyPressed&Bit3)) {downNotePattern();keyB2pressed=true;};   // ./>
+          //if (!(keyPressed&Bit4)) {keyB2pressed=true;}; // /
+          //if (!(keyPressed&Bit5)) {keyB2pressed=true;}; // DEAD
+          //if (!(keyPressed&Bit6)) {keyB2pressed=true;}; // A
+          //if (!(keyPressed&Bit7)) {keyB2pressed=true;}; // B
         }      
-      }else keyB2semaphore=false;
+      }else keyB2pressed=false;
       
       
       
       keyPressed = GetKeyMatrix(6);
       if (keyPressed!=0xFF)
       {
-        if(keyB6semaphore==false)
+        if(keyB6pressed==false)
         {
-          if (!(keyPressed&Bit0)) {CopyPrevPatterns();genTonePattern();keyB6semaphore=true;}; // SHIFT
-          if (!(keyPressed&Bit1)) {CopyPrevPatterns();genDrumPattern();keyB6semaphore=true;}; // CTRL
-          //if (!(keyPressed&Bit2)) {keyB6semaphore=true;}; // GRAPH
-          //if (!(keyPressed&Bit3)) {keyB6semaphore=true;}; // CAPS
-          //if (!(keyPressed&Bit4)) {keyB6semaphore=true;}; // CODE
-          if (!(keyPressed&Bit5)) {invertDrumChannel();keyB6semaphore=true;}; // F1
-          if (!(keyPressed&Bit6)) {invertToneChannel();keyB6semaphore=true;}; // F2
-          //if (!(keyPressed&Bit7)) {keyB6semaphore=true;}; // F3
+          if (!(keyPressed&Bit0)) {CopyPrevPatterns();genTonePattern();keyB6pressed=true;}; // SHIFT
+          if (!(keyPressed&Bit1)) {CopyPrevPatterns();genDrumPattern();keyB6pressed=true;}; // CTRL
+          //if (!(keyPressed&Bit2)) {keyB6pressed=true;}; // GRAPH
+          //if (!(keyPressed&Bit3)) {keyB6pressed=true;}; // CAPS
+          //if (!(keyPressed&Bit4)) {keyB6pressed=true;}; // CODE
+          if (!(keyPressed&Bit5)) {invertDrumChannel();keyB6pressed=true;}; // F1
+          if (!(keyPressed&Bit6)) {invertToneChannel();keyB6pressed=true;}; // F2
+          //if (!(keyPressed&Bit7)) {keyB6pressed=true;}; // F3
         }      
-      }else keyB6semaphore=false;
+      }else keyB6pressed=false;
       
       
      
@@ -696,41 +705,46 @@ void WorkWin()
       keyPressed = GetKeyMatrix(7);
       if (keyPressed!=0xFF)
       {
-        if(keyB7semaphore==false)
+        if(keyB7pressed==false)
         {
-          //if (!(keyPressed&Bit0)) {keyB7semaphore=true;}; // F4
-          //if (!(keyPressed&Bit1)) {keyB7semaphore=true;}; // F5
+          //if (!(keyPressed&Bit0)) {keyB7pressed=true;}; // F4
+          //if (!(keyPressed&Bit1)) {keyB7pressed=true;}; // F5
           //if (!(keyPressed&Bit2)){}; // ESC
-          if (!(keyPressed&Bit3)) {CopyPrevPatterns();genDrumPattern();genTonePattern();keyB7semaphore=true;}; // TAB
-          if (!(keyPressed&Bit4)) {setChannelsState(false);keyB7semaphore=true;}; // STOP
-          if (!(keyPressed&Bit5)) {RestorePrevPatterns();keyB7semaphore=true;}; // BS
+          if (!(keyPressed&Bit3)) {CopyPrevPatterns();genDrumPattern();genTonePattern();keyB7pressed=true;}; // TAB
+          if (!(keyPressed&Bit4)) {setChannelsState(false);keyB7pressed=true;}; // STOP
+          if (!(keyPressed&Bit5)) {RestorePrevPatterns();keyB7pressed=true;}; // BS
           if (!(keyPressed&Bit6)) 
           {
             if(isCasio==true) isCasio=false;
             else isCasio=true;
             switcher(0x1909,isCasio); 
-            keyB7semaphore=true;
+            keyB7pressed=true;
           }; // SELECT
-          if (!(keyPressed&Bit7)) {setChannelsState(true);keyB7semaphore=true;}; // RETURN
+          if (!(keyPressed&Bit7)) {setChannelsState(true);keyB7pressed=true;}; // RETURN
         }
-      }else keyB7semaphore=false;
+      }else keyB7pressed=false;
       
-      //if (!(GetKeyMatrix(8)&Bit1)) Help(); // Home      
-            
+   
+      keyPressed = GetKeyMatrix(8);
+      if (keyPressed!=0xFF)
+      {
+        if(keyB8pressed==false)
+        {
+          //if (!(keyPressed&Bit0)) {keyB8pressed=true;}; // Space
+          //if (!(keyPressed&Bit1)) {Help();keyB8pressed=true;}; // Home
+          if (!(keyPressed&Bit2)) {upOctave();keyB8pressed=true;}; // Ins
+          if (!(keyPressed&Bit3)) {downOctave();keyB8pressed=true;}; // Del
+          //if (!(keyPressed&Bit4)) {keyB8pressed=true;}; // Left
+          //if (!(keyPressed&Bit5)) {keyB8pressed=true;}; // Up
+          //if (!(keyPressed&Bit6)) {keyB8pressed=true;}; // Down
+          //if (!(keyPressed&Bit7)) {keyB8pressed=true;}; // Right
+        }      
+      }else keyB8pressed=false;      
             
     }// Infinite loop
     
 
 }
-
-
-
-void setOctave(char value)
-{
-    _octave = value;
-    VPrintNumber(8,20, _octave, 1);
-}
-
 
 
 
@@ -1049,6 +1063,29 @@ void genTonePattern()
   }
     
   return;
+}
+
+
+
+void upOctave()
+{
+  if (_octave>1) _octave--;
+  showOctave();
+}
+
+
+
+void downOctave()
+{
+   if (_octave<6) _octave++;
+   showOctave();
+}
+
+
+
+void showOctave()
+{
+    VPrintNumber(8,20, _octave, 1);
 }
 
 
