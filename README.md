@@ -17,6 +17,10 @@ mail: mvac7303b@gmail.com
 This software is an AY-3-8910 groovebox, with functions for random generation of 
 rhythm and melody patterns.
 
+It is designed to be played live. 
+It does not contain tools to edit sequences of various patterns, nor to load and 
+save them.
+
 The first version (0.9b) was presented in the Karoshi MSX Community eXperimental 
 Sound Mini-compo 2012 contest.
 

@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/*   The Alan Randoms Project v0.94b                                           */
+/*   The Alan Randoms Project v0.95b                                           */
 /*   tarp.c                                                                   */
 /*   by mvac7/303bcn 2020                                                     */
 /*   eXperimental Sound miniCompo (XSmC)                                      */
@@ -59,6 +59,8 @@ typedef struct {
 void logoScreen();
 void WorkWin();
 
+void wipe2theMiddle();
+
 void setTileset();
 void setSprites();
 void setMainScr();
@@ -106,7 +108,7 @@ void num2Dec16(uint aNumber, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char soft[] = "THE ALAN RANDOMS PROJECT"; 
 const char author[] = "MVAC7/303BCN";
-const char version[] = "0.94b";
+const char version[] = "0.95b";
 
 
 const char enve_data[128]={
@@ -162,7 +164,7 @@ Envelope env_list[8];
 
 
 void main(void) {
-
+  
   checkMSX();
   
   COLOR(15,1,1);  
@@ -173,14 +175,38 @@ void main(void) {
   
   logoScreen();
   
-  HALT;
-  FillVRAM(BASE10, 768, 32); //clear screen
+
+  wipe2theMiddle();
+  //FillVRAM(BASE10, 768, 255); //clear screen
     
     
   WorkWin();
 }
 
 
+
+void wipe2theMiddle()
+{
+  signed char x;
+  char y;
+    
+  HALT;
+  ClearSprites();
+    
+  FillVRAM(BASE11+0x7F8, 8, 0x11); //clear screen
+  FillVRAM(BASE11+0x0FF8, 8, 0x11); //clear screen
+  FillVRAM(BASE11+0x17F8, 8, 0x11); //clear screen
+  
+  for (x=0;x<16;x++)
+  {
+    for (y=0;y<24;y++)
+    {
+        VPOKE(BASE10+(y*32)+x,255);
+        VPOKE(BASE10+(y*32)+(31-x),255);    
+    } 
+    HALT;
+  }
+}
 
 
 void logoScreen()
@@ -279,7 +305,7 @@ void WorkWin()
     
     INST_PERC *tmp_INST;
     
-    ClearSprites();
+    
     SetSpritesSize(1);    //16x16
     SetSpritesZoom(true); //zoom
     
