@@ -85,6 +85,8 @@ increase or reduce notes of the pattern.
 
 ### List of keys:
 
+#### Main Screen:
+
 * [RETURN] Enable Drum and Tone audio channels 
 * [STOP] Disable Drum and Tone audio channels
 * [F1] Drums audio On/Off
@@ -106,3 +108,10 @@ increase or reduce notes of the pattern.
 * [Del] Octave Down
 * [,/<] Note Up
 * [./>] Note Down
+* [HOME] Show Help screen
+
+#### Help Screen:
+
+* Cursor/Joystick [Up] Up scroll text
+* Cursor/Joystick [Down] Down scroll text
+* [ESC] Return to main screen

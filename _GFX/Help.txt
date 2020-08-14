@@ -1,0 +1,31 @@
+HELP
+-----------------------------
+Key List:
+
+-[RETURN] Enable Drum and 
+ Tone audio channels 
+-[STOP] Disable Drum and Tone
+ audio channels
+-[F1] Drums audio On/Off
+-[F2] Tone audio On/Off
+-[TAB] Random Drums & Tone 
+ patterns
+-[CTRL] Random Drums pattern
+-[SHIFT] Random Tone pattern
+-[1] Loop first 2 steps
+-[2] Loop first 4 steps
+-[3] Loop first 8 steps
+-[4] Restore to 16 steps
+-[BS] Play previous pattern
+-[SELECT] Drum set: Normal or
+ Casio
+-[Up] Menu cursor up.
+-[Down] Menu cursor down.
+-[Left] Switch left or value 
+ down
+-[Right] Switch right or 
+ value up
+-[Ins] Octave Up
+-[Del] Octave Down
+-[,/<] Note Up
+-[./>] Note Down

@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/*   The Alan Randoms Project v0.95b                                          */
+/*   The Alan Randoms Project v0.96b                                          */
 /*   tarp.c                                                                   */
 /*   by mvac7/303bcn 2020                                                     */
 /*   eXperimental Sound miniCompo (XSmC)                                      */
@@ -7,11 +7,17 @@
 /*     Random music maker                                                     */
 /* ========================================================================== */
 
-    // Tareas para una futura version: 
-    // 1)usar envolvente por soft para percusion. 
-    // 2)Añadir editor de instrumentos.
-    // 3) probar con SCC
-    // crear sistema de envolventes por soft
+
+/* -----------------------------------------------------------------------------
+Notas del autor:
+
+Tareas para una futura version: 
+- usar envolvente por soft para percusion. 
+- Añadir editor de instrumentos.
+- probar con SCC
+- crear sistema de envolventes por soft
+
+----------------------------------------------------------------------------- */
 
 
 //__sfr __at 0xA8 g_slotPort;
@@ -24,15 +30,19 @@
 #include "../include/joystick.h"
 #include "../include/keyboard.h"
 #include "../include/memory.h"
+#include "../include/unRLEWBtoVRAM.h"
+#include "../include/unRLEWBtoRAM.h"
+
 
 #define  HALT __asm halt __endasm
-
-#define  SEED         0xE000
-#define  PLAY_HARDW   0xE010  //(1B) indica por que chip ha de sonar (0=PSG interno;1=PSG MFR;2=SCC)
-#define  PSG_RAM      0xE011  //(12B) buffer regs PSG R0-R10 
   
 #define  SEQVIEWER1LINE 0x1ACE
 #define  SEQVIEWER2LINE 0x1AEE
+
+// AY-3-8910 MSX Internal PSG
+#define AY0index 0xA0
+#define AY0write 0xA1
+#define AY0read  0xA2
 
 
 typedef struct {
@@ -61,18 +71,24 @@ void WorkWin();
 
 void wipe2theMiddle();
 
-void setTileset();
-void setHelpTileset();
-
 void setSprites();
 
-void setMainScr();
-void setHelpScr();
+void setTileset();
+void showMainScr();
+
+void initGUI();
+
+void Help();
+void setHelpTileset();
+void showHelpScr();
+void initHelpText();
+void showHelpText(char line);
+void showScrollbar(char line);
 
 void showLogoScreen();
 
 void setMSX2Palette();
-void setMSX2logoPal();
+void SetPalette(char number);
 
 void showEnv(char value);
 void showSpeaker(uint vaddr, boolean value);
@@ -88,6 +104,10 @@ void RestorePrevPatterns();
 void genDrumPattern();
 void genTonePattern();
 
+void ShowPattern();
+void ShowDrumPattern();
+void ShowTonePattern();
+
 void upNotePattern();
 void downNotePattern();
 int getFreq(char value);
@@ -99,7 +119,9 @@ void checkMSX();
 
 char Rnd(char value);
 
-void play();
+void PlayerInit();
+void PlayerDecode();
+void PlayAY();
 void setChannelRAM(char NumChannel, boolean isTone, boolean isNoise);
 
 uint GetVAddressByPosition(char column, char line);
@@ -112,7 +134,7 @@ void num2Dec16(uint aNumber, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char soft[] = "THE ALAN RANDOMS PROJECT"; 
 const char author[] = "MVAC7/303BCN";
-const char version[] = "0.95b";
+const char version[] = "0.96b";
 
 
 const char enve_data[128]={
@@ -151,11 +173,41 @@ const char xvalues[64]={
 };   //cos 96,224     
 
 
-char VDP_type;
-boolean _isTone=false; //_ToneEnabled
-boolean _DrumEnabled=false; //_DrumEnabled
+//global variables -------------------------------------------------------------
 
+char VDP_type;
+
+
+// Player ----------------------------------------------------------------------
+char PLAY_HARDW;  //(1B) indica por que chip ha de sonar (0=PSG interno;1=PSG MFR;2=SCC)
+
+char _tempo;
 char _octave;
+
+boolean _ToneEnabled; //_ToneEnabled
+boolean _DrumEnabled; //_DrumEnabled
+
+boolean _isAB;
+char _offsetAY;
+
+char _env_index;
+char _env_speed;
+char _env_step;
+
+char _toneAmp;
+
+char _tempoStep;
+char _pattern_step;
+char _ENDstep;  //to control the size of the pattern
+char _newENDstep;
+
+INST_PERC *_tmp_INST;
+INST_PERC Percu_casio[3];
+INST_PERC Percu_basic[3];
+
+char AYREGS[14]; //PSG Registers Buffer R0-R13 
+// -----------------------------------------------------------------------------
+
 
 char drum_pattern[16];
 char tone_pattern[16]; //={46,0,49,0,50,0,51,0,46,0,49,0,50,0,51,0};
@@ -163,7 +215,24 @@ char tone_pattern[16]; //={46,0,49,0,50,0,51,0,46,0,49,0,50,0,51,0};
 char prev_drum_pattern[16];  // #9
 char prev_tone_pattern[16];
 
-Envelope env_list[8];
+Envelope envelope_list[8];
+
+
+
+
+char SEED;
+
+boolean _isCasio;
+
+
+#define TILE_BARempty 158
+#define TILE_BAR      159
+#define HELP_WIDTH    29
+#define HELP_LINES    30
+#define HELP_sizeBar  15   //(20/HELP_LINES)*20
+
+char    HELP_TXTADDR[(HELP_LINES+1)*30];
+
 
 
 
@@ -174,13 +243,14 @@ void main(void) {
   COLOR(15,1,1);  
   SCREEN(2);  
   
-  
   POKE(CLIKSW,0);
+  
+  initHelpText();
   
   logoScreen();
   
 
-  wipe2theMiddle();
+  wipe2theMiddle(); //screen transition
   //FillVRAM(BASE10, 768, 255); //clear screen
     
     
@@ -230,7 +300,7 @@ void logoScreen()
   PUTSPRITE(5,102,62,2,4);
  
   
-  if (VDP_type>0) setMSX2logoPal();  
+  if (VDP_type>0) SetPalette(0);  
   
   while(timec-->0)
   {
@@ -249,8 +319,6 @@ void logoScreen()
 
 void WorkWin()
 {
-    boolean isCasio=false;
-    boolean isAB=true;
     
     // key press control
     boolean keyB0pressed=false;
@@ -263,35 +331,24 @@ void WorkWin()
     boolean joybool = false;
     
       
-    //uint t;
-    uint freqA;
-    uint freqB;
     
-    
-    char amp;
+    //sprite for tone vars
     char stone_step=0; //de 31
+    char stone_size;
+    char stone_color;
+    
+    //sprite for drums vars 
     char sdrum_step=31;
     char sdrum_size=0;
     char sdrum_color=15;
-    char variacion=0;
-        
-    char B_offset =3;
+    //char variacion=0;
+       
     
-    char Tempo = 4;
-    char tempoStep =4;
-    char pattern_step=0;
-    char ENDstep = 15;  //to control the size of the pattern
-    char newENDstep = 15;
     char last_step=0;    //to delete the last cursor position
 
     
     char drum_type;
-    char tone_note;
-        
-    char env_selected=0;
-    char env_speed=1;    
-    char env_step=0;
-    
+               
     signed char cursor_pos=0;
     
     char i,o;
@@ -304,10 +361,8 @@ void WorkWin()
     //char pattern[16]={1,0,3,3,0,0,3,3,1,0,3,3,0,0,3,3}; 
     //char pattern[16]={1,0,3,0,2,0,2,0,1,0,3,0,2,0,3,0}; //rock1
     
-    INST_PERC Percu_casio[3];
-    INST_PERC Percu_basic[3];
-    
-    INST_PERC *tmp_INST;
+  
+
     
     
     SetSpritesSize(1);    //16x16
@@ -321,12 +376,13 @@ void WorkWin()
   
     setTileset();
   
-    if (VDP_type>0) setMSX2Palette();
+    if (VDP_type>0) SetPalette(1);
     
-    setMainScr();
+    showMainScr();
     
     
-    _octave=2;
+    _ToneEnabled=false;
+    _DrumEnabled=false;
      
     // Instrumentos percusion - Kit Casio PT1
     // Kick
@@ -383,41 +439,39 @@ void WorkWin()
     // genera las estructuras de datos de las envolventes
     for(i=0;i<8;i++)
     {
-      env_list[i].isLoop = enve_loop[i];
+      envelope_list[i].isLoop = enve_loop[i];
       for(o=0;o<16;o++)
       {
-        env_list[i].ampValues[o] = enve_data[conta++];
+        envelope_list[i].ampValues[o] = enve_data[conta++];
       }    
     }
     // end
     
+    
+    PLAY_HARDW=0; //selecciona AY interno
+    
+    _isCasio = false;
+    _isAB = true;
+    
+    
+    PlayerInit();
+        
     
     // genera los patrones de percusion y tono
     genDrumPattern();
     genTonePattern();
     CopyPrevPatterns();
       
-  
-    POKE(PLAY_HARDW,0); //selecciona AY interno
     
-    FillRAM(PSG_RAM,13,0);  //borra el area del buffer de registros del PSG
     
     // activa los canales A y B del AY (registro 7)  
     setChannelRAM(0,true,false);
     setChannelRAM(1,true,false);
     
-    VPrintNumber(8,2, Tempo, 1);
+    VPrintNumber(8,2, _tempo, 1);
     
     // muestra los valores de los controles
-    switcher(0x1909,isCasio);
-    switcher(0x19A9,isAB);
-    VPrintNumber(6,14, B_offset, 3);
-    
-    showEnv(env_selected);
-    VPrintNumber(8,17, env_speed, 1);
-    switcher(0x1A49,env_list[env_selected].isLoop);
-    
-    showOctave();
+    initGUI();
     // end set visual controls values
        
     
@@ -428,144 +482,65 @@ void WorkWin()
     while(1)
     {
       HALT;
-      play();
-      if (PEEK(PSG_RAM+13)>0 && _DrumEnabled==true) Sound(13,PEEK(PSG_RAM+13)); //lanza envolvente · dispara sonido percusion    && _DrumEnabled==true
+      PlayAY();
+      //if (AYREGS[13]>0 && _DrumEnabled==true) Sound(13,AYREGS[13]); //lanza envolvente · dispara sonido percusion    && _DrumEnabled==true
       
-      if (tempoStep>=Tempo) //control de tempo por ciclos de Vblank 
-      {
-        tempoStep=0;
-        
+
+      // ############################################################### VISUALS
+      if (_tempoStep==0) //control de tempo por ciclos de Vblank 
+      {        
         // cursor de patron
         VPOKE(0x1AAE+last_step,239);    //borra la ultima posicion
-        VPOKE(0x1AAE+pattern_step,185); //muestra el cursor
-        last_step = pattern_step;
+        VPOKE(0x1AAE+_pattern_step,185); //muestra el cursor
+        last_step = _pattern_step;
         // 
         
         
         // control de la percusion
         if(_DrumEnabled==true)
         {
-          drum_type = drum_pattern[pattern_step];
+          drum_type = drum_pattern[_pattern_step];
           if(drum_type>0)
-          {
-            if(isCasio==true) tmp_INST= &Percu_casio[drum_type-1];
-            else tmp_INST= &Percu_basic[drum_type-1];
-            
-            setChannelRAM(2,tmp_INST->isTone,tmp_INST->isNoise);
-            POKE(PSG_RAM+4,tmp_INST->Tone & 0xFF);      
-            POKE(PSG_RAM+5,(tmp_INST->Tone & 0xFF00)/255);      
-            POKE(PSG_RAM+6,tmp_INST->Noise); //noise
-            POKE(PSG_RAM+10,16); //volumen canal C (16=envolvente)
-            POKE(PSG_RAM+11,tmp_INST->Period & 0xFF);      
-            POKE(PSG_RAM+12,(tmp_INST->Period & 0xFF00)/255);
-            POKE(PSG_RAM+13,tmp_INST->Shape); //envelope wave form   
-            
+          {                       
             sdrum_size=7;
-            sdrum_color=drumcolor[drum_type];
-                        
-          }else{
-            // es un silencio
-            //POKE(PSG_RAM+10,0); //volumen canal C          
+            sdrum_color=drumcolor[drum_type];     
           }
         }     
-        
-
-        // control del intrumento de acompañamiento
-        tone_note = tone_pattern[pattern_step];
-        if(tone_note>0)
-        {
-          freqA = getFreq(tone_note+(_octave*12)); //+ variacion;
-          freqB = freqA + B_offset;
-          //VPrintNumber(20,0, tone_note, 3);   // TEST ##########################
-          //VPrintNumber(24,0, freq1, 5);
-          
-          POKE(PSG_RAM,freqA & 0xFF);      
-          POKE(PSG_RAM+1,(freqA & 0xFF00)/255);
-          POKE(PSG_RAM+2,freqB & 0xFF);      
-          POKE(PSG_RAM+3,(freqB & 0xFF00)/255);
-          
-          env_step=0;          
-        }
-        
-               
-        // control de posicion de pattern
-        pattern_step++;
-        if(pattern_step>ENDstep)
-        {
-          pattern_step=0;
-          ENDstep = newENDstep;
-        } 
-        
-      }else{
-        tempoStep++;
-        POKE(PSG_RAM+13,0); //envelope wave form 
-        drum_type=0;    
+           
       }
       
-      
-      
-      
-      if (_isTone==true)
-      {
-        //control de volumen del tono (envolvente) #############################
-        amp = env_list[env_selected].ampValues[env_step];
-        
-        // calcula siguiente posicion.
-        env_step+=env_speed;
-        
-        if (env_step>15) //control de tamaño de envolvente
-        {
-          if (env_list[env_selected].isLoop==true) env_step=0;
-          else env_step=15; // ultimo valor de la envolvente
-        }
-        
-      }else{
-        amp=0;
-      }      
-      
-      POKE(PSG_RAM+8,amp);
-      if(isAB==true) POKE(PSG_RAM+9,amp);
-      else POKE(PSG_RAM+9,0);
-      
-          
-      
-            
-      // VISUALS ###############################################################
-      
+                     
       //Tone
-      SetSpritePosition(0,xvalues[stone_step],yvalues[stone_step]);
-      SetSpritePattern(0,amp/2);// /2
-      SetSpriteColor(0,15);
+      stone_size = AYREGS[8];
+      stone_size = stone_size>>1;   // /2
+      //SetSpritePosition(0,xvalues[stone_step],yvalues[stone_step]);
+      //SetSpritePattern(0,stone_size);
+      if (stone_size>0) stone_color = 15;
+      else stone_color = 14;
+      //SetSpriteColor(0,stone_color);      
+      PUTSPRITE(0,xvalues[stone_step],yvalues[stone_step],stone_color,stone_size);
+      
       stone_step++;
       if (stone_step>63) stone_step=0;
       
       
       //Drum
-      if (_DrumEnabled==false)
-      {
-        POKE(PSG_RAM+10,0); //volumen canal C
-        sdrum_size=0;
-      }
+      if (_DrumEnabled==false) sdrum_size=0;
+            
+      if (sdrum_size==0) sdrum_color=drumcolor[0];
+      //SetSpritePosition(1,xvalues[sdrum_step],yvalues[sdrum_step]);
+      //SetSpritePattern(1,sdrum_size);
+      //SetSpriteColor(1,sdrum_color);
+      PUTSPRITE(1,xvalues[sdrum_step],yvalues[sdrum_step],sdrum_color,sdrum_size);
       
-/*      else
-      {
-        if (drum_type>0){        
-          sdrum_size=7;
-          sdrum_color=drumcolor[drum_type];  
-        }              
-      }*/
-       
-      if(sdrum_size==0) sdrum_color=drumcolor[0];
-      SetSpritePosition(1,xvalues[sdrum_step],yvalues[sdrum_step]);
-      SetSpritePattern(1,sdrum_size);
-      SetSpriteColor(1,sdrum_color);
       
       if (sdrum_size>0) sdrum_size--;
-      //VPrintNumber(24,0, sdrum_size, 3); //test
       sdrum_step++;
       if (sdrum_step>63) sdrum_step=0;
-      // END VISUALS ###########################################################
+      // ########################################################### END VISUALS
       
+      
+      PlayerDecode();
       
       
       joyval=STICK(0);
@@ -593,32 +568,32 @@ void WorkWin()
             switch (cursor_pos)   //{0x1841,0x1901,0x19A1,0x19C1,0x1A01,0x1A21,0x1A41,0x1A81,0x1AA1};
             {
               case 0: //tempo
-                if (Tempo<8) Tempo++;                
-                VPrintNumber(8,2, Tempo, 1);
+                if (_tempo<8) _tempo++;                
+                VPrintNumber(8,2, _tempo, 1);
                 break;
               case 1: //CASIO DRUMS?
-                isCasio=true;
+                _isCasio=true;
                 switcher(0x1909,true); 
                 break;
               case 2: //A+B
-                isAB=true;
+                _isAB=true;
                 switcher(0x19A9,true); 
                 break;
               case 3: //B offset
-                if (B_offset<254) B_offset++;                
-                VPrintNumber(6,14, B_offset, 3); 
+                if (_offsetAY<254) _offsetAY++;                
+                VPrintNumber(6,14, _offsetAY, 3); 
                 break;
               case 4: //envelope wave
-                if (env_selected<7) env_selected++;
-                showEnv(env_selected);
-                switcher(0x1A49,env_list[env_selected].isLoop); 
+                if (_env_index<7) _env_index++;
+                showEnv(_env_index);
+                switcher(0x1A49,envelope_list[_env_index].isLoop); 
                 break;
               case 5: //envelope speed
-                if (env_speed<3) env_speed++;
-                VPrintNumber(8,17, env_speed, 1); 
+                if (_env_speed<3) _env_speed++;
+                VPrintNumber(8,17, _env_speed, 1); 
                 break;
               case 6: //loop
-                env_list[env_selected].isLoop=true;
+                envelope_list[_env_index].isLoop=true;
                 switcher(0x1A49,true);
                 break;
               case 7: // _octave +
@@ -634,32 +609,32 @@ void WorkWin()
             switch (cursor_pos) 
             {
               case 0:
-                if (Tempo>1) Tempo--;                
-                VPrintNumber(8,2, Tempo, 1); 
+                if (_tempo>1) _tempo--;                
+                VPrintNumber(8,2, _tempo, 1); 
                 break;
               case 1:
-                isCasio=false;
+                _isCasio=false;
                 switcher(0x1909,false); 
                 break;
               case 2:
-                isAB=false;
-                switcher(0x19A9,isAB); 
+                _isAB=false;
+                switcher(0x19A9,false); 
                 break;
               case 3:
-                if (B_offset>0) B_offset--;                
-                VPrintNumber(6,14, B_offset, 3); 
+                if (_offsetAY>0) _offsetAY--;                
+                VPrintNumber(6,14, _offsetAY, 3); 
                 break;
               case 4:
-                if (env_selected>0) env_selected--;
-                showEnv(env_selected);
-                switcher(0x1A49,env_list[env_selected].isLoop); 
+                if (_env_index>0) _env_index--;
+                showEnv(_env_index);
+                switcher(0x1A49,envelope_list[_env_index].isLoop); 
                 break;
               case 5:
-                if (env_speed>0) env_speed--;
-                VPrintNumber(8,17, env_speed, 1); 
+                if (_env_speed>0) _env_speed--;
+                VPrintNumber(8,17, _env_speed, 1); 
                 break;
               case 6:
-                env_list[env_selected].isLoop=false;
+                envelope_list[_env_index].isLoop=false;
                 switcher(0x1A49,false); 
                 break;
               case 7: //_octave -
@@ -683,10 +658,10 @@ void WorkWin()
         if(keyB0pressed==false)
         {
           //if (!(keyPressed&Bit0)) {keyB0pressed=true;}; // 0
-          if (!(keyPressed&Bit1)) {newENDstep=1;keyB0pressed=true;}; // 1
-          if (!(keyPressed&Bit2)) {newENDstep=3;keyB0pressed=true;}; // 2
-          if (!(keyPressed&Bit3)) {newENDstep=7;keyB0pressed=true;}; // 3
-          if (!(keyPressed&Bit4)) {newENDstep=15;keyB0pressed=true;}; // 4
+          if (!(keyPressed&Bit1)) {_newENDstep=1;keyB0pressed=true;}; // 1 
+          if (!(keyPressed&Bit2)) {_newENDstep=3;keyB0pressed=true;}; // 2
+          if (!(keyPressed&Bit3)) {_newENDstep=7;keyB0pressed=true;}; // 3
+          if (!(keyPressed&Bit4)) {_newENDstep=15;keyB0pressed=true;}; // 4
           //if (!(keyPressed&Bit5)) {keyB0pressed=true;}; // 5
           //if (!(keyPressed&Bit6)) {keyB0pressed=true;}; // 6
           //if (!(keyPressed&Bit7)) {keyB0pressed=true;}; // 7
@@ -745,9 +720,9 @@ void WorkWin()
           if (!(keyPressed&Bit5)) {RestorePrevPatterns();keyB7pressed=true;}; // BS
           if (!(keyPressed&Bit6)) 
           {
-            if(isCasio==true) isCasio=false;
-            else isCasio=true;
-            switcher(0x1909,isCasio); 
+            if(_isCasio==true) _isCasio=false;
+            else _isCasio=true;
+            switcher(0x1909,_isCasio); 
             keyB7pressed=true;
           }; // SELECT
           if (!(keyPressed&Bit7)) {setChannelsState(true);keyB7pressed=true;}; // RETURN
@@ -761,7 +736,18 @@ void WorkWin()
         if(keyB8pressed==false)
         {
           //if (!(keyPressed&Bit0)) {keyB8pressed=true;}; // Space
-          //if (!(keyPressed&Bit1)) {Help();keyB8pressed=true;}; // Home
+          if (!(keyPressed&Bit1)) 
+          {
+            Help();
+            
+            keyB8pressed=true;
+            
+            initGUI();
+            ShowPattern();            
+            
+            VPOKE(vaddr_cursor[cursor_pos],186);    
+            
+          }; // Home
           if (!(keyPressed&Bit2)) {upOctave();keyB8pressed=true;}; // Ins
           if (!(keyPressed&Bit3)) {downOctave();keyB8pressed=true;}; // Del
           //if (!(keyPressed&Bit4)) {keyB8pressed=true;}; // Left
@@ -773,6 +759,159 @@ void WorkWin()
             
     }// Infinite loop
     
+
+}
+
+
+
+void initGUI()
+{    
+    VPrintNumber(8,2, _tempo, 1); 
+    
+    showSpeaker(0x198A,_DrumEnabled);     
+    showSpeaker(0x18CA,_ToneEnabled);
+    
+    switcher(0x1909,_isCasio);
+    
+    switcher(0x19A9,_isAB);
+    VPrintNumber(6,14, _offsetAY, 3);
+        
+    showEnv(_env_index);
+    VPrintNumber(8,17, _env_speed, 1);
+    switcher(0x1A49,envelope_list[_env_index].isLoop);
+    
+    showOctave();
+}
+
+
+
+
+void PlayerInit()
+{
+    _tempo = 4;
+    _offsetAY = 3;
+    _env_index=0;
+    _env_speed=1;
+    _env_step=0;
+    _octave=2;
+    
+    _tempoStep = _tempo;
+    _pattern_step=0;
+    _ENDstep = 15;  //to control the size of the pattern
+    _newENDstep = 15; 
+    
+    FillRAM((uint) AYREGS,14,0);  //borra el area del buffer de registros del PSG
+}
+
+
+
+/*
+Decode a frame from song. 
+Write AY registers values to buffer 
+*/
+void PlayerDecode()
+{
+    char drum_type;
+    char tone_note;
+    
+    uint freqA;
+    uint freqB;
+        
+    
+    
+    if (_tempoStep>=_tempo) //control de tempo por ciclos de Vblank 
+    {
+      _tempoStep=0;
+      
+      /* cursor de patron
+      VPOKE(0x1AAE+last_step,239);    //borra la ultima posicion
+      VPOKE(0x1AAE+pattern_step,185); //muestra el cursor
+      last_step = pattern_step;
+      */ 
+      
+      
+      // control de la percusion
+      if(_DrumEnabled==true)
+      {
+        drum_type = drum_pattern[_pattern_step];
+        
+        if(drum_type>0) //0 = there is no drum
+        {
+          if(_isCasio==true) _tmp_INST= &Percu_casio[drum_type-1];
+          else _tmp_INST= &Percu_basic[drum_type-1];
+          
+          setChannelRAM(2,_tmp_INST->isTone,_tmp_INST->isNoise);
+          AYREGS[4]  = _tmp_INST->Tone & 0xFF;      
+          AYREGS[5]  = (_tmp_INST->Tone & 0xFF00)/255;      
+          AYREGS[6]  = _tmp_INST->Noise; //noise
+          AYREGS[10] = 16; //volumen canal C (16=envolvente)
+          AYREGS[11] = _tmp_INST->Period & 0xFF;      
+          AYREGS[12] = (_tmp_INST->Period & 0xFF00)/255;
+          AYREGS[13] = _tmp_INST->Shape; //envelope wave form   
+                      
+        }else{
+          // there is no drum
+          //POKE(AYREGS+10,0); //volumen canal C          
+        }
+      }     
+      
+
+      // control del intrumento de acompañamiento
+      tone_note = tone_pattern[_pattern_step];
+      if(tone_note>0)
+      {
+        freqA = getFreq(tone_note+(_octave*12)); //+ variacion;
+        freqB = freqA + _offsetAY;
+        //VPrintNumber(20,0, tone_note, 3);   // TEST ##########################
+        //VPrintNumber(24,0, freq1, 5);
+        
+        AYREGS[0] = freqA & 0xFF;      
+        AYREGS[1] = (freqA & 0xFF00)/255;
+        AYREGS[2] = freqB & 0xFF;      
+        AYREGS[3] = (freqB & 0xFF00)/255;
+        
+        _env_step=0;          
+      }
+      
+             
+      // control de posicion de pattern
+      _pattern_step++;
+      if(_pattern_step>_ENDstep)
+      {
+        _pattern_step=0;
+        _ENDstep = _newENDstep;
+      } 
+      
+    }else{
+      _tempoStep++;
+      //AYREGS[13]=0; //envelope wave form 
+      drum_type=0;    
+    }
+    
+    
+    
+    //control de volumen del tono (envolvente) ###############################
+    if (_ToneEnabled==true)
+    {        
+      _toneAmp = envelope_list[_env_index].ampValues[_env_step];        
+    }else{
+      _toneAmp = 0;
+    }      
+    
+    // calcula siguiente posicion.
+    _env_step+=_env_speed;
+    
+    if (_env_step>15) //control de tamaño de envolvente
+    {
+      if (envelope_list[_env_index].isLoop==true) _env_step=0;
+      else _env_step=15; // ultimo valor de la envolvente
+    }
+    
+    AYREGS[8] = _toneAmp;
+    
+    if(_isAB==true) AYREGS[9] = _toneAmp;
+    else AYREGS[9] = 0;
+
 
 }
 
@@ -790,10 +929,10 @@ void invertDrumChannel()
 
 void invertToneChannel()
 {
-    if(_isTone==true) _isTone=false;
-    else _isTone=true;
+    if(_ToneEnabled==true) _ToneEnabled=false;
+    else _ToneEnabled=true;
     
-    showSpeaker(0x198A,_isTone);
+    showSpeaker(0x198A,_ToneEnabled);
 }
 
 
@@ -801,7 +940,7 @@ void invertToneChannel()
 void setChannelsState(boolean state)
 {
     _DrumEnabled=state;     
-    _isTone=state;              
+    _ToneEnabled=state;              
     showSpeaker(0x18CA,state);
     showSpeaker(0x198A,state);
 }
@@ -833,45 +972,60 @@ its_60hz:
 
 
 
-// vuelca desde una area de la RAM (PSG_RAM), 
+// vuelca desde una area de la RAM (AYREGS), 
 // los valores de los registros del PSG
 // a tres diferentes chips (AY interno, AY Pazos y SCC)
-void play()
+void PlayAY()
 {
 __asm
-  ld HL,#PSG_RAM ; direccion de memoria del buffer	
-	ld B,#13       ; numero de registros
+  ld HL,#_AYREGS ; direccion de memoria del buffer	
+
+  ld   A,(#_AYREGS+7)
+  AND  #0b00111111
+  ld   B,A
+      
+  ld   A,#7
+  out  (#AY0index),A
+  in   A,(#AY0read) ; read mixer register value 
+  and  #0b11000000  ; Mascara para coger dos bits de joys 
+  or   B            ; Añado Byte de B
+  
+  ld   (#_AYREGS+7),A
 	
-  ld A,(#PLAY_HARDW) ;//indica que chip utiliza (0=AY interno, 1=AY pazos)
-  cp #0
-  jr NZ,MFR_CPY
+  ld   A,(#_PLAY_HARDW) ;//indica que chip utiliza (0=AY interno, 1=AY MEGAFLASHROM)
+  or   A
+  jr   Z,PSGinternal
+
+;MEGAFLASHROM FPGA AY
+  xor A
+  ld   C,#0x10
+  jr   ILOOP
   
-  ;PSG intern
+PSGinternal:
   xor A	
-  ld C,#0xA1
+  ld   C,#AY0index  ; MSX Internal PSG
+  
 ILOOP:
-  out (#0xA0),A
-  inc A
-  outi  
-  JR NZ,ILOOP  
-  ret
+  out  (C),A
+  inc  C
+  outi
+  dec  C
+  inc  A
+  cp   #13  
+  jr   NZ,ILOOP
   
-MFR_CPY:
-  cp #1
-  jr NZ,SCC_CPY
+  out  (C),A
+  ld   A,(HL)
+  or   A
+  ret  Z
   
-  ;MEGAFLASHROM PSG
-  xor A	
-  ld C,#0x11
-MLOOP:
-  out (#0x10),A
-  inc A
-  outi  
-  JR NZ,MLOOP  
-  ret
+  inc  C
+  out  (C),A 
   
-SCC_CPY:
-  ret
+  ;xor  A
+  ld   (HL),#0
+    
+  ret  
 
 __endasm;
 }
@@ -902,7 +1056,7 @@ void setChannelRAM(char NumChannel, boolean isTone, boolean isNoise)
       if(isNoise==true){newValue&=223;}else{newValue|=32;}
   }
   //sound_set(7,newValue);
-  POKE(PSG_RAM+7,newValue);
+  AYREGS[7] = newValue;
 }
 
 
@@ -923,7 +1077,7 @@ __asm
   ld   A,R		;  
   ld	 B,A
   
-  ld   A,(SEED)
+  ld   A,(#_SEED)
   SRA  A
   
 	add	 A,B		
@@ -936,7 +1090,7 @@ __asm
 	
 	inc	 A
   
-  ld   (SEED),A
+  ld   (#_SEED),A
     
   AND  C  ;aplica la mascara     
   
@@ -1048,7 +1202,7 @@ void genDrumPattern()
     }while(conta<16); 
   }
   
-  for (i=0;i<16;i++) VPOKE(vaddr++,drum_pattern[i]+180);  //draw new pattern
+  ShowDrumPattern();
   
 }
 
@@ -1061,7 +1215,6 @@ void genTonePattern()
   char value;
   char conta=0;
   char increment=0;
-  uint vaddr = SEQVIEWER2LINE;
   
   char i;
   
@@ -1086,13 +1239,42 @@ void genTonePattern()
     tone_pattern[i+8]=tone_pattern[i];
   }
   
-  //draw new pattern
+  ShowTonePattern();
+    
+  return;
+}
+
+
+
+void ShowPattern()
+{
+    ShowDrumPattern();
+    ShowTonePattern();
+}
+
+
+ //draw in screen a Drum pattern
+void ShowDrumPattern()
+{
+  uint vaddr = SEQVIEWER1LINE;
+  char i;
+  
+  for (i=0;i<16;i++) VPOKE(vaddr++,drum_pattern[i]+180);
+  
+}
+
+
+
+ //draw in screen a Tone pattern
+void ShowTonePattern()
+{
+  uint vaddr = SEQVIEWER2LINE;
+  char i;
+  
   for (i=0;i<16;i++){
     if(tone_pattern[i]==0) VPOKE(vaddr++,180);
     else VPOKE(vaddr++,184);
   }
-    
-  return;
 }
 
 
@@ -1323,6 +1505,267 @@ void showSpeaker(uint vaddr, boolean value)
 
 
 
+
+void initHelpText() __naked
+{
+__asm
+
+  ld   HL,#HELP_TEXT
+  ld   DE,#_HELP_TXTADDR
+  call unRLEWBRAM
+  
+  ld   IX,#_version
+  ld   HL,#_HELP_TXTADDR + 20 
+  ;write version in RAM
+versLOOP:
+  ld   A,(IX)
+  or   A
+  ret  Z
+  ld   (HL),A  
+  inc  HL
+  inc  IX  
+  jr   versLOOP
+
+; map size width:29 height:30  
+; RLE WB compressed - Original size= 870 - Compress size= 633
+HELP_TEXT:
+.db 0x48,0x45,0x4C,0x50,0x80,0x0E,0x20,0x76,0x80,0x08,0x20,0x80,0x1C,0x2D,0x4B,0x65
+.db 0x79,0x20,0x4C,0x69,0x73,0x74,0x3A,0x80,0x30,0x20,0x2D,0x5B,0x52,0x45,0x54,0x55
+.db 0x52,0x4E,0x5D,0x20,0x45,0x6E,0x61,0x62,0x6C,0x65,0x20,0x44,0x72,0x75,0x6D,0x20
+.db 0x61,0x6E,0x64,0x80,0x04,0x20,0x54,0x6F,0x6E,0x65,0x20,0x61,0x75,0x64,0x69,0x6F
+.db 0x20,0x63,0x68,0x61,0x6E,0x6E,0x65,0x6C,0x73,0x80,0x08,0x20,0x2D,0x5B,0x53,0x54
+.db 0x4F,0x50,0x5D,0x20,0x44,0x69,0x73,0x61,0x62,0x6C,0x65,0x20,0x44,0x72,0x75,0x6D
+.db 0x20,0x61,0x6E,0x64,0x20,0x54,0x6F,0x6E,0x65,0x20,0x61,0x75,0x64,0x69,0x6F,0x20
+.db 0x63,0x68,0x61,0x6E,0x6E,0x65,0x6C,0x73,0x80,0x0D,0x20,0x2D,0x5B,0x46,0x31,0x5D
+.db 0x20,0x44,0x72,0x75,0x6D,0x73,0x20,0x61,0x75,0x64,0x69,0x6F,0x20,0x4F,0x6E,0x2F
+.db 0x4F,0x66,0x66,0x80,0x04,0x20,0x2D,0x5B,0x46,0x32,0x5D,0x20,0x54,0x6F,0x6E,0x65
+.db 0x20,0x61,0x75,0x64,0x69,0x6F,0x20,0x4F,0x6E,0x2F,0x4F,0x66,0x66,0x80,0x05,0x20
+.db 0x2D,0x5B,0x54,0x41,0x42,0x5D,0x20,0x52,0x61,0x6E,0x64,0x6F,0x6D,0x20,0x50,0x61
+.db 0x74,0x74,0x65,0x72,0x6E,0x80,0x07,0x20,0x2D,0x5B,0x43,0x54,0x52,0x4C,0x5D,0x20
+.db 0x52,0x61,0x6E,0x64,0x6F,0x6D,0x20,0x44,0x72,0x75,0x6D,0x73,0x20,0x70,0x61,0x74
+.db 0x74,0x65,0x72,0x6E,0x20,0x2D,0x5B,0x53,0x48,0x49,0x46,0x54,0x5D,0x20,0x52,0x61
+.db 0x6E,0x64,0x6F,0x6D,0x20,0x54,0x6F,0x6E,0x65,0x20,0x70,0x61,0x74,0x74,0x65,0x72
+.db 0x6E,0x20,0x2D,0x5B,0x31,0x5D,0x20,0x4C,0x6F,0x6F,0x70,0x20,0x66,0x69,0x72,0x73
+.db 0x74,0x20,0x32,0x20,0x73,0x74,0x65,0x70,0x73,0x80,0x05,0x20,0x2D,0x5B,0x32,0x5D
+.db 0x20,0x4C,0x6F,0x6F,0x70,0x20,0x66,0x69,0x72,0x73,0x74,0x20,0x34,0x20,0x73,0x74
+.db 0x65,0x70,0x73,0x80,0x05,0x20,0x2D,0x5B,0x33,0x5D,0x20,0x4C,0x6F,0x6F,0x70,0x20
+.db 0x66,0x69,0x72,0x73,0x74,0x20,0x38,0x20,0x73,0x74,0x65,0x70,0x73,0x80,0x05,0x20
+.db 0x2D,0x5B,0x34,0x5D,0x20,0x52,0x65,0x73,0x74,0x6F,0x72,0x65,0x20,0x74,0x6F,0x20
+.db 0x31,0x36,0x20,0x73,0x74,0x65,0x70,0x73,0x80,0x04,0x20,0x2D,0x5B,0x42,0x53,0x5D
+.db 0x20,0x50,0x6C,0x61,0x79,0x20,0x70,0x72,0x65,0x76,0x69,0x6F,0x75,0x73,0x20,0x70
+.db 0x61,0x74,0x74,0x65,0x72,0x6E,0x20,0x20,0x2D,0x5B,0x53,0x45,0x4C,0x45,0x43,0x54
+.db 0x5D,0x20,0x44,0x72,0x75,0x6D,0x20,0x73,0x65,0x74,0x3A,0x20,0x4E,0x6F,0x72,0x6D
+.db 0x61,0x6C,0x20,0x6F,0x72,0x20,0x43,0x61,0x73,0x69,0x6F,0x80,0x16,0x20,0x2D,0x5B
+.db 0x55,0x70,0x5D,0x20,0x4D,0x65,0x6E,0x75,0x20,0x63,0x75,0x72,0x73,0x6F,0x72,0x20
+.db 0x75,0x70,0x80,0x08,0x20,0x2D,0x5B,0x44,0x6F,0x77,0x6E,0x5D,0x20,0x4D,0x65,0x6E
+.db 0x75,0x20,0x63,0x75,0x72,0x73,0x6F,0x72,0x20,0x64,0x6F,0x77,0x6E,0x80,0x04,0x20
+.db 0x2D,0x5B,0x4C,0x65,0x66,0x74,0x5D,0x20,0x53,0x77,0x69,0x74,0x63,0x68,0x20,0x6C
+.db 0x65,0x66,0x74,0x20,0x6F,0x72,0x20,0x76,0x61,0x6C,0x75,0x65,0x20,0x20,0x64,0x6F
+.db 0x77,0x6E,0x80,0x17,0x20,0x2D,0x5B,0x52,0x69,0x67,0x68,0x74,0x5D,0x20,0x53,0x77
+.db 0x69,0x74,0x63,0x68,0x20,0x72,0x69,0x67,0x68,0x74,0x20,0x6F,0x72,0x80,0x05,0x20
+.db 0x76,0x61,0x6C,0x75,0x65,0x20,0x75,0x70,0x80,0x13,0x20,0x2D,0x5B,0x49,0x6E,0x73
+.db 0x5D,0x20,0x4F,0x63,0x74,0x61,0x76,0x65,0x20,0x55,0x70,0x80,0x0C,0x20,0x2D,0x5B
+.db 0x44,0x65,0x6C,0x5D,0x20,0x4F,0x63,0x74,0x61,0x76,0x65,0x20,0x44,0x6F,0x77,0x6E
+.db 0x80,0x0A,0x20,0x2D,0x5B,0x2C,0x2F,0x3C,0x5D,0x20,0x4E,0x6F,0x74,0x65,0x20,0x55
+.db 0x70,0x80,0x0E,0x20,0x2D,0x5B,0x2E,0x2F,0x3E,0x5D,0x20,0x4E,0x6F,0x74,0x65,0x20
+.db 0x44,0x6F,0x77,0x6E,0x80,0x0C,0x20,0x80,0xFF
+  
+__endasm;
+}
+
+
+
+void Help()
+{
+  boolean isExit = false;
+  
+  boolean joybool = false;
+  char joyval;
+  char joytrig;
+  
+  char helpLinePos=0;
+  
+  //Stop();
+  SetSpriteVisible(0,false);
+  SetSpriteVisible(1,false);
+  FillVRAM(BASE10, 768, 255); //clear screen
+  
+  if (VDP_type>0) SetPalette(2);
+  
+  setHelpTileset();
+  showHelpScr();
+  
+  showHelpText(0);
+  showScrollbar(0);
+  
+  //SetSpritePattern(0, 31);
+  //SetSpritePattern(1, 31);
+
+    
+  while(isExit==false)
+  {
+    HALT;
+    
+    joytrig = STRIG(0);       
+    if (joytrig==0) joytrig=STRIG(1);
+    if (joytrig==0) joytrig=STRIG(2);
+    if (joytrig>0)  isExit=true;
+    
+    if (!(GetKeyMatrix(7)&Bit2)) isExit=true; // ESC
+    
+    joyval=STICK(0);
+    if (joyval==0) joyval=STICK(1);
+    if (joyval==0) joyval=STICK(2);
+    if (joyval>0)
+    {
+      if (joybool==false)
+      {
+        joybool = true;
+        
+        if(joyval==1) // arriba
+        {            
+          if(helpLinePos>0) {helpLinePos--;showHelpText(helpLinePos);showScrollbar(helpLinePos);}
+        }
+        if(joyval==5) // abajo
+        {            
+          if(helpLinePos<(HELP_LINES-20)) {helpLinePos++;showHelpText(helpLinePos);showScrollbar(helpLinePos);}           
+        }
+        //if(joyval==3) // right
+        //if(joyval==7) // left
+      }
+    }else{
+      joybool = false;
+    }  
+      
+  }
+  
+  FillVRAM(BASE10, 768, 255); //clear screen
+  if (VDP_type>0) SetPalette(1);
+  setTileset();
+  showMainScr();
+
+  
+/*
+  
+  
+  VPRINT(RNAME_X,RNAME_Y,_rhythm->name);
+  VPrintNumber(TEMPO_X,TEMPO_Y, _tempo, 2);
+  
+  setPattern();
+  
+  WAIT(30); //
+
+  SetSpritePattern(0, 7);
+  SetSpritePattern(1, 7);
+*/
+  
+}
+
+
+
+void showHelpText(char line) __naked
+{
+line;
+__asm
+  push IX
+  ld   IX,#0
+  add  IX,SP
+  
+  ld   E,4(IX)    ;<--- line number
+  ld   D,#0
+  
+  ld   BC,#HELP_WIDTH
+  
+  call Mult16  ; HL = BC*DE 
+  ld   DE,#_HELP_TXTADDR
+  add  HL,DE
+  
+  ld   DE,#BASE10 + (3*32)+1  ;VRAM address
+
+  ld   B,#20
+printAline:
+  push BC
+  push HL
+  push DE  
+  
+  ld   BC,#HELP_WIDTH  ; line size 
+  call LDIRVM
+
+  pop  DE
+  ex   DE,HL
+  ld   DE,#32
+  add  HL,DE
+  ex   DE,HL
+  
+  pop  HL
+  ld   BC,#HELP_WIDTH
+  add  HL,BC  
+  
+  pop  BC
+  djnz printAline
+
+  pop  IX
+  ret
+  
+;
+; Multiply 16-bit values (with 16-bit result)
+; In: Multiply BC with DE
+; Out: HL = result
+;
+Mult16:
+    ld   A,B
+    ld   B,#16
+Mult16_Loop:
+    add  HL,HL
+    sla  C
+    rla
+    jr   NC,Mult16_NoAdd
+    add  HL,DE
+Mult16_NoAdd:
+    djnz Mult16_Loop
+    ret  
+  
+__endasm;
+}
+
+
+
+void showScrollbar(char line)
+{
+    char i;
+    uint vaddr = 0x187F;
+    char barrPos;
+    //char temp;
+    boolean writeBar;
+    
+    //temp = (20/30)*8;
+    barrPos =(line<<4)>>1;
+    barrPos = barrPos>>4;
+    
+    //VPrintNumber(26,0, temp, 4);
+
+    char size=0;
+    
+    for (i=0;i<20;i++)
+    {
+        if(i>=barrPos){
+          if(size<HELP_sizeBar)
+          {
+            writeBar=true;
+            size++;
+          } 
+          else writeBar=false;
+        }        
+        else writeBar=false;
+        
+        if(writeBar) VPOKE(vaddr,TILE_BAR); 
+        else VPOKE(vaddr,TILE_BARempty);
+        vaddr+=32;
+    }
+    
+    //HELP_sizeBar = 13;   //(20/HELP_LINES)*20
+
+}
 
 
 
@@ -1853,7 +2296,7 @@ help_TSET_COL:
 .db 0x4E,0x80,0x05,0x4F,0xFE,0x4E,0x80,0x05,0x4F,0xFE,0x4E,0x80,0x05,0x4F,0xFE,0x4E
 .db 0x80,0x05,0x4F,0xFE,0x4E,0x80,0x05,0xF4,0xFE,0x4E,0x80,0x05,0xF4,0xFE,0x4E,0x80
 .db 0x05,0xF4,0xFE,0x4E,0x80,0x05,0xF4,0xFE,0x4E,0x80,0x05,0xF4,0xFE,0x4E,0x80,0x05
-.db 0x4F,0xFE,0x80,0x06,0xF4,0xFE,0x80,0x0F,0x4E,0x80,0x07,0xE5,0x80,0x07,0xD5,0x80
+.db 0x4F,0xFE,0x80,0x06,0xF4,0xFE,0x80,0x0F,0x4E,0x80,0x07,0x45,0x80,0x07,0x75,0x80
 .db 0x9F,0x5E,0x80,0x07,0x14,0x80,0x07,0x1C,0x80,0x07,0x18,0x80,0x07,0x17,0x80,0x0B
 .db 0x1F,0x80,0x03,0x17,0xFE,0x80,0x06,0x8E,0x80,0x07,0x3E,0x80,0x07,0x5E,0x2E,0x2E
 .db 0x80,0x07,0x1E,0x80,0x07,0xCE,0x80,0x05,0x9E,0x80,0x03,0x5E,0x80,0x83,0xF5,0x80
@@ -1903,7 +2346,7 @@ __endasm;
 
 
 // pantalla principal
-void setMainScr() __naked
+void showMainScr() __naked
 {
 __asm
 
@@ -1930,7 +2373,7 @@ SCR01:
 .db 0x05,0xE8,0xF1,0x80,0x05,0xFF,0xA7,0x74,0x6F,0x6E,0x65,0x20,0x7C,0x20,0x0C,0x0E
 .db 0xBC,0xA8,0x80,0x05,0xFF,0xF2,0x80,0x05,0xE8,0xF3,0x80,0x05,0xFF,0xA7,0x20,0x41
 .db 0x2B,0x42,0x80,0x03,0x20,0xDF,0xDE,0xA8,0x80,0x05,0xFF,0xF4,0xF5,0x80,0x03,0xE8
-.db 0xF6,0xF7,0x80,0x05,0xFF,0xA7,0x20,0x4F,0x53,0x45,0x54,0x80,0x02,0x0A,0xD9,0xDA
+.db 0xF6,0xF7,0x80,0x05,0xFF,0xA7,0x20,0x4F,0x46,0x46,0x53,0x80,0x02,0x0A,0xD9,0xDA
 .db 0xA8,0x80,0x06,0xFF,0xF8,0xF9,0xFA,0xFB,0xFC,0xFD,0x80,0x06,0xFF,0xA7,0x80,0x09
 .db 0x20,0xA8,0x80,0x13,0xFF,0xA7,0x20,0x45,0x4E,0x56,0x20,0xD0,0xD0,0x0A,0xD9,0xDA
 .db 0xA8,0x80,0x13,0xFF,0xA7,0x20,0x53,0x50,0x45,0x45,0x44,0x20,0x0A,0xD9,0xDA,0xA8
@@ -1947,7 +2390,7 @@ __endasm;
 
 
 
-void setHelpScr() __naked
+void showHelpScr() __naked
 {
 __asm
 
@@ -1979,25 +2422,52 @@ __endasm;
 
 
 
-// cambia la paleta de colores del logo (MSX2)
-void setMSX2logoPal()
+/* -----------------------------------------------------------------------------
+ set V9938 Palette
+----------------------------------------------------------------------------- */
+void SetPalette(char number) __naked
 {
+number;
 __asm
+  push IX
+  ld   IX,#0
+  add  IX,SP
+  
+  ld   A,4(ix)  ;<-- numero de paleta
 
-  ld hl,#PALETTE00
-  xor	a
+;recoge la posicion de los datos del mapa usando un indice 
+  ld   IX,#palIndex
+  
+;get ADDR of page data
+  or   A
+  jr   Z,readPALaddr    ;si es 0 no calcula nada, recoge el primer valor
+  sla  A
+  ld   E,A
+  ld   D,#0
+  add  IX,DE
+
+readPALaddr:
+  ld   H,1(IX)
+  ld   L,(IX)
+    
+  xor	 A
 	di
-	out	(#0x99),a
-	ld	a,#144
-	out	(#0x99),a
-	ld	bc,#0x209A
+	out	 (#0x99),A
+	ld	 A,#144
+	out	 (#0x99),A
+	ld	 BC,#0x209A
 	otir
 	ei
-  ret
   
-; Default Palette
+  pop  IX  
+  ret 
+  
+palIndex:
+.dw TITLE_PAL,MAIN_PAL,HELP_PAL
+  
+
 ; RB,G
-PALETTE00:
+TITLE_PAL:
 .db 0x00,0x00
 .db 0x00,0x00
 .db 0x01,0x06
@@ -2015,29 +2485,9 @@ PALETTE00:
 .db 0x55,0x05
 .db 0x77,0x07
 
-__endasm;
-}
 
-
-// cambia la paleta de colores (MSX2)
-void setMSX2Palette()
-{
-__asm
-
-  ld hl,#PALETTE01
-  xor	a
-	di
-	out	(#0x99),a
-	ld	a,#144
-	out	(#0x99),a
-	ld	bc,#0x209A
-	otir
-	ei
-  ret
-
-; alanRandoms
 ; RB,G
-PALETTE01:
+MAIN_PAL:
 .db 0x00,0x00
 .db 0x00,0x00
 .db 0x44,0x04
@@ -2055,5 +2505,29 @@ PALETTE01:
 .db 0x66,0x06
 .db 0x77,0x07
 
+
+HELP_PAL:
+.db 0x00,0x00
+.db 0x00,0x00
+.db 0x44,0x04
+.db 0x33,0x07
+.db 0x33,0x03
+.db 0x37,0x04
+.db 0x61,0x01
+.db 0x47,0x06
+.db 0x71,0x01
+.db 0x73,0x03
+.db 0x61,0x06
+.db 0x64,0x06
+.db 0x11,0x04
+.db 0x65,0x02
+.db 0x66,0x06
+.db 0x77,0x07
+
+
 __endasm;
 }
+
+
+
+
