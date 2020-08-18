@@ -15,7 +15,8 @@ Tareas para una futura version:
 - usar envolvente por soft para percusion. 
 - Añadir editor de instrumentos.
 - probar con SCC
-- crear sistema de envolventes por soft
+- mejorar el sistema de envolventes por soft. Necesitaria usar interrupciones 
+por linea para aumentar la resolucion de la forma de los volumenes. 
 
 ----------------------------------------------------------------------------- */
 
@@ -122,7 +123,8 @@ char Rnd(char value);
 void PlayerInit();
 void PlayerDecode();
 void PlayAY();
-void setChannelRAM(char NumChannel, boolean isTone, boolean isNoise);
+void SetChannelRAM(char NumChannel, boolean isTone, boolean isNoise);
+void Silence();
 
 uint GetVAddressByPosition(char column, char line);
 void VPrintNumber(char posx, char posy, uint aNumber, char aLength);
@@ -465,8 +467,8 @@ void WorkWin()
     
     
     // activa los canales A y B del AY (registro 7)  
-    setChannelRAM(0,true,false);
-    setChannelRAM(1,true,false);
+    SetChannelRAM(0,true,false);
+    SetChannelRAM(1,true,false);
     
     VPrintNumber(8,2, _tempo, 1);
     
@@ -840,7 +842,7 @@ void PlayerDecode()
           if(_isCasio==true) _tmp_INST= &Percu_casio[drum_type-1];
           else _tmp_INST= &Percu_basic[drum_type-1];
           
-          setChannelRAM(2,_tmp_INST->isTone,_tmp_INST->isNoise);
+          SetChannelRAM(2,_tmp_INST->isTone,_tmp_INST->isNoise);
           AYREGS[4]  = _tmp_INST->Tone & 0xFF;      
           AYREGS[5]  = (_tmp_INST->Tone & 0xFF00)/255;      
           AYREGS[6]  = _tmp_INST->Noise; //noise
@@ -1034,7 +1036,7 @@ __endasm;
 
 
 // activa tono y ruido de uno de los tres canales del PSG
-void setChannelRAM(char NumChannel, boolean isTone, boolean isNoise)
+void SetChannelRAM(char NumChannel, boolean isTone, boolean isNoise)
 {
   char newValue;
   
@@ -1057,6 +1059,15 @@ void setChannelRAM(char NumChannel, boolean isTone, boolean isNoise)
   }
   //sound_set(7,newValue);
   AYREGS[7] = newValue;
+}
+
+
+
+void Silence()
+{
+__asm  
+  call GICINI   ;Init PSG
+__endasm;
 }
 
 
@@ -1584,8 +1595,10 @@ void Help()
   char joytrig;
   
   char helpLinePos=0;
+
   
-  //Stop();
+  Silence(); //Enjoy the...
+  
   SetSpriteVisible(0,false);
   SetSpriteVisible(1,false);
   FillVRAM(BASE10, 768, 255); //clear screen

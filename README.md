@@ -63,7 +63,7 @@ The control area is divided into three parts:
 ### Song:
  
 Contains the speed controller. It is based on VBLANK cycles.
-
+1 = very fast; 8 = quite slow.
 
 
 ### Drums:
@@ -78,7 +78,7 @@ The set is composed of three instruments: Kick (green), Snare (red) and Hi (cyan
 Tone generator control based on two square wave oscillators, and a 
 controlfrequency offset. It contains a software envelope generator with 8 
 different waveforms, which can modify the parameters of speed or whether 
-cyclical. It also includes a control for changing octave and a control to 
+cyclical. It also includes a control for changing octave (1-6), and a control to 
 increase or reduce notes of the pattern.
 
 
