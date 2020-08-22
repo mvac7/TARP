@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/*   The Alan Randoms Project v0.9.7b                                          */
+/*   The Alan Randoms Project v0.9.8b                                          */
 /*   tarp.c                                                                   */
 /*   by mvac7/303bcn 2020                                                     */
 /*   eXperimental Sound miniCompo (XSmC)                                      */
@@ -64,6 +64,7 @@ por linea para aumentar la resolucion de la forma de los volumenes.
 #define GUI_CURSOR       215 //186
 #define GUI_SEQCURSOR    214 //185
 
+#define GUI_SEQ_VADDR    0x1AAE
 #define GUI_SEQ_INSTR    209 // 180
 #define GUI_SEQ_TONE     213 // 184
 
@@ -128,13 +129,15 @@ void switcher(uint vaddr, boolean value);
 
 void invertDrumChannel();
 void invertToneChannel();
-void setChannelsState(boolean state);
+//void setChannelsState(boolean state);
 
 void CopyPrevPatterns();
 void RestorePrevPatterns();
 
 void genDrumPattern();
 void genTonePattern();
+
+void ShowSequenceCursor();
 
 void ShowPattern();
 void ShowDrumPattern();
@@ -168,7 +171,7 @@ void num2Dec16(uint aNumber, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
-const char app_version[] = "0.9.7b";
+const char app_version[] = "0.9.8b";
 
 
 const char enve_data[128]={
@@ -213,7 +216,12 @@ char VDP_type;
 
 
 // Player ----------------------------------------------------------------------
-char PLAY_HARDW;  //(1B) indica por que chip ha de sonar (0=PSG interno;1=PSG MFR;2=SCC)
+#define PLAYER_STOP 0
+#define PLAYER_PLAY 1
+
+char _playerHardware;  //(1B) indica por que chip ha de sonar (0=PSG interno;1=PSG MFR;2=SCC)
+
+char _playerStatus;    // 0=off ; >0 = On
 
 char _tempo;
 char _octave;
@@ -232,6 +240,7 @@ char _toneAmp;
 
 char _tempoStep;
 char _pattern_step;
+char _last_step;
 char _ENDstep;  //to control the size of the pattern
 char _newENDstep;
 
@@ -374,10 +383,6 @@ void WorkWin()
     char sdrum_size=0;
     char sdrum_color=15;
     //char variacion=0;
-       
-    
-    char last_step=0;    //to delete the last cursor position
-
     
     char drum_type;
                
@@ -414,8 +419,9 @@ void WorkWin()
     showMainScr();
     
     
-    _ToneEnabled=false;
-    _DrumEnabled=false;
+    _ToneEnabled=true;
+    _DrumEnabled=true;
+    
      
     // Instrumentos percusion - Kit Casio PT1
     // Kick
@@ -481,7 +487,8 @@ void WorkWin()
     // end
     
     
-    PLAY_HARDW=0; //selecciona AY interno
+    _playerHardware=0; //selecciona AY interno
+    _playerStatus=PLAYER_STOP;  
     
     _isCasio = false;
     _AB_MIX = true;
@@ -491,10 +498,17 @@ void WorkWin()
         
     
     // genera los patrones de percusion y tono
-    genDrumPattern();
-    genTonePattern();
-    CopyPrevPatterns();
-      
+    //genDrumPattern();
+    //genTonePattern();
+    //CopyPrevPatterns();
+    for(i=0;i<16;i++)
+    {
+        drum_pattern[i]=0;
+        tone_pattern[i]=0;
+        prev_drum_pattern[i]=0;
+        prev_tone_pattern[i]=0;
+    }
+  
     
     
     // activa los canales A y B del AY (registro 7)  
@@ -520,14 +534,10 @@ void WorkWin()
       
 
       // ############################################################### VISUALS
-      if (_tempoStep==0) //control de tempo por ciclos de Vblank 
-      {        
-        // cursor de patron
-        VPOKE(0x1AAE+last_step,GUI_EMPTY_BLACK);    //borra la ultima posicion del
-        VPOKE(0x1AAE+_pattern_step,GUI_SEQCURSOR);        //muestra el cursor
-        last_step = _pattern_step;
-        // 
-        
+      if (_playerStatus==PLAYER_PLAY && _tempoStep==0) //control de tempo por ciclos de Vblank 
+      {
+        ShowSequenceCursor();        
+               
         
         // control de la percusion
         if(_DrumEnabled==true)
@@ -573,7 +583,7 @@ void WorkWin()
       // ########################################################### END VISUALS
       
       
-      PlayerDecode();
+      if (_playerStatus==PLAYER_PLAY) PlayerDecode();
       
       
       joyval=STICK(0);
@@ -613,7 +623,8 @@ void WorkWin()
                 switcher(GUI_ABMIX_VADDR,true); 
                 break;
               case 5: //B offset
-                if (_AB_offset<254) _AB_offset++;                
+                //if (_AB_offset<254) 
+                _AB_offset++;                
                 VPrintNumber(6,14, _AB_offset, 3); 
                 break;
               case 6: //envelope wave
@@ -654,7 +665,8 @@ void WorkWin()
                 switcher(GUI_ABMIX_VADDR,false); 
                 break;
               case 5:
-                if (_AB_offset>0) _AB_offset--;                
+                //if (_AB_offset>0) 
+                _AB_offset--;                
                 VPrintNumber(6,14, _AB_offset, 3); 
                 break;
               case 6:
@@ -793,16 +805,26 @@ void WorkWin()
           //if (!(keyPressed&Bit1)) {keyB7pressed=true;}; // F5
           //if (!(keyPressed&Bit2)){}; // ESC
           if (!(keyPressed&Bit3)) {CopyPrevPatterns();genDrumPattern();genTonePattern();keyB7pressed=true;}; // TAB
-          if (!(keyPressed&Bit4)) {setChannelsState(false);keyB7pressed=true;}; // STOP
-          if (!(keyPressed&Bit5)) {RestorePrevPatterns();keyB7pressed=true;}; // BS
-          if (!(keyPressed&Bit6)) 
+          if (!(keyPressed&Bit4)) 
           {
-            if(_isCasio==true) _isCasio=false;
-            else _isCasio=true;
-            switcher(GUI_CASIO_VADDR,_isCasio); 
+            //setChannelsState(false);
+            AYREGS[8]=0;
+            AYREGS[9]=0;
+            AYREGS[10]=0;
+            _playerStatus=PLAYER_STOP;
             keyB7pressed=true;
-          }; // SELECT
-          if (!(keyPressed&Bit7)) {setChannelsState(true);keyB7pressed=true;}; // RETURN
+          }; // STOP
+          if (!(keyPressed&Bit5)) {RestorePrevPatterns();keyB7pressed=true;}; // BS
+          if (!(keyPressed&Bit6)) {_isCasio=!_isCasio;switcher(GUI_CASIO_VADDR,_isCasio);keyB7pressed=true;}; // SELECT
+          if (!(keyPressed&Bit7)) 
+          {
+            _tempoStep = _tempo;
+            _pattern_step=0;
+            ShowSequenceCursor();
+            //setChannelsState(true);
+            _playerStatus=PLAYER_PLAY;
+            keyB7pressed=true;
+          }; // RETURN
         }
       }else keyB7pressed=false;
       
@@ -887,22 +909,29 @@ void initGUI()
 
 
 
-void setChannelsState(boolean state)
+void ShowSequenceCursor()
+{
+  // cursor de patron
+  VPOKE(GUI_SEQ_VADDR+_last_step,GUI_EMPTY_BLACK);    //borra la ultima posicion del
+  VPOKE(GUI_SEQ_VADDR+_pattern_step,GUI_SEQCURSOR);  //muestra el cursor
+  _last_step = _pattern_step;
+}        
+
+
+
+/*void setChannelsState(boolean state)
 {
     _DrumEnabled=state;     
-    _ToneEnabled=state;              
-    
+    _ToneEnabled=state;    
     showSpeaker(GUI_DRUM_VADDR,state);
     showSpeaker(GUI_TONE_VADDR,state);
-}
+}*/
 
 
 
 void invertDrumChannel()
 {
-    if(_DrumEnabled==true) _DrumEnabled=false;
-    else _DrumEnabled=true;
-              
+    _DrumEnabled=!_DrumEnabled;              
     showSpeaker(GUI_DRUM_VADDR,_DrumEnabled); 
 }
 
@@ -910,9 +939,7 @@ void invertDrumChannel()
 
 void invertToneChannel()
 {
-    if(_ToneEnabled==true) _ToneEnabled=false;
-    else _ToneEnabled=true;
-    
+    _ToneEnabled=!_ToneEnabled;
     showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
 }
 
@@ -930,6 +957,7 @@ void PlayerInit()
     
     _tempoStep = _tempo;
     _pattern_step=0;
+    _last_step=0;
     _ENDstep = 15;  //to control the size of the pattern
     _newENDstep = 15; 
     
@@ -1070,7 +1098,7 @@ __asm
   
   ld   (#_AYREGS+7),A
 	
-  ld   A,(#_PLAY_HARDW) ;//indica que chip utiliza (0=AY interno, 1=AY MEGAFLASHROM)
+  ld   A,(#__playerHardware) ;//indica que chip utiliza (0=AY interno, 1=AY MEGAFLASHROM)
   or   A
   jr   Z,PSGinternal
 
@@ -1321,10 +1349,9 @@ void genTonePattern()
     tone_pattern[conta]=value+1;
     conta=conta+increment;
   }
-  for(i=0;i<8;i++)
-  {
-    tone_pattern[i+8]=tone_pattern[i];
-  }
+  
+  //copy first 8 steps sequence to next 8 steps 
+  for(i=0;i<8;i++) tone_pattern[i+8]=tone_pattern[i];
   
   ShowTonePattern();
     

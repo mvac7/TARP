@@ -49,8 +49,8 @@ For compile:
 
 ## How does it work?
 
-It does not sound?
-Try pressing [Enter] and enjoy! :D
+To start, press TAB to make it generate a random pattern and then press Return.
+
 
 On the main screen, you will see on the left, the control area, where you can 
 change settings using the cursor keys and activate some functions using a keys. 
@@ -75,11 +75,15 @@ The set is composed of three instruments: Kick (green), Snare (red) and Hi (cyan
 
 ### Tone:
  
-Tone generator control based on two square wave oscillators, and a 
-controlfrequency offset. It contains a software envelope generator with 8 
-different waveforms, which can modify the parameters of speed or whether 
-cyclical. It also includes a control for changing octave (1-6), and a control to 
-increase or reduce notes of the pattern.
+Tone generator control based on two square wave oscillators.
+
+You can disable generator B by pressing the "A + B" switcher and you can modify 
+the frequency offset from the "OFFS" field (0 to 255). 
+
+It contains a software envelope generator with 8 different waveforms, which can 
+modify the parameters of speed or whether cyclical. It also includes a control 
+for changing octave (1-6), and a control to increase or reduce notes of the 
+pattern.
 
 
 
@@ -87,8 +91,8 @@ increase or reduce notes of the pattern.
 
 #### Main Screen:
 
-* [RETURN] Enable Drum and Tone audio channels 
-* [STOP] Disable Drum and Tone audio channels
+* [RETURN] It goes into Play mode and moves to the first step of the sequence. 
+* [STOP] Stop the song.
 * [F1] Drums audio On/Off
 * [F2] Tone audio On/Off
 * [TAB] Random Drums & Tone patterns
