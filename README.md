@@ -11,6 +11,8 @@ Programming language: **C**
 mail: mvac7303b@gmail.com
 
 
+## Sorry! This text is pending correction of the English translation
+
 
 ## Description:
 
@@ -91,8 +93,13 @@ pattern.
 
 #### Main Screen:
 
-* [RETURN] It goes into Play mode and moves to the first step of the sequence. 
-* [STOP] Stop the song.
+* [Up] Menu cursor up
+* [Down] Menu cursor down
+* [Left] Switch left or value down
+* [Right] Switch right or value up
+* [SPACE] or Joystick Button - Actuate the random buttons or the switchers
+* [RETURN] It goes into Play mode and moves to the first step of the sequence 
+* [STOP] Stop pattern playback
 * [F1] Drums audio On/Off
 * [F2] Tone audio On/Off
 * [TAB] Random Drums & Tone patterns
@@ -104,14 +111,10 @@ pattern.
 * [4] Restore to 16 steps
 * [BS] Play previous pattern
 * [SELECT] Drums set: Normal/Casio
-* [Up] Menu cursor up.
-* [Down] Menu cursor down.
-* [Left] Switch left or value down
-* [Right] Switch right or value up
 * [Ins] Octave Up
 * [Del] Octave Down
-* [,/<] Note Up
-* [./>] Note Down
+* [,] Note Up
+* [.] Note Down
 * [HOME] Show Help screen
 
 #### Help Screen:
