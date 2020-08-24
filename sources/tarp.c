@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/*   The Alan Randoms Project v0.9.9b                                          */
+/*   The Alan Randoms Project v0.9.10b                                          */
 /*   tarp.c                                                                   */
 /*   by mvac7/303bcn 2020                                                     */
 /*   eXperimental Sound miniCompo (XSmC)                                      */
@@ -55,8 +55,8 @@ por linea para aumentar la resolucion de la forma de los volumenes.
 #define GUI_ABMIX_VADDR   0x19A9
 #define GUI_ENVLOOP_VADDR 0x1A49
 
-#define GUI_DRUM_VADDR    0x198A  //speaker
-#define GUI_TONE_VADDR    0x18CA  //speaker
+#define GUI_DRUM_VADDR    0x18CA  //speaker
+#define GUI_TONE_VADDR    0x198A  //speaker
 
 #define GUI_SPEAKER_ON   217
 #define GUI_SPEAKER_OFF  216
@@ -171,7 +171,7 @@ void num2Dec16(uint aNumber, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
-const char app_version[] = "0.9.9b";
+const char app_version[] = "0.9.10b";
 
 
 const char enve_data[128]={
@@ -219,7 +219,7 @@ char VDP_type;
 #define PLAYER_STOP 0
 #define PLAYER_PLAY 1
 
-char _playerHardware;  //(1B) indica por que chip ha de sonar (0=PSG interno;1=PSG MFR;2=SCC)
+char _playerHardware;  //(1B) indica por que chip ha de sonar (0=PSG interno;1=PSG MFR;2=[SCC?])
 
 char _playerStatus;    // 0=off ; >0 = On
 
@@ -333,6 +333,7 @@ void logoScreen()
    
   showLogoScreen();  
   
+  //Show Sprites to add more colors to the drawing.
   PUTSPRITE(0,74,58,12,0);
   PUTSPRITE(1,73,74,12,1);    
   PUTSPRITE(2,96,57,12,2);     
@@ -349,7 +350,8 @@ void logoScreen()
     if (!(GetKeyMatrix(7)&Bit2)) break; // ESC
     if (!(GetKeyMatrix(7)&Bit7)) break; // RETURN
     if (!(GetKeyMatrix(8)&Bit0)) break; // SPACE 
-    if (STRIG(1)>0 || STRIG(2)>0) break; //button 1, joy A & B    
+    if (STRIG(1)>0) break; //button 1, joy A
+    if (STRIG(2)>0) break; //button 1, joy B    
   }
 
   return;
@@ -385,6 +387,8 @@ void WorkWin()
     //char variacion=0;
     
     char drum_type;
+    
+    char vumeterStep;
                
     signed char cursor_pos=0;
     
@@ -398,10 +402,6 @@ void WorkWin()
     
     //char pattern[16]={1,0,3,3,0,0,3,3,1,0,3,3,0,0,3,3}; 
     //char pattern[16]={1,0,3,0,2,0,2,0,1,0,3,0,2,0,3,0}; //rock1
-    
-  
-
-    
     
     SetSpritesSize(1);    //16x16
     SetSpritesZoom(true); //zoom
@@ -495,6 +495,8 @@ void WorkWin()
     
     
     PlayerInit();
+    
+    vumeterStep = _tempo;
         
     
     // genera los patrones de percusion y tono
@@ -530,8 +532,7 @@ void WorkWin()
     {
       HALT;
       PlayAY();
-      //if (AYREGS[13]>0 && _DrumEnabled==true) Sound(13,AYREGS[13]); //lanza envolvente · dispara sonido percusion    && _DrumEnabled==true
-      
+     
 
       // ############################################################### VISUALS
       if (_playerStatus==PLAYER_PLAY && _tempoStep==0) //control de tempo por ciclos de Vblank 
@@ -563,10 +564,6 @@ void WorkWin()
       //SetSpriteColor(0,stone_color);      
       PUTSPRITE(0,xvalues[stone_step],yvalues[stone_step],stone_color,stone_size);
       
-      stone_step++;
-      if (stone_step>63) stone_step=0;
-      
-      
       //Drum
       if (_DrumEnabled==false) sdrum_size=0;
             
@@ -578,8 +575,18 @@ void WorkWin()
       
       
       if (sdrum_size>0) sdrum_size--;
-      sdrum_step++;
-      if (sdrum_step>63) sdrum_step=0;
+      
+      if (vumeterStep>=_tempo-1)
+      {
+        vumeterStep=0;
+              
+        stone_step++;
+        if (stone_step>63) stone_step=0;
+        sdrum_step++;
+        if (sdrum_step>63) sdrum_step=0;
+      }else{
+          vumeterStep++;
+      }
       // ########################################################### END VISUALS
       
       
