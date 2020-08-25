@@ -11,15 +11,13 @@ Programming language: **C**
 mail: mvac7303b@gmail.com
 
 
-## Sorry! This text is pending correction of the English translation
-
 
 ## Description:
 
 This software is an AY-3-8910 groovebox, with functions for random generation of 
 rhythm and melody patterns.
 
-It is designed to be played live. 
+It is designed for playing live. 
 It does not contain tools to edit sequences of various patterns, nor to load and 
 save them.
 
@@ -34,18 +32,18 @@ http://karoshi.auic.es/index.php/topic,2294.0.html
 
 A standard MSX computer with 16K RAM.
 
-For compile:
+To compile:
 
 * SDCC v3.9 http://sdcc.sourceforge.net/ 
 * Hex2bin v2.5 http://hex2bin.sourceforge.net/
 
 
 
-## For run:
+## To run:
 
-* you can record to a flashrom 
-* from disk using tools: ODO, loadrom, execrom, etc. 
-* from cassette using WAVeR or similar tool.
+* You can record it to a FlashROM 
+* From disk using tools like ODO, loadrom, execrom, etc. 
+* From cassette using WAVeR or a similar tool.
 
 
 
@@ -53,8 +51,7 @@ For compile:
 
 To start, press TAB to make it generate a random pattern and then press Return.
 
-
-On the main screen, you will see on the left, the control area, where you can 
+On the main screen, you will see on the left the control area. There you can 
 change settings using the cursor keys and activate some functions using a keys. 
 
 On the right, there is a rotary vumeter for the drum and melody channels, and 
@@ -79,8 +76,8 @@ The set is composed of three instruments: Kick (green), Snare (red) and Hi (cyan
  
 Tone generator control based on two square wave oscillators.
 
-You can disable generator B by pressing the "A + B" switcher and you can modify 
-the frequency offset from the "OFFS" field (0 to 255). 
+You can disable the generator B by pressing the "A + B" switcher and you can
+modify the frequency offset from the "OFFS" field (0 to 255). 
 
 It contains a software envelope generator with 8 different waveforms, which can 
 modify the parameters of speed or whether cyclical. It also includes a control 
@@ -105,16 +102,16 @@ pattern.
 * [TAB] Random Drums & Tone patterns
 * [CTRL] Random Drums pattern
 * [SHIFT] Random Tone pattern
-* [1] Play the first 2 steps
-* [2] Play the first 4 steps
-* [3] Play the first 8 steps
-* [4] Restore to 16 steps
+* [1] Play the first 2 steps  #4f6651d6
+* [2] Play the first 4 steps  #063ff680
+* [3] Play the first 8 steps  #ca4a4bcb
+* [4] Restore to 16 steps  #8c4b445e
 * [BS] Play previous pattern
 * [SELECT] Drums set: Normal/Casio
 * [Ins] Octave Up
 * [Del] Octave Down
-* [,] Note Up
-* [.] Note Down
+* [,] Note Up  #49a64731
+* [.] Note Down  #0afcae1d
 * [HOME] Show Help screen
 
 #### Help Screen:
