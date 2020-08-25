@@ -1,67 +1,115 @@
-The Alan Randoms Project
-Version: v0.9.2
+The Alan Randoms Project (TARP)
+Version: v1
 Autor: mvac7/303bcn
 Arquitectura: MSX
 Formato: ROM 16K (h4000)
-Lenguaje de programación: C
-Requisitos: 
- * SDCC v3.6 http://sdcc.sourceforge.net/ 
- * Hex2bin v2.2 http://hex2bin.sourceforge.net/
 
-WEB: http://psged.blogspot.com.es/2012/05/alan-randoms-project-v09b.html
-mail: mvac7303b@gmail.com
 
-Para el eXperimental Sound Mini-compo 2012
+--------------------------------------------------------------------------------
+1 Descripción:
+
+Este software es un groovebox AY-3-8910, con funciones para la generación 
+aleatoria de patrones de ritmo y melodía.
+
+Está diseñado para tocar en vivo.
+No contiene herramientas para editar secuencias de varios patrones, ni para 
+cargar o guardar canciones a un dispositivo de almacenamiento.
+
+La primera versión (0.9b) se presentó al Karoshi MSX Community eXperimental 
+Sound Mini-compo 2012 contest.
 http://karoshi.auic.es/index.php/topic,2294.0.html
 
-Descripción:
-Este software es un generador aleatorio de patrones de ritmo y melodía.
 
-Para ejecutar:
-Requiere de un ordenador MSX estándar.
+--------------------------------------------------------------------------------
+2 Requisitos: 
+
+Un ordenador MSX estándar con 64K RAM (o 16K si se ejecuta desde una FlashROM)
+
+
+--------------------------------------------------------------------------------
+3 Para ejecutar:
  
-  - grabar a una flashRom, 
-  - desde disco utilizando la herramienta: ODO, loadrom, execrom, etc.
-  - desde casete mediante WAVeR u otra herramienta similar. 
+- Puedes grabarlo en una FlashROM
+- Desde disco usando herramientas como ODO, loadrom, execrom, etc.
+- Desde cassette usando WAVeR o una herramienta similar.
 
 
-Cómo funciona?
+--------------------------------------------------------------------------------
+4 ¿Cómo funciona?
 
-  En la pantalla principal encontraremos a la parte izquierda, el área de control, 
-  donde se pueden modificar parámetros usando las teclas de cursor y activar 
-  algunas funciones mediante teclas de control. A la derecha disponemos de un 
-  vumeter giratorio para el canal de percusión y de melodía y un visualizador de 
-  los datos de los patrones.
-  
-  El área de control se divide en tres partes:
-  
-  Song: 
-  Contiene controlador de tempo y generador de patrones aleatorios (ritmo y 
-  melodia).
-  
-  Drums: 
-  Control del patrón de percusión. Incluye generador aleatorio y conmutador 
-  para cambiar de set de percusión. El set, se compone de tres instrumentos: 
-  Kick (verde), Snare (rojo) y Hi (cían).
-  
-  Tone: 
-  Control del generador de tonos, basado en dos osciladores de onda cuadrada
-  y un control de desfase de la frecuencia. Contiene un generador de envolventes 
-  por software, con 8 formas diferentes, al que podemos modificar sus parámetros 
-  de velocidad o si es cíclico. También incluye un generador de notas aleatorio, 
-  un control para cambiar de octava y un control para incrementar o reducir las 
-  notas del patrón.
-  
-  Lista de teclas y funciones:
-  [F1] Generador de patrones de Ritmo y Melodía.
-  [F2] Generador del patrón de Ritmo .
-  [F3] Generador del patrón y Melodía.
-  [F4] Activa/desactiva el audio del canal de Ritmo.
-  [F5] Activa/desactiva el audio del canal de melodía.
-  [SELECT] Interruptor indicador del set de percusión (Normal/Casio).
-  [STOP] Desactiva los dos canales (ritmo y melodía)
-  [Arriba] Sube el cursor del menú.
-  [Abajo] Baja el cursor del menú.
-  [Izquierda] Cambia el interruptor a la izquierda o reduce el valor.
-  [Derecha] Cambia el interruptor a la derecha o aumenta el valor.  
+Para comenzar, presione TAB para que genere un patrón aleatorio y luego presione
+Retorn.
+
+En la pantalla principal, encontrarás a la izquierda el área de control. Allí 
+puedes cambiar la configuración usando las teclas del cursor y activar algunas 
+funciones utilizando algunas teclas (Ver Lista de teclas).
+
+A la derecha, hay un vúmetro giratorio para los canales de batería y melodía, y 
+debajo veras los datos del patrón.
+
+El área de control se divide en tres partes:
+
+4.1 Canción
  
+Contiene el controlador de velocidad. Se basa en ciclos VBLANK.
+1 = muy rápido; 8 = bastante lento.
+
+
+4.2 Ritmo
+Control del patrón de batería. Contiene un interruptor para cambiar entre dos 
+kits de percusion: estandar o similar al de los Casio series PT.
+
+El kit está compuesto de tres instrumentos: Bombo (verde), Caja (rojo) y 
+Platillos (cian).
+
+
+4.3 Melodía
+
+Control del generador de tonos basado en dos osciladores de onda cuadrada.
+
+Puede deshabilitar el generador B presionando el conmutador "A + B" y puede 
+modificar el desplazamiento de frecuencia desde el campo "OFFS" (0 a 255).
+
+Contiene un generador de envolvente de software con 8 formas de onda diferentes, 
+que pueden modificar los parámetros de velocidad o si son cíclicos. 
+
+También incluye un control para cambiar de octava (1-6) y un control para 
+aumentar o reducir el valor de las notas del patrón.
+
+
+
+--------------------------------------------------------------------------------
+5 Lista de teclas:
+
+5.1 Pantalla principal:
+
+- [Arriba] Cursor del menú hacia arriba
+- [Abajo] Cursor del menú hacia abajo
+- [Izquierda] Cambiar conmutador a la izquierda o decrementa el valor
+- [Derecha] Cambiar conmutador a la derecha o incrementa el valor
+- [ESPACIO] o botón de joystick: acciona los botones aleatorios o los conmutadores
+- [RETURN] Entra en el modo de reproducción y pasa al primer paso de la secuencia
+- [STOP] Detiene la reproducción del patrón
+- [F1] Activa/desactiva audio del canal de Ritmo
+- [F2] Activa/desactiva audio del canal de Melodía
+- [TAB] Patrones de Ritmo y Melodía aleatorios
+- [CTRL] Patrón de Ritmo aleatoria
+- [SHIFT] Patrón de Melodía aleatorio
+- [1] Reproduce los 2 primeros pasos
+- [2] Reproduce los primeros 4 pasos
+- [3] Reproduce los primeros 8 pasos
+- [4] Restaurar a 16 pasos
+- [BS] Reproducir patrón anterior
+- [SELECT] Cambia el Kit de Bateria: Normal/Casio
+- [Ins] Octava arriba
+- [Del] Octava abajo
+- [,] Nota arriba
+- [.] Nota abajo
+- [HOME] Mostrar pantalla de ayuda
+
+
+5.2 Pantalla de ayuda:
+
+- Cursor/Joystick [Arriba] Desplaza el texto hacia arriba
+- Cursor/Joystick [Abajo] Desplaza el texto hacia abajo
+- [ESC] Volver a la pantalla principal

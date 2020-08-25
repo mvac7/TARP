@@ -65,14 +65,15 @@ Contains the speed controller. It is based on VBLANK cycles.
 1 = very fast; 8 = quite slow.
 
 
-### Drums:
-Control of the drum pattern. Contains a switch to change the drum set. 
+### Rhythm:
+Control of the drum pattern. Contains a switch to change between two percussion
+kits: standard or similar to the Casio PT series. 
 
-The set is composed of three instruments: Kick (green), Snare (red) and Hi (cyan). 
+The kit is composed of three instruments: Kick (green), Snare (red) and Hi Hat (cyan). 
 
 
 
-### Tone:
+### Melody:
  
 Tone generator control based on two square wave oscillators.
 
@@ -97,17 +98,17 @@ pattern.
 * [SPACE] or Joystick Button - Actuate the random buttons or the switchers
 * [RETURN] It goes into Play mode and moves to the first step of the sequence 
 * [STOP] Stop pattern playback
-* [F1] Drums audio On/Off
-* [F2] Tone audio On/Off
-* [TAB] Random Drums & Tone patterns
-* [CTRL] Random Drums pattern
-* [SHIFT] Random Tone pattern
+* [F1] Rhythm channel On/Off
+* [F2] Melody channel On/Off
+* [TAB] Random Rhythm & Melody patterns
+* [CTRL] Random Rhythm pattern
+* [SHIFT] Random Melody pattern
 * [1] Play the first 2 steps
 * [2] Play the first 4 steps
 * [3] Play the first 8 steps
 * [4] Restore to 16 steps
 * [BS] Play previous pattern
-* [SELECT] Drums set: Normal/Casio
+* [SELECT] Drums kit: Normal/Casio
 * [Ins] Octave Up
 * [Del] Octave Down
 * [,] Note Up

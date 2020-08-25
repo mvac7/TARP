@@ -1,63 +1,111 @@
-The Alan Randoms Project
-Version: v0.9.2
+The Alan Randoms Project (TARP)
+Version: v1
 Author: mvac7/303bcn
 Architecture: MSX
 Format: ROM 16K (h4000)
-Programming language: C
-Requirements: 
- * SDCC v3.6 http://sdcc.sourceforge.net/ 
- * Hex2bin v2.2 http://hex2bin.sourceforge.net/
 
-WEB: http://psged.blogspot.com.es/2012/05/alan-randoms-project-v09b.html
-mail: mvac7303b@gmail.com
 
-for eXperimental Sound Mini-compo 2012
+--------------------------------------------------------------------------------
+1 Description:
+
+This software is an AY-3-8910 groovebox, with functions for random generation of 
+rhythm and melody patterns.
+
+It is designed for playing live. 
+It does not contain tools to edit sequences of various patterns, nor to load and 
+save them.
+
+The first version (0.9b) was presented in the Karoshi MSX Community eXperimental 
+Sound Mini-compo 2012 contest.
 http://karoshi.auic.es/index.php/topic,2294.0.html
 
-Description:
-This software is a random generator of rhythm and melody patterns.
 
-To run:
-Requires a standard MSX computer.
+--------------------------------------------------------------------------------
+2 Requirements: 
+
+A standard MSX computer with 64K RAM (or 16K if running from a FlashROM).
+
+
+--------------------------------------------------------------------------------
+3 To run:
  
-  - you can record to a flashrom 
-  - from disk using tools: ODO, LOADROM, EXECROM, etc. 
-  - from cassette using WAVeR or similar tool.
+- You can record it to a FlashROM 
+- From disk using tools like ODO, loadrom, execrom, etc. 
+- From cassette using WAVeR or a similar tool.
 
 
-How does it work?
+--------------------------------------------------------------------------------
+4 How does it work?
 
-  On the main screen, you will see on the left, the control area, where you can 
-  change settings using the cursor keys and activate some functions using 
-  control keys. On the right, have a rotary vumeter drum for channels and 
-  melody, and a display pattern data.
-  
-  The control area is divided into three parts:
+To start, press TAB to make it generate a random pattern and then press Return.
 
-  Song: 
-  Contains tempo controller and random pattern generator (rhythm and melody).
-  
-  Drums: 
-  Control of the drum pattern. Includes random generator and switch to change 
-  the drum set. The set is composed of three instruments: 
-  Kick (green), Snare (red) and Hi (cyan). 
-  
-  Tone: 
-  Tone generator control based on two square wave oscillators, and a 
-  controlfrequency offset. It contains a software envelope generator with 8 
-  different waveforms, which can modify the parameters of speed or whether 
-  cyclical. It also includes a generator of random notes, a control for changing
-  octave and a control to increase or reduce notes of the pattern.
-  
-  List of keys:
-  [F1] Random Drums & Tone patterns.
-  [F2] Random Drums pattern.
-  [F3] Random Tone pattern.
-  [F4] Drums audio On/Off. 
-  [F5] Tone audio On/Off.   
-  [SELECT] Drums set: Normal/Casio.
-  [STOP] Drums & Tone audio off
-  [Up] Menu cursor up.
-  [Down] Menu cursor down.
-  [Left] Switch left or value down.
-  [Right] Switch right or value up.
+On the main screen, you will see on the left the control area. There you can 
+change settings using the cursor keys and activate some functions using a keys. 
+
+On the right, there is a rotary vumeter for the drum and melody channels, and 
+the pattern data is shown below.
+
+
+The control area is divided into three parts:
+
+4.1 Song:
+ 
+Contains the speed controller. It is based on VBLANK cycles.
+1 = very fast; 8 = quite slow.
+
+
+4.2 Rhythm:
+Control of the drum pattern. Contains a switch to change between two percussion
+kits: standard or similar to the Casio PT series. 
+
+The kit is composed of three instruments: Kick (green), Snare (red) and Hi Hat 
+(cyan). 
+
+
+4.3 Melody:
+ 
+Tone generator control based on two square wave oscillators.
+
+You can disable the generator B by pressing the "A + B" switcher and you can
+modify the frequency offset from the "OFFS" field (0 to 255). 
+
+It contains a software envelope generator with 8 different waveforms, which can 
+modify the parameters of speed or whether cyclical. It also includes a control 
+for changing octave (1-6), and a control to increase or reduce notes of the 
+pattern.
+
+
+--------------------------------------------------------------------------------
+5 List of keys:
+
+5.1 Main Screen:
+
+- [Up] Menu cursor up
+- [Down] Menu cursor down
+- [Left] Switch left or value down
+- [Right] Switch right or value up
+- [SPACE] or Joystick Button - Actuate the random buttons or the switchers
+- [RETURN] It goes into Play mode and moves to the first step of the sequence 
+- [STOP] Stop pattern playback
+- [F1] Rhythm channel On/Off
+- [F2] Melody channel On/Off
+- [TAB] Random Rhythm & Melody patterns
+- [CTRL] Random Rhythm pattern
+- [SHIFT] Random Melody pattern
+- [1] Play the first 2 steps
+- [2] Play the first 4 steps
+- [3] Play the first 8 steps
+- [4] Restore to 16 steps
+- [BS] Play previous pattern
+- [SELECT] Drums kit: Normal/Casio
+- [Ins] Octave Up
+- [Del] Octave Down
+- [,] Note Up
+- [.] Note Down
+- [HOME] Show Help screen
+
+5.2 Help Screen:
+
+- Cursor/Joystick [Up] Up scroll text
+- Cursor/Joystick [Down] Down scroll text
+- [ESC] Return to main screen
