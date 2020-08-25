@@ -102,16 +102,16 @@ pattern.
 * [TAB] Random Drums & Tone patterns
 * [CTRL] Random Drums pattern
 * [SHIFT] Random Tone pattern
-* [1] Play the first 2 steps  #4f6651d6
-* [2] Play the first 4 steps  #063ff680
-* [3] Play the first 8 steps  #ca4a4bcb
-* [4] Restore to 16 steps  #8c4b445e
+* [1] Play the first 2 steps  #069be862
+* [2] Play the first 4 steps  #354def87
+* [3] Play the first 8 steps  #35c193ec
+* [4] Restore to 16 steps  #19c6560f
 * [BS] Play previous pattern
 * [SELECT] Drums set: Normal/Casio
 * [Ins] Octave Up
 * [Del] Octave Down
-* [,] Note Up  #49a64731
-* [.] Note Down  #0afcae1d
+* [,] Note Up  #53412933
+* [.] Note Down  #f758930d
 * [HOME] Show Help screen
 
 #### Help Screen:
