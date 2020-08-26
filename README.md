@@ -67,7 +67,7 @@ Contains the speed controller. It is based on VBLANK cycles.
 
 ### Rhythm:
 Control of the drum pattern. Contains a switch to change between two percussion
-kits: standard or similar to the Casio PT series. 
+kits: Standard or similar to the Casio PT series. 
 
 The kit is composed of three instruments: Kick (green), Snare (red) and Hi Hat (cyan). 
 
@@ -93,8 +93,8 @@ pattern.
 
 * [Up] Menu cursor up
 * [Down] Menu cursor down
-* [Left] Switch left or value down
-* [Right] Switch right or value up
+* [Left] Switch left or decrease value
+* [Right] Switch right or increase value
 * [SPACE] or Joystick Button - Actuate the random buttons or the switchers
 * [RETURN] It goes into Play mode and moves to the first step of the sequence 
 * [STOP] Stop pattern playback
@@ -108,7 +108,7 @@ pattern.
 * [3] Play the first 8 steps
 * [4] Restore to 16 steps
 * [BS] Play previous pattern
-* [SELECT] Drums kit: Normal/Casio
+* [SELECT] Drums kit: Standard/Casio
 * [Ins] Octave Up
 * [Del] Octave Down
 * [,] Note Up
