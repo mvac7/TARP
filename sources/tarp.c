@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/*   The Alan Randoms Project v0.9.11b                                          */
+/*   The Alan Randoms Project v0.9.12b                                          */
 /*   tarp.c                                                                   */
 /*   by mvac7/303bcn 2020                                                     */
 /*   eXperimental Sound miniCompo (XSmC)                                      */
@@ -150,6 +150,8 @@ void upOctave();
 void downOctave();
 void showOctave();
 
+void SetDrumKit(boolean kit);
+
 void checkMSX();
 
 char Rnd(char value);
@@ -171,7 +173,7 @@ void num2Dec16(uint aNumber, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
-const char app_version[] = "0.9.11b";
+const char app_version[] = "0.9.12b";
 
 
 const char enve_data[128]={
@@ -244,9 +246,10 @@ char _last_step;
 char _ENDstep;  //to control the size of the pattern
 char _newENDstep;
 
-INST_PERC *_tmp_INST;
-INST_PERC Percu_casio[3];
-INST_PERC Percu_basic[3];
+INST_PERC *_Drum;
+INST_PERC _DrumKit[3];
+//INST_PERC Percu_casio[3];
+//INST_PERC Percu_basic[3];
 
 char AYREGS[14]; //PSG Registers Buffer R0-R13 
 // -----------------------------------------------------------------------------
@@ -422,58 +425,6 @@ void WorkWin()
     _ToneEnabled=true;
     _DrumEnabled=true;
     
-     
-    // Instrumentos percusion - Kit Casio PT1
-    // Kick
-    Percu_casio[0].isTone=true;
-    Percu_casio[0].isNoise=false;
-    Percu_casio[0].Tone=140;
-    Percu_casio[0].Noise=0;
-    Percu_casio[0].Shape=1;
-    Percu_casio[0].Period=800;
-    
-    // Snare
-    Percu_casio[1].isTone=false;
-    Percu_casio[1].isNoise=true;
-    Percu_casio[1].Tone=0;
-    Percu_casio[1].Noise=0;
-    Percu_casio[1].Shape=1;
-    Percu_casio[1].Period=1600;
-    
-    // Hi
-    Percu_casio[2].isTone=true;
-    Percu_casio[2].isNoise=false;
-    Percu_casio[2].Tone=66;
-    Percu_casio[2].Noise=0;
-    Percu_casio[2].Shape=1;
-    Percu_casio[2].Period=400;
-    
-    
-    // Instrumentos percusion Kit Basico
-    // Kick
-    Percu_basic[0].isTone=true;
-    Percu_basic[0].isNoise=false;
-    Percu_basic[0].Tone=1700;
-    Percu_basic[0].Noise=0;
-    Percu_basic[0].Shape=1;
-    Percu_basic[0].Period=800;
-    
-    // Snare
-    Percu_basic[1].isTone=true;
-    Percu_basic[1].isNoise=true;
-    Percu_basic[1].Tone=1000;
-    Percu_basic[1].Noise=0;
-    Percu_basic[1].Shape=1;
-    Percu_basic[1].Period=1400;
-    
-    // Hi
-    Percu_basic[2].isTone=false;
-    Percu_basic[2].isNoise=true;
-    Percu_basic[2].Tone=0;
-    Percu_basic[2].Noise=0;
-    Percu_basic[2].Shape=1;
-    Percu_basic[2].Period=400;  //200
-    // end
     
     // genera las estructuras de datos de las envolventes
     for(i=0;i<8;i++)
@@ -493,6 +444,7 @@ void WorkWin()
     _isCasio = false;
     _AB_MIX = true;
     
+    SetDrumKit(_isCasio);    
     
     PlayerInit();
     
@@ -623,6 +575,7 @@ void WorkWin()
                 break;
               case 2: //CASIO DRUMS?
                 _isCasio=true;
+                SetDrumKit(_isCasio);
                 switcher(GUI_CASIO_VADDR,true); 
                 break;
               case 4: //A+B
@@ -665,6 +618,7 @@ void WorkWin()
                 break;
               case 2:
                 _isCasio=false;
+                SetDrumKit(_isCasio);
                 switcher(GUI_CASIO_VADDR,false); 
                 break;
               case 4:
@@ -722,6 +676,7 @@ void WorkWin()
                 break;
             case 2:
                 _isCasio=!_isCasio;
+                SetDrumKit(_isCasio);
                 switcher(GUI_CASIO_VADDR,_isCasio); 
                 break;
             case 3:    //random Rhithm
@@ -822,7 +777,13 @@ void WorkWin()
             keyB7pressed=true;
           }; // STOP
           if (!(keyPressed&Bit5)) {RestorePrevPatterns();keyB7pressed=true;}; // BS
-          if (!(keyPressed&Bit6)) {_isCasio=!_isCasio;switcher(GUI_CASIO_VADDR,_isCasio);keyB7pressed=true;}; // SELECT
+          if (!(keyPressed&Bit6)) 
+          {
+            _isCasio=!_isCasio;
+            SetDrumKit(_isCasio);
+            switcher(GUI_CASIO_VADDR,_isCasio);
+            keyB7pressed=true;
+          }; // SELECT
           if (!(keyPressed&Bit7)) 
           {
             _tempoStep = _tempo;
@@ -1005,17 +966,19 @@ void PlayerDecode()
         
         if(drum_type>0) //0 = there is no drum
         {
-          if(_isCasio==true) _tmp_INST= &Percu_casio[drum_type-1];
-          else _tmp_INST= &Percu_basic[drum_type-1];
+          //if(_isCasio==true) _tmp_INST= &Percu_casio[drum_type-1];
+          //else _tmp_INST= &Percu_basic[drum_type-1];
           
-          SetChannelRAM(2,_tmp_INST->isTone,_tmp_INST->isNoise);
-          AYREGS[4]  = _tmp_INST->Tone & 0xFF;      
-          AYREGS[5]  = (_tmp_INST->Tone & 0xFF00)/255;      
-          AYREGS[6]  = _tmp_INST->Noise; //noise
+          _Drum=&_DrumKit[drum_type-1];
+          
+          SetChannelRAM(2,_Drum->isTone,_Drum->isNoise);
+          AYREGS[4]  = _Drum->Tone & 0xFF;      
+          AYREGS[5]  = (_Drum->Tone & 0xFF00)/255;      
+          AYREGS[6]  = _Drum->Noise; //noise
           AYREGS[10] = 16; //volumen canal C (16=envolvente)
-          AYREGS[11] = _tmp_INST->Period & 0xFF;      
-          AYREGS[12] = (_tmp_INST->Period & 0xFF00)/255;
-          AYREGS[13] = _tmp_INST->Shape; //envelope wave form   
+          AYREGS[11] = _Drum->Period & 0xFF;      
+          AYREGS[12] = (_Drum->Period & 0xFF00)/255;
+          AYREGS[13] = _Drum->Shape; //envelope wave form   
                       
         }else{
           // there is no drum
@@ -1151,7 +1114,7 @@ void SetChannelRAM(char NumChannel, boolean isTone, boolean isNoise)
 {
   char newValue;
   
-  newValue = GetSound(7);
+  newValue = 0; //GetSound(7); It is not necessary. It is done in PlayAY.
   
   if(NumChannel==0) 
   {
@@ -1171,6 +1134,68 @@ void SetChannelRAM(char NumChannel, boolean isTone, boolean isNoise)
   //sound_set(7,newValue);
   AYREGS[7] = newValue;
 }
+
+
+
+void SetDrumKit(boolean kit)
+{
+
+    if (kit==false)
+    {
+      // Instrumentos percusion default Kit
+      // Kick
+      _DrumKit[0].isTone=true;
+      _DrumKit[0].isNoise=false;
+      _DrumKit[0].Tone=1700;
+      _DrumKit[0].Noise=0;
+      _DrumKit[0].Shape=1;
+      _DrumKit[0].Period=800;
+      
+      // Snare
+      _DrumKit[1].isTone=true;
+      _DrumKit[1].isNoise=true;
+      _DrumKit[1].Tone=1000;
+      _DrumKit[1].Noise=0;
+      _DrumKit[1].Shape=1;
+      _DrumKit[1].Period=1400;
+      
+      // Hi
+      _DrumKit[2].isTone=false;
+      _DrumKit[2].isNoise=true;
+      _DrumKit[2].Tone=0;
+      _DrumKit[2].Noise=0;
+      _DrumKit[2].Shape=1;
+      _DrumKit[2].Period=400;  //200
+    
+    }else{
+      // Instrumentos percusion - Kit PT1
+      // Kick
+      _DrumKit[0].isTone=true;
+      _DrumKit[0].isNoise=false;
+      _DrumKit[0].Tone=140;
+      _DrumKit[0].Noise=0;
+      _DrumKit[0].Shape=1;
+      _DrumKit[0].Period=800;
+      
+      // Snare
+      _DrumKit[1].isTone=false;
+      _DrumKit[1].isNoise=true;
+      _DrumKit[1].Tone=0;
+      _DrumKit[1].Noise=0;
+      _DrumKit[1].Shape=1;
+      _DrumKit[1].Period=1600;
+      
+      // Hi
+      _DrumKit[2].isTone=true;
+      _DrumKit[2].isNoise=false;
+      _DrumKit[2].Tone=66;
+      _DrumKit[2].Noise=0;
+      _DrumKit[2].Shape=1;
+      _DrumKit[2].Period=400;    
+    }
+
+}
+
 
 
 
