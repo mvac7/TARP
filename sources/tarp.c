@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/*   The Alan Randoms Project v0.9.12b                                          */
+/*   The Alan Randoms Project v0.9.13b                                          */
 /*   tarp.c                                                                   */
 /*   by mvac7/303bcn 2020                                                     */
 /*   eXperimental Sound miniCompo (XSmC)                                      */
@@ -159,7 +159,7 @@ char Rnd(char value);
 void PlayerInit();
 void PlayerDecode();
 void PlayAY();
-void SetChannelRAM(char NumChannel, boolean isTone, boolean isNoise);
+void SetMixer(char NumChannel, boolean isTone, boolean isNoise);
 void Silence();
 
 uint GetVAddressByPosition(char column, char line);
@@ -173,7 +173,7 @@ void num2Dec16(uint aNumber, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
-const char app_version[] = "0.9.12b";
+const char app_version[] = "0.9.13b";
 
 
 const char enve_data[128]={
@@ -466,8 +466,8 @@ void WorkWin()
     
     
     // activa los canales A y B del AY (registro 7)  
-    SetChannelRAM(0,true,false);
-    SetChannelRAM(1,true,false);
+    SetMixer(0,true,false);
+    SetMixer(1,true,false);
     
     VPrintNumber(8,2, _tempo, 1);
     
@@ -971,7 +971,7 @@ void PlayerDecode()
           
           _Drum=&_DrumKit[drum_type-1];
           
-          SetChannelRAM(2,_Drum->isTone,_Drum->isNoise);
+          SetMixer(2,_Drum->isTone,_Drum->isNoise);
           AYREGS[4]  = _Drum->Tone & 0xFF;      
           AYREGS[5]  = (_Drum->Tone & 0xFF00)/255;      
           AYREGS[6]  = _Drum->Noise; //noise
@@ -1110,11 +1110,11 @@ __endasm;
 
 
 // activa tono y ruido de uno de los tres canales del PSG
-void SetChannelRAM(char NumChannel, boolean isTone, boolean isNoise)
+void SetMixer(char NumChannel, boolean isTone, boolean isNoise)
 {
   char newValue;
   
-  newValue = 0; //GetSound(7); It is not necessary. It is done in PlayAY.
+  newValue = AYREGS[7]; //GetSound(7);
   
   if(NumChannel==0) 
   {
