@@ -27,7 +27,6 @@ por linea para aumentar la resolucion de la forma de los volumenes.
 #include "../include/newTypes.h"
 #include "../include/VDP_TMS9918.h"
 #include "../include/VDP_sprites.h"
-#include "../include/AY38910.h"
 #include "../include/joystick.h"
 #include "../include/keyboard.h"
 #include "../include/memory.h"
