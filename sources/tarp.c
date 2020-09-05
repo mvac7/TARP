@@ -176,7 +176,7 @@ void num2Dec16(uint aNumber, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
-const char app_version[] = "0.9.14b";
+const char app_version[] = "0.9.15b";
 
 
 const char enve_data[128]={
@@ -497,8 +497,7 @@ void WorkWin()
       // ############################################################### VISUALS
       if (_playerStatus==PLAYER_PLAY && _tempoStep==0) //control de tempo por ciclos de Vblank 
       {
-        ShowSequenceCursor();        
-               
+        ShowSequenceCursor();               
         
         // control de la percusion
         if(_DrumEnabled==true)
@@ -509,8 +508,7 @@ void WorkWin()
             sdrum_size=7;
             sdrum_color=drumcolor[drum_type];     
           }
-        }     
-           
+        }           
       }
       
                      
@@ -554,8 +552,8 @@ void WorkWin()
       
       
       joyval=STICK(0);
-      if(joyval==0) joyval=STICK(1);
-  
+      if (joyval==0) joyval=STICK(1);
+      if (joyval==0) joyval=STICK(2);
       if (joyval>0)
       {
         if (joybool==false)
