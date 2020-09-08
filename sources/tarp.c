@@ -45,9 +45,9 @@ por linea para aumentar la resolucion de la forma de los volumenes.
 
 
 // ------------------------- GUI Tiles
-#define GUI_SWITCHER     223
-#define GUI_SWITCHER_ON  221
-#define GUI_SWITCHER_OFF 222
+#define GUI_SWITCHER      223
+#define GUI_SWITCHER_ON   221
+#define GUI_SWITCHER_OFF  222
 
 #define GUI_CASIO_VADDR   0x1929
 #define GUI_ABMIX_VADDR   0x19C9
@@ -56,23 +56,28 @@ por linea para aumentar la resolucion de la forma de los volumenes.
 #define GUI_DRUM_VADDR    0x18EA  //speaker
 #define GUI_TONE_VADDR    0x198A  //speaker
 
-#define GUI_SPEAKER_ON   217
-#define GUI_SPEAKER_OFF  216
+#define GUI_PLAY_VADDR    0x1865  //Play/Stop button
 
-#define GUI_CURSOR       215 //186
-#define GUI_SEQCURSOR    214 //185
+#define GUI_PLAY_ICON     22
+#define GUI_STOP_ICON     23
+
+#define GUI_SPEAKER_ON    217
+#define GUI_SPEAKER_OFF   216
+
+#define GUI_CURSOR        215 //186
+#define GUI_SEQCURSOR     214 //185
 
 #define GUI_SEQ_VADDR       0x1AAE
 #define GUI_SEQ_DRUM_VADDR  0x1ACE
 #define GUI_SEQ_TONE_VADDR  0x1AEE
-#define GUI_SEQ_INSTR    209 // 180
-#define GUI_SEQ_TONE     213 // 184
+#define GUI_SEQ_INSTR     209 // 180
+#define GUI_SEQ_TONE      213 // 184
 
 #define GUI_SCROLLBAR       127 //159
 #define GUI_SCROLLBAR_EMPTY 126 //158
 
-#define GUI_EMPTY         32
-#define GUI_EMPTY_BLACK  255
+#define GUI_EMPTY          32
+#define GUI_EMPTY_BLACK   255
 // ------------------------- END GUI Tiles
 
 
@@ -167,8 +172,10 @@ void Stop();
 
 uint GetVAddressByPosition(char column, char line);
 void VPRINT(char column, char line, char* text);
-void VPrintNumber(char posx, char posy, uint aNumber, char aLength);
-void num2Dec16(uint aNumber, char *address);
+void VPokeString(unsigned int vaddr, char* text);
+void VPrintNumber(char column, char line, unsigned int value, char length);
+void VPrintNum(unsigned int vaddr, unsigned int value, char length);
+void num2Dec16(unsigned int value, char *address);
 
 
 
@@ -176,7 +183,7 @@ void num2Dec16(uint aNumber, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
-const char app_version[] = "0.9.15b";
+const char app_version[] = "0.9.16b";
 
 
 const char enve_data[128]={
@@ -870,6 +877,8 @@ void initGUI()
     ShowPattern();            
     
     VPOKE(vaddr_cursor[_cursor_pos],GUI_CURSOR);
+    
+    VPOKE(GUI_PLAY_VADDR,GUI_PLAY_ICON);
 }
 
 
@@ -1211,6 +1220,7 @@ void Play()
     ShowSequenceCursor();
     //setChannelsState(true);
     _playerStatus=PLAYER_PLAY;
+    VPOKE(GUI_PLAY_VADDR,GUI_STOP_ICON);
 }
 
 
@@ -1221,6 +1231,7 @@ void Stop()
     AYREGS[9]=0;
     AYREGS[10]=0;
     _playerStatus=PLAYER_STOP;
+    VPOKE(GUI_PLAY_VADDR,GUI_PLAY_ICON);
 }
 
 
@@ -1566,36 +1577,50 @@ uint GetVAddressByPosition(char column, char line)
 
 void VPRINT(char column, char line, char* text)
 {
-  unsigned int vaddress = GetVAddressByPosition(column, line);
-  while(*(text)) VPOKE(vaddress++,*(text++));
+  unsigned int vaddr = GetVAddressByPosition(column, line);
+  VPokeString(vaddr,text);
+}
+
+
+void VPokeString(unsigned int vaddr, char* text)
+{
+  while(*(text)) VPOKE(vaddr++,*(text++));
 }
 
 
 
-void VPrintNumber(char posx, char posy, uint aNumber, char aLength)
+void VPrintNumber(char column, char line, unsigned int value, char length)
 {
-  char pos=5;
-  uint tiladdre=0;
+  unsigned int vaddr = GetVAddressByPosition(column, line);
+  VPrintNum(vaddr, value, length);
+}
 
-  char strBuff[]="     ";    
 
-  num2Dec16(aNumber, strBuff);
+/* =============================================================================
+   VPrintNum
+   Prints a number at the specified position on the screen.
+   Inputs:
+     [unsigned int] VRAM address in Pattern Name Table.
+     [unsigned int] number
+     [char] length
+============================================================================= */
+void VPrintNum(unsigned int vaddr, unsigned int value, char length)
+{
+  char pos=5-length;
+  char text[]="     ";
+
+  num2Dec16(value, text); 
   
-  // proporciona la direccion de la VRAM a partir de una posicion
-  tiladdre = GetVAddressByPosition(posx, posy);
-  
-  //coloca el puntero en la posicion donde se ha de empezar a mostrar 
-  pos = 5-aLength;
-  
-  // muestra el numero en la pantalla
-  while (aLength-->0){ VPOKE(tiladdre++,strBuff[pos++]);}
+  //while (length-->0){ VPOKE(vaddr++,text[pos++]);}
+  CopyToVRAM((unsigned int) text + (5-length), vaddr, length);
 }
 
 
 
-void num2Dec16(uint aNumber, char *address)
+
+void num2Dec16(unsigned int value, char *address)
 {
-  aNumber;
+  value;
   address;
 __asm
   push IX
@@ -1755,10 +1780,10 @@ void Help()
   char joytrig;
   
   char helpLinePos=0;
-
-  
+    
   Silence(); //Enjoy the...
-  
+  Stop();
+    
   SetSpriteVisible(0,false);
   SetSpriteVisible(1,false);
   
