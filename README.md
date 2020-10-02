@@ -26,6 +26,8 @@ Sound Mini-compo 2012 contest.
 
 http://karoshi.auic.es/index.php/topic,2294.0.html
 
+![TARPv1_screenshot_main_x2](https://user-images.githubusercontent.com/5410950/94923536-4b61de80-04bc-11eb-8896-8bdf73d06d1c.png)
+
 
 
 ## Requirements: 
