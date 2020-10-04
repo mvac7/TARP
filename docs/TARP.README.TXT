@@ -44,7 +44,7 @@ A standard MSX computer with 64K RAM (or 16K if running from a FlashROM).
 
 
 --------------------------------------------------------------------------------
-4 How does it work?
+4 User Guide
 
 To start, press TAB to make it generate a random pattern and then press Return.
 
@@ -96,20 +96,20 @@ frequency offset.
 
 It contains a software envelope generator with 8 different waveforms, which can 
 modify the parameters of speed or whether cyclical. It also includes a control 
-for changing octave (1-6), and a control to increase or reduce notes of the 
+for changing octave, and a control to increase or reduce notes of the 
 pattern.
 
 List of controls:
 - When you press the title, the status of the Melody channel changes.
 - Random button, generates a Melody pattern.
 - A+B switcher, enables/disables square wave generator B.
-- OFFS value entry, frequency offset (0 to 255)
+- OFFS value entry, frequency offset (0-255)
 - ENV selector, choose from 8 types of wave envelopes. 
   (0 \, 1 /, 2 \/, 3 /\, 4 ¯|_, 5 ~, 6 ¯\_, 7 \-\)
 - Speed value entry, adjusts the speed of the wave envelope (1-3).
 - Loop switcher, changes the state of the wave envelope loop.
 
-- Octave value entry, increase or reduce octave of the pattern.
+- Octave value entry, increase or reduce octave of the pattern. (1-6)
 - UP/Down note, increase or reduce notes of the pattern.
 
 

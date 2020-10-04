@@ -182,7 +182,7 @@ void num2Dec16(unsigned int value, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
-const char app_version[] = "0.9.17b";
+const char app_version[] = "0.9.18b";
 
 
 const char enve_data[128]={
@@ -240,7 +240,13 @@ char _playerHardware;  //(1B) indica por que chip ha de sonar (0=PSG interno;1=P
 
 char _playerStatus;    // 0=off ; >0 = On
 
-char _tempo;
+char _songSpeed; //_songSpeed
+char _songSpeedStep;
+char _pattern_step;
+char _last_step;
+char _ENDstep;  //to control the size of the pattern
+char _newENDstep;
+
 char _octave;
 
 boolean _ToneEnabled; //_ToneEnabled
@@ -255,12 +261,6 @@ char _env_step;
 
 char _toneAmp;
 
-char _tempoStep;
-char _pattern_step;
-char _last_step;
-char _ENDstep;  //to control the size of the pattern
-char _newENDstep;
-
 DRUM_INST *_Drum;
 DRUM_INST _DrumKit[3];
 
@@ -271,6 +271,7 @@ char AYREGS[14]; //PSG Registers Buffer R0-R13
 char drum_pattern[16];
 char tone_pattern[16]; //={46,0,49,0,50,0,51,0,46,0,49,0,50,0,51,0};
 
+char prev_octave;
 char prev_drum_pattern[16];  // #9
 char prev_tone_pattern[16];
 
@@ -463,7 +464,7 @@ void WorkWin()
     
     PlayerInit();
     
-    vumeterStep = _tempo;
+    vumeterStep = _songSpeed;
         
     
     // genera los patrones de percusion y tono
@@ -483,7 +484,7 @@ void WorkWin()
     SetMixer(0,true,false);
     SetMixer(1,true,false);
     
-    //VPrintNumber(8,2, _tempo, 1);
+    //VPrintNumber(8,2, _songSpeed, 1);
     
     // muestra los valores de los controles
     initGUI();
@@ -501,7 +502,7 @@ void WorkWin()
      
 
       // ############################################################### VISUALS
-      if (_playerStatus==PLAYER_PLAY && _tempoStep==0) //control de tempo por ciclos de Vblank 
+      if (_playerStatus==PLAYER_PLAY && _songSpeedStep==0) //control de tempo por ciclos de Vblank 
       {
         ShowSequenceCursor();               
         
@@ -540,7 +541,7 @@ void WorkWin()
       
       if (sdrum_size>0) sdrum_size--;
       
-      if (vumeterStep>=_tempo-1)
+      if (vumeterStep>=_songSpeed-1)
       {
         vumeterStep=0;
               
@@ -582,8 +583,8 @@ void WorkWin()
             switch (_cursor_pos)   //{0x1841,0x1901,0x19A1,0x19C1,0x1A01,0x1A21,0x1A41,0x1A81,0x1AA1};
             {
               case 4: //tempo
-                if (_tempo<8) _tempo++;                
-                VPrintNum(GUI_TEMPO_VADDR, _tempo, 1);
+                if (_songSpeed<8) _songSpeed++;                
+                VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1);
                 break;
               case 7: //Drum KIT Switcher
                 _isCasio=true;
@@ -595,14 +596,13 @@ void WorkWin()
                 switcher(GUI_ABMIX_VADDR,true); 
                 break;
               case 11: //B offset
-                //if (_AB_offset<254) 
                 _AB_offset++;                
                 VPrintNum(GUI_OFFS_VADDR, _AB_offset, 3); 
                 break;
               case 12: //envelope wave
                 if (_env_index<7) _env_index++;
-                showEnv(_env_index);
-                switcher(GUI_ENVLOOP_VADDR,envelope_list[_env_index].isLoop); 
+                else _env_index=0;
+                showEnv(_env_index); 
                 break;
               case 13: //envelope speed
                 if (_env_speed<3) _env_speed++;
@@ -625,8 +625,8 @@ void WorkWin()
             switch (_cursor_pos) 
             {
               case 4:
-                if (_tempo>1) _tempo--;                
-                VPrintNum(GUI_TEMPO_VADDR, _tempo, 1); 
+                if (_songSpeed>1) _songSpeed--;                
+                VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1); 
                 break;
               case 7:
                 _isCasio=false;
@@ -638,14 +638,13 @@ void WorkWin()
                 switcher(GUI_ABMIX_VADDR,false); 
                 break;
               case 11:
-                //if (_AB_offset>0) 
                 _AB_offset--;                
                 VPrintNum(GUI_OFFS_VADDR, _AB_offset, 3); 
                 break;
               case 12:
                 if (_env_index>0) _env_index--;
-                showEnv(_env_index);
-                switcher(GUI_ENVLOOP_VADDR,envelope_list[_env_index].isLoop); 
+                else _env_index=7;
+                showEnv(_env_index); 
                 break;
               case 13:
                 if (_env_speed>1) _env_speed--;
@@ -719,10 +718,25 @@ void WorkWin()
                 _AB_MIX=!_AB_MIX;
                 switcher(GUI_ABMIX_VADDR,_AB_MIX); 
                 break;
+/*            case 11: //B offset
+                _AB_offset++;                
+                VPrintNum(GUI_OFFS_VADDR, _AB_offset, 3); 
+                break;
+            case 12: //envelope wave
+                if (_env_index<7) _env_index++;
+                else _env_index=0;
+                showEnv(_env_index); 
+                break;
             case 14:
                 envelope_list[_env_index].isLoop=!envelope_list[_env_index].isLoop;
                 switcher(GUI_ENVLOOP_VADDR,envelope_list[_env_index].isLoop); 
                 break;
+            case 15: // _octave +
+                downOctave(); 
+                break;
+            case 16:
+                downNotePattern(); 
+                break;*/
             case 17:
                 Help();
                 break;
@@ -863,7 +877,7 @@ its_60hz:
 
 void initGUI()
 {    
-    VPrintNum(GUI_TEMPO_VADDR, _tempo, 1); 
+    VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1); 
     
     showSpeaker(GUI_DRUM_VADDR,_DrumEnabled);     
     showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
@@ -875,7 +889,7 @@ void initGUI()
         
     showEnv(_env_index);
     VPrintNum(GUI_WSPEED_VADDR, _env_speed, 1);
-    switcher(GUI_ENVLOOP_VADDR,envelope_list[_env_index].isLoop);
+    //switcher(GUI_ENVLOOP_VADDR,envelope_list[_env_index].isLoop);
     
     showOctave();
     
@@ -944,14 +958,16 @@ void invertToneChannel()
 
 void PlayerInit()
 {
-    _tempo = 4;
+    _songSpeed = 4;
     _AB_offset = 3;
     _env_index=0;
     _env_speed=1;
     _env_step=0;
     _octave=2;
     
-    _tempoStep = _tempo;
+    prev_octave=_octave;
+    
+    _songSpeedStep = _songSpeed;
     _pattern_step=0;
     _last_step=0;
     _ENDstep = 15;  //to control the size of the pattern
@@ -973,12 +989,11 @@ void PlayerDecode()
     
     uint freqA;
     uint freqB;
-        
     
     
-    if (_tempoStep>=_tempo) //control de tempo por ciclos de Vblank 
+    if (_songSpeedStep>=_songSpeed) //control de tempo por ciclos de Vblank 
     {
-      _tempoStep=0;
+      _songSpeedStep=0;
       
       /* cursor de patron
       VPOKE(0x1AAE+last_step,239);    //borra la ultima posicion
@@ -1042,7 +1057,7 @@ void PlayerDecode()
       } 
       
     }else{
-      _tempoStep++;
+      _songSpeedStep++;
       //AYREGS[13]=0; //envelope wave form 
       //drum_type=0;    
     }
@@ -1237,7 +1252,7 @@ __endasm;
 
 void Play()
 {
-    _tempoStep = _tempo;
+    _songSpeedStep = _songSpeed;
     _pattern_step=0;
     ShowSequenceCursor();
     //setChannelsState(true);
@@ -1329,9 +1344,14 @@ void RestorePrevPatterns()
   char i;
   char drum;
   char tone;
+  char tmp_octave;
   
   uint vaddrDrum = GUI_SEQ_DRUM_VADDR;
   uint vaddrTone = GUI_SEQ_TONE_VADDR;
+  
+  tmp_octave = _octave;
+  _octave = prev_octave;
+  prev_octave = tmp_octave;
     
   for(i=0;i<16;i++)
   {
@@ -1344,12 +1364,15 @@ void RestorePrevPatterns()
     prev_drum_pattern[i] = drum;
     prev_tone_pattern[i] = tone;
     
-    VPOKE(vaddrDrum++,drum_pattern[i]+GUI_SEQ_INSTR); //draw drum
+    //VPOKE(vaddrDrum++,drum_pattern[i]+GUI_SEQ_INSTR); //draw drum
     
     //draw tone
-    if(tone_pattern[i]==0) VPOKE(vaddrTone++,GUI_SEQ_INSTR);
-    else VPOKE(vaddrTone++,GUI_SEQ_TONE);    
+    //if(tone_pattern[i]==0) VPOKE(vaddrTone++,GUI_SEQ_INSTR);
+    //else VPOKE(vaddrTone++,GUI_SEQ_TONE);    
   }
+  
+  showOctave();
+  ShowPattern();
 }
 
 
@@ -1477,7 +1500,8 @@ void ShowTonePattern()
 
 void upOctave()
 {
-  if (_octave>1) _octave--;
+  if (_octave>0) _octave--;
+  else _octave=6;
   showOctave();
 }
 
@@ -1486,6 +1510,7 @@ void upOctave()
 void downOctave()
 {
    if (_octave<6) _octave++;
+   else _octave=0;
    showOctave();
 }
 
@@ -1709,6 +1734,7 @@ void showEnv(char value)
   value=value*2+192;
   VPOKE(vaddr++,value++);
   VPOKE(vaddr,value);
+  switcher(GUI_ENVLOOP_VADDR,envelope_list[_env_index].isLoop);
 }
 
 
@@ -2402,7 +2428,7 @@ SCR01:
 .db 0x8E,0x87,0x80,0x04,0x20,0xA8,0x80,0x13,0xFF,0xA7,0x80,0x02,0x20,0xBB,0x10,0x11
 .db 0xB7,0xB8,0xB9,0xBA,0xA8,0x80,0x13,0xFF,0xA7,0x80,0x02,0x20,0xBB,0x7B,0x18,0x19
 .db 0x1A,0x1B,0xBA,0xA8,0x80,0x13,0xFF,0xA7,0x80,0x02,0x20,0xBB,0x0F,0xDA,0x1A,0xDB
-.db 0xDC,0xBA,0xA8,0x80,0x13,0xFF,0xA7,0x20,0x54,0x45,0x4D,0x50,0x4F,0x20,0x20,0xBC
+.db 0xDC,0xBA,0xA8,0x80,0x13,0xFF,0xA7,0x20,0x53,0x50,0x45,0x45,0x44,0x20,0x20,0xBC
 .db 0xBE,0xA8,0x80,0x13,0xFF,0xA3,0x80,0x09,0xA4,0xA6,0x80,0x13,0xFF,0xA7,0x20,0x92
 .db 0x88,0x99,0x94,0x88,0x8D,0x0C,0x0D,0xD8,0xA8,0x80,0x06,0xFF,0xE0,0xE1,0xE2,0xE3
 .db 0xE4,0xE5,0x80,0x06,0xFF,0xA7,0x80,0x02,0x20,0xBB,0x12,0x13,0xB7,0xB8,0xB9,0xBA
