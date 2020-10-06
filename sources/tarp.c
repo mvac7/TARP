@@ -102,6 +102,17 @@ typedef struct {
 
 
 
+typedef struct {
+
+  char octave;
+  char drum[16];
+  char tone[16];
+    
+} PATTERN;
+
+
+
+
 void logoScreen();
 void WorkWin();
 
@@ -112,7 +123,8 @@ void setSprites();
 void setTileset();
 void showMainScr();
 
-void initGUI();
+void initWaveEnvelopes();
+void initPatternsData();
 
 void Help();
 void showHelpScr();
@@ -125,6 +137,8 @@ void showLogoScreen();
 void setMSX2Palette();
 void SetPalette(char number);
 
+void initGUI();
+
 void showEnv(char value);
 void showSpeaker(uint vaddr, boolean value);
 void switcher(uint vaddr, boolean value);
@@ -133,8 +147,8 @@ void invertDrumChannel();
 void invertToneChannel();
 //void setChannelsState(boolean state);
 
-void CopyPrevPatterns();
-void RestorePrevPatterns();
+//void CopyPrevPatterns();
+void ChangePattern();
 
 void genDrumPattern();
 void genTonePattern();
@@ -182,7 +196,7 @@ void num2Dec16(unsigned int value, char *address);
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
-const char app_version[] = "0.9.18b";
+const char app_version[] = "0.9.19b";
 
 
 const char enve_data[128]={
@@ -247,7 +261,7 @@ char _last_step;
 char _ENDstep;  //to control the size of the pattern
 char _newENDstep;
 
-char _octave;
+//char _octave;
 
 boolean _ToneEnabled; //_ToneEnabled
 boolean _DrumEnabled; //_DrumEnabled
@@ -267,13 +281,19 @@ DRUM_INST _DrumKit[3];
 char AYREGS[14]; //PSG Registers Buffer R0-R13 
 // -----------------------------------------------------------------------------
 
+boolean _playPATT;
 
-char drum_pattern[16];
-char tone_pattern[16]; //={46,0,49,0,50,0,51,0,46,0,49,0,50,0,51,0};
+PATTERN *_pattern;
 
-char prev_octave;
-char prev_drum_pattern[16];  // #9
-char prev_tone_pattern[16];
+PATTERN patternA;
+PATTERN patternB;
+
+//char drum_pattern[16];
+//char tone_pattern[16]; //={46,0,49,0,50,0,51,0,46,0,49,0,50,0,51,0};
+
+//char prev_octave;
+//char prev_drum_pattern[16];  // #9
+//char prev_tone_pattern[16];
 
 Envelope envelope_list[8];
 
@@ -295,13 +315,18 @@ char    HELP_TXTADDR[(HELP_LINES+1)*29];
 
 
 void main(void) {
-  
+
   checkMSX();
+  
+  _playPATT = true;
   
   COLOR(15,1,1);  
   SCREEN(2);  
   
   POKE(CLIKSW,0);
+  
+  initWaveEnvelopes();
+  initPatternsData();
   
   initHelpText();
   
@@ -407,31 +432,15 @@ void WorkWin()
     
     char vumeterStep;
     
-    char i,o;
-    char conta=0;
+    //char i,o;
+    //char conta=0;
     
     char keyPressed;
     
     char joyval;
     char joytrig;
-    
-    //char pattern[16]={1,0,3,3,0,0,3,3,1,0,3,3,0,0,3,3}; 
-    //char pattern[16]={1,0,3,0,2,0,2,0,1,0,3,0,2,0,3,0}; //rock1
-    
+        
     _cursor_pos=0;
-    
-    // initialize data structures of volume envelopes
-    for(i=0;i<8;i++)
-    {
-      envelope_list[i].isLoop = enve_loop[i];
-      for(o=0;o<16;o++)
-      {
-        envelope_list[i].ampValues[o] = enve_data[conta++];
-      }    
-    }
-    // end
-    
-    
     
     //initialize sprite hardware
     SetSpritesSize(1);    //16x16
@@ -471,14 +480,7 @@ void WorkWin()
     //genDrumPattern();
     //genTonePattern();
     //CopyPrevPatterns();
-    for(i=0;i<16;i++)
-    {
-        drum_pattern[i]=0;
-        tone_pattern[i]=0;
-        prev_drum_pattern[i]=0;
-        prev_tone_pattern[i]=0;
-    }
-   
+  
     
     // activa los canales A y B del AY (registro 7)  
     SetMixer(0,true,false);
@@ -509,7 +511,7 @@ void WorkWin()
         // control de la percusion
         if(_DrumEnabled==true)
         {
-          drum_type = drum_pattern[_pattern_step];
+          drum_type = _pattern->drum[_pattern_step];
           if(drum_type>0)
           {                       
             sdrum_size=7;
@@ -684,7 +686,8 @@ void WorkWin()
                 PlaySomething(); 
                 break;
             case 1:    //random All
-                CopyPrevPatterns();
+                //CopyPrevPatterns();
+                ChangePattern();
                 genDrumPattern();
                 genTonePattern(); 
                 break;
@@ -693,13 +696,15 @@ void WorkWin()
                 else Stop(); 
                 break;
             case 3:    //
-                RestorePrevPatterns();
+                ChangePattern();
+                showOctave();
+                ShowPattern();
                 break;
             case 5:    //Rhythm channel On/Off
                 invertDrumChannel();
                 break;
             case 6:    //random Rhithm
-                CopyPrevPatterns();
+                //CopyPrevPatterns();
                 genDrumPattern(); 
                 break;
             case 7:
@@ -711,7 +716,7 @@ void WorkWin()
                 invertToneChannel();
                 break;
             case 9:    //random Melody
-                CopyPrevPatterns();
+                //CopyPrevPatterns();
                 genTonePattern(); 
                 break;
             case 10:
@@ -790,8 +795,16 @@ void WorkWin()
       {
         if(keyB6pressed==false)
         {
-          if (!(keyPressed&Bit0)) {CopyPrevPatterns();genTonePattern();keyB6pressed=true;}; // SHIFT
-          if (!(keyPressed&Bit1)) {CopyPrevPatterns();genDrumPattern();keyB6pressed=true;}; // CTRL
+          if (!(keyPressed&Bit0)) {
+            //CopyPrevPatterns();
+            genTonePattern();
+            keyB6pressed=true;
+          }; // SHIFT
+          if (!(keyPressed&Bit1)) {
+            //CopyPrevPatterns();
+            genDrumPattern();
+            keyB6pressed=true;
+          }; // CTRL
           //if (!(keyPressed&Bit2)) {keyB6pressed=true;}; // GRAPH
           //if (!(keyPressed&Bit3)) {keyB6pressed=true;}; // CAPS
           //if (!(keyPressed&Bit4)) {keyB6pressed=true;}; // CODE
@@ -812,9 +825,20 @@ void WorkWin()
           //if (!(keyPressed&Bit0)) {keyB7pressed=true;}; // F4
           //if (!(keyPressed&Bit1)) {keyB7pressed=true;}; // F5
           //if (!(keyPressed&Bit2)){}; // ESC
-          if (!(keyPressed&Bit3)) {CopyPrevPatterns();genDrumPattern();genTonePattern();keyB7pressed=true;}; // TAB
+          if (!(keyPressed&Bit3)) {
+            //CopyPrevPatterns();
+            ChangePattern();
+            genDrumPattern();
+            genTonePattern();
+            keyB7pressed=true;
+          }; // TAB
           if (!(keyPressed&Bit4)) {Stop();keyB7pressed=true;}; // STOP
-          if (!(keyPressed&Bit5)) {RestorePrevPatterns();keyB7pressed=true;}; // BS
+          if (!(keyPressed&Bit5)) {
+            ChangePattern();  
+            showOctave();
+            ShowPattern();
+            keyB7pressed=true;
+          }; // BS
           if (!(keyPressed&Bit6)) 
           {
             _isCasio=!_isCasio;
@@ -930,7 +954,7 @@ void PlaySomething()
     showSpeaker(GUI_DRUM_VADDR,_DrumEnabled);
     showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
 
-    CopyPrevPatterns();
+    //CopyPrevPatterns();
     genDrumPattern();
     genTonePattern();
      
@@ -955,6 +979,54 @@ void invertToneChannel()
 
 
 
+void initWaveEnvelopes()
+{
+  char i,o;
+  char conta=0;
+  
+  // initialize data structures of volume envelopes
+  for(i=0;i<8;i++)
+  {
+    envelope_list[i].isLoop = enve_loop[i];
+    for(o=0;o<16;o++)
+    {
+      envelope_list[i].ampValues[o] = enve_data[conta++];
+    }    
+  }
+  // end
+}
+
+
+
+void initPatternsData()
+{
+    char i;
+    
+    //char pattern[16]={1,0,3,3,0,0,3,3,1,0,3,3,0,0,3,3}; 
+    //char pattern[16]={1,0,3,0,2,0,2,0,1,0,3,0,2,0,3,0}; //rock1
+    
+    //_pattern = (PATTERN *) patternA;
+    
+    patternA.octave = 2;
+    patternB.octave = 2;
+    
+    for(i=0;i<16;i++)
+    {
+        //drum_pattern[i]=0;
+        //tone_pattern[i]=0;
+        //prev_drum_pattern[i]=0;
+        //prev_tone_pattern[i]=0;
+        
+        patternA.drum[i]=0;
+        patternA.tone[i]=0;
+        
+        patternB.drum[i]=0;
+        patternB.tone[i]=0;
+    }
+}
+
+
+
 
 void PlayerInit()
 {
@@ -963,15 +1035,17 @@ void PlayerInit()
     _env_index=0;
     _env_speed=1;
     _env_step=0;
-    _octave=2;
+    //_octave=2;
     
-    prev_octave=_octave;
+    //prev_octave=_octave;
     
     _songSpeedStep = _songSpeed;
     _pattern_step=0;
     _last_step=0;
     _ENDstep = 15;  //to control the size of the pattern
-    _newENDstep = 15; 
+    _newENDstep = 15;
+    
+    _pattern = (PATTERN *) patternA; 
     
     FillRAM((uint) AYREGS,14,0);  //borra el area del buffer de registros del PSG
 }
@@ -1005,7 +1079,7 @@ void PlayerDecode()
       // control de la percusion
       if(_DrumEnabled==true)
       {
-        drum_type = drum_pattern[_pattern_step];
+        drum_type = _pattern->drum[_pattern_step];
         
         if(drum_type>0) //0 = there is no drum
         {
@@ -1031,10 +1105,10 @@ void PlayerDecode()
       
 
       // control del intrumento de acompañamiento
-      tone_note = tone_pattern[_pattern_step];
+      tone_note = _pattern->tone[_pattern_step];
       if(tone_note>0)
       {
-        freqA = getFreq(tone_note+(_octave*12)); //+ variacion;
+        freqA = getFreq(tone_note+(_pattern->octave*12)); //+ variacion;
         freqB = freqA + _AB_offset;
         //VPrintNumber(20,0, tone_note, 3);   // TEST ##########################
         //VPrintNumber(24,0, freq1, 5);
@@ -1325,41 +1399,47 @@ __endasm;
 
 
 
-void CopyPrevPatterns()
+/*void CopyPrevPatterns()
 {
   char i;
   
   for(i=0;i<16;i++)
   {
-    prev_drum_pattern[i] = drum_pattern[i]; //copy pattern
-    prev_tone_pattern[i] = tone_pattern[i];
+    prev_drum_pattern[i] = _pattern->drum[i]; //copy pattern
+    prev_tone_pattern[i] = _pattern->tone[i];
   }
-}
+}*/
 
 
 
 
-void RestorePrevPatterns()
+void ChangePattern()
 {
-  char i;
-  char drum;
-  char tone;
-  char tmp_octave;
+  //char i;
+  //char drum;
+  //char tone;
+  //char tmp_octave;
   
-  uint vaddrDrum = GUI_SEQ_DRUM_VADDR;
-  uint vaddrTone = GUI_SEQ_TONE_VADDR;
+  //uint vaddrDrum = GUI_SEQ_DRUM_VADDR;
+  //uint vaddrTone = GUI_SEQ_TONE_VADDR;
   
-  tmp_octave = _octave;
-  _octave = prev_octave;
-  prev_octave = tmp_octave;
+  //tmp_octave = _octave;
+  //_octave = prev_octave;
+  //prev_octave = tmp_octave;
+  
+  
+  _playPATT= !_playPATT;
+  
+  if (_playPATT) _pattern = (PATTERN *) patternA; 
+  else _pattern = (PATTERN *) patternB;
     
-  for(i=0;i<16;i++)
+/*  for(i=0;i<16;i++)
   {
-    drum = drum_pattern[i];
-    tone = tone_pattern[i];
+    drum = _pattern->drum[i];
+    tone = _pattern->tone[i];
        
-    drum_pattern[i]=prev_drum_pattern[i];
-    tone_pattern[i]=prev_tone_pattern[i];
+    _pattern->drum[i]=prev_drum_pattern[i];
+    _pattern->tone[i]=prev_tone_pattern[i];
     
     prev_drum_pattern[i] = drum;
     prev_tone_pattern[i] = tone;
@@ -1369,10 +1449,8 @@ void RestorePrevPatterns()
     //draw tone
     //if(tone_pattern[i]==0) VPOKE(vaddrTone++,GUI_SEQ_INSTR);
     //else VPOKE(vaddrTone++,GUI_SEQ_TONE);    
-  }
-  
-  showOctave();
-  ShowPattern();
+  }*/
+
 }
 
 
@@ -1390,7 +1468,7 @@ void genDrumPattern()
   char i;  
   
   
-  for(i=0;i<16;i++) drum_pattern[i]=0;
+  for(i=0;i<16;i++) _pattern->drum[i]=0;
   
   hits=Rnd(3);  
   if(hits>0)
@@ -1398,7 +1476,7 @@ void genDrumPattern()
     //hits++;
     do{
       conta+=hits;
-      if(conta<16) drum_pattern[conta]=3;       
+      if(conta<16) _pattern->drum[conta]=3;       
     }while(conta<16); 
   }
   
@@ -1407,7 +1485,7 @@ void genDrumPattern()
   if(kicks>0)
   {
     do{      
-      drum_pattern[conta]=1;
+      _pattern->drum[conta]=1;
       conta+=kicks;       
     }while(conta<16); 
   }
@@ -1418,7 +1496,7 @@ void genDrumPattern()
   {
     do{
       conta+=snares;
-      if(conta<16) drum_pattern[conta]=2;       
+      if(conta<16) _pattern->drum[conta]=2;       
     }while(conta<16); 
   }
   
@@ -1439,7 +1517,7 @@ void genTonePattern()
   char i;
   
   
-  for(i=0;i<16;i++) tone_pattern[i]=0;
+  for(i=0;i<16;i++) _pattern->tone[i]=0;
   
   type=Rnd(3)+1; 
   if (type==1) increment=0;
@@ -1451,12 +1529,12 @@ void genTonePattern()
   {
     value=Rnd(15);
     if(value>11) value=0;
-    tone_pattern[conta]=value+1;
+    _pattern->tone[conta]=value+1;
     conta=conta+increment;
   }
   
   //copy first 8 steps sequence to next 8 steps 
-  for(i=0;i<8;i++) tone_pattern[i+8]=tone_pattern[i];
+  for(i=0;i<8;i++) _pattern->tone[i+8]=_pattern->tone[i];
   
   ShowTonePattern();
     
@@ -1478,7 +1556,7 @@ void ShowDrumPattern()
   uint vaddr = GUI_SEQ_DRUM_VADDR;
   char i;
   
-  for (i=0;i<16;i++) VPOKE(vaddr++,drum_pattern[i]+GUI_SEQ_INSTR);
+  for (i=0;i<16;i++) VPOKE(vaddr++,_pattern->drum[i]+GUI_SEQ_INSTR);
   
 }
 
@@ -1491,7 +1569,7 @@ void ShowTonePattern()
   char i;
   
   for (i=0;i<16;i++){
-    if(tone_pattern[i]==0) VPOKE(vaddr++,GUI_SEQ_INSTR);
+    if(_pattern->tone[i]==0) VPOKE(vaddr++,GUI_SEQ_INSTR);
     else VPOKE(vaddr++,GUI_SEQ_TONE);
   }
 }
@@ -1500,8 +1578,8 @@ void ShowTonePattern()
 
 void upOctave()
 {
-  if (_octave>0) _octave--;
-  else _octave=6;
+  if (_pattern->octave>0) _pattern->octave--;
+  else _pattern->octave=6;
   showOctave();
 }
 
@@ -1509,8 +1587,8 @@ void upOctave()
 
 void downOctave()
 {
-   if (_octave<6) _octave++;
-   else _octave=0;
+   if (_pattern->octave<6) _pattern->octave++;
+   else _pattern->octave=0;
    showOctave();
 }
 
@@ -1518,7 +1596,7 @@ void downOctave()
 
 void showOctave()
 {
-    VPrintNum(GUI_OCTA_VADDR, _octave, 1);
+    VPrintNum(GUI_OCTA_VADDR, _pattern->octave, 1);
 }
 
 
@@ -1531,8 +1609,8 @@ void downNotePattern()
   
   for(i=0;i<16;i++)
   {
-    value = tone_pattern[i];
-    if(value>0 && value<96) tone_pattern[i]=value+1;
+    value = _pattern->tone[i];
+    if(value>0 && value<96) _pattern->tone[i]=value+1;
   }
   
   return;  
@@ -1548,8 +1626,8 @@ void upNotePattern()
   
   for(i=0;i<16;i++)
   {
-    value = tone_pattern[i];
-    if(value>1) tone_pattern[i]=value-1;
+    value = _pattern->tone[i];
+    if(value>1) _pattern->tone[i]=value-1;
   }
   
   return;  
