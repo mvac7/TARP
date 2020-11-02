@@ -27,7 +27,8 @@ Sound Minicompo 2012 contest.
 
 http://web.archive.org/web/20191116233848/http://karoshi.auic.es/index.php/topic,2294.0.html
 
-![TARPv1_screenshot_main_x2](https://user-images.githubusercontent.com/5410950/94923536-4b61de80-04bc-11eb-8896-8bdf73d06d1c.png)
+![TARPv1_screenshot_main_x2](https://raw.githubusercontent.com/mvac7/TARP/master/_GFX/TARPv1_screenshot_main_x2.png)
+![TARPv1_screenshot_title_TMS](https://raw.githubusercontent.com/mvac7/TARP/master/_GFX/TARPv1_screenshot_title_TMS.png) ![TARPv1_screenshot_help](https://raw.githubusercontent.com/mvac7/TARP/master/_GFX/TARPv1_screenshot_help.png)
 
 
 
@@ -51,10 +52,10 @@ http://web.archive.org/web/20191116233848/http://karoshi.auic.es/index.php/topic
 
 ## Acknowledgments
 
-* Kun/Paxanga Soft. Second place in the Experimental Sound Minicompo with his application Noise Raiser. http://paxangasoft.retroinvaders.com/
-* Hap. Third place in the Experimental Sound Minicompo with his application VDP Music.
-* Fubukimaru for betatesting
-* Karoshi MSX Community (RIP 2007-2020)
+* **Kun/Paxanga Soft** - Second place in the Experimental Sound Minicompo with his application Noise Raiser. http://paxangasoft.retroinvaders.com/
+* **Hap** - Third place in the Experimental Sound Minicompo with his application VDP Music.
+* **Fubukimaru** for betatesting
+* **Karoshi MSX Community** (RIP 2007-2020)
 
 
 ## User Guide
@@ -149,13 +150,10 @@ Using keyboard shortcuts you can operate many of the controls in the control are
 ## Users feelings
 
 > _"For me TARP is like having a great tool in the hands of a 3 year old kid. I have a lot of fun and, eventually, I get really cool sounds even though I have no idea about music. I just mash buttons."_
-[@PresidentFubu](https://twitter.com/PresidentFubu)
+> [@PresidentFubu](https://twitter.com/PresidentFubu)
 
 
 ## Songs and Jams 
 
-**TARPatinando** by Fubukimaru
-https://soundcloud.com/fusbus/tarpatinando
-
-**TARPeando: La venganza** by Fubukimaru
-https://soundcloud.com/fusbus/tarpeando-la-venganza
+- **TARPatinando** by Fubukimaru --> https://soundcloud.com/fusbus/tarpatinando
+- **TARPeando: La venganza** by Fubukimaru --> https://soundcloud.com/fusbus/tarpeando-la-venganza
