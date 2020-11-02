@@ -194,9 +194,10 @@ void num2Dec16(unsigned int value, char *address);
 
 
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+const char APPCODE[] = "MV0071";
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
-const char app_version[] = "0.9.19b";
+const char app_version[] = "1";
 
 
 const char enve_data[128]={

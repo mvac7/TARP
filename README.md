@@ -11,7 +11,7 @@ Programming language: **C**
 mail: mvac7303b@gmail.com
 
 
-Sorry!: This text is pending correction of the English translation.
+## Sorry!: This text is pending correction of the English translation.
 
 ## Description:
 
@@ -25,7 +25,7 @@ Use it in your Jam sessions, add effect generators and enjoy!
 The first version (0.9b) was presented in the Karoshi MSX Community eXperimental 
 Sound Minicompo 2012 contest.
 
-http://karoshi.auic.es/index.php/topic,2294.0.html
+http://web.archive.org/web/20191116233848/http://karoshi.auic.es/index.php/topic,2294.0.html
 
 ![TARPv1_screenshot_main_x2](https://user-images.githubusercontent.com/5410950/94923536-4b61de80-04bc-11eb-8896-8bdf73d06d1c.png)
 
@@ -33,21 +33,28 @@ http://karoshi.auic.es/index.php/topic,2294.0.html
 
 ## Requirements: 
 
-A standard MSX computer with 16K RAM.
-
-To compile:
+### To compile:
 
 * SDCC v3.9 http://sdcc.sourceforge.net/ 
 * Hex2bin v2.5 http://hex2bin.sourceforge.net/
 
+**Note:** The project includes a script for Win but it is possible to compile on Linux computers.
 
 
-## To run:
+### To run:
 
-* You can record it to a FlashROM 
-* From disk using tools like ODO, loadrom, execrom, etc. 
-* From cassette using WAVeR or a similar tool.
+* You can record it to a FlashROM and you can execute in a standard MSX computer with 16K RAM.
+* From disk, using tools like ODO, loadrom, execrom, etc. 
+* From cassette, using WAVeR or a similar tool.
 
+
+
+## Acknowledgments
+
+* Kun/Paxanga Soft. Second place in the Experimental Sound Minicompo with his application Noise Raiser. http://paxangasoft.retroinvaders.com/
+* Hap. Third place in the Experimental Sound Minicompo with his application VDP Music.
+* Fubukimaru for betatesting
+* Karoshi MSX Community (RIP 2007-2020)
 
 
 ## User Guide
@@ -92,7 +99,7 @@ List of controls:
 - Random button, generates a Melody pattern.
 - A+B switcher, enables/disables square wave generator B.
 - OFFS value entry, frequency offset [0-255]
-- ENV selector, choose from 8 types of wave envelopes. [0 \, 1 /, 2 \/, 3 /\, 4 ¯|_, 5 ~, 6 ¯\_, 7 \-\]
+- ENV selector, choose from 8 types of wave envelopes. `[0 \, 1 /, 2 \/, 3 /\, 4 ¯|_, 5 ~, 6 ¯\_, 7 \-\]`
 - Speed value entry, adjusts the speed of the wave envelope [1-3].
 - Loop switcher, changes the state of the wave envelope loop.
 
@@ -136,3 +143,19 @@ Using keyboard shortcuts you can operate many of the controls in the control are
 * Cursor/Joystick [Up] Up scroll text
 * Cursor/Joystick [Down] Down scroll text
 * [ESC] Return to main screen
+
+
+
+## Users feelings
+
+> _"For me TARP is like having a great tool in the hands of a 3 year old kid. I have a lot of fun and, eventually, I get really cool sounds even though I have no idea about music. I just mash buttons."_
+[@PresidentFubu](https://twitter.com/PresidentFubu)
+
+
+## Songs and Jams 
+
+**TARPatinando** by Fubukimaru
+https://soundcloud.com/fusbus/tarpatinando
+
+**TARPeando: La venganza** by Fubukimaru
+https://soundcloud.com/fusbus/tarpeando-la-venganza

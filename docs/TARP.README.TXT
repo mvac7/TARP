@@ -6,7 +6,7 @@ Format: ROM 16K (h4000)
 
 
 
-Sorry!: This text is pending correction of the English translation.
+>>>>> Sorry!:  This text is pending correction of the English translation. <<<<<
 
 
 --------------------------------------------------------------------------------
