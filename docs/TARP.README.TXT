@@ -122,7 +122,7 @@ List of controls:
 - Loop switcher, changes the state of the wave envelope loop.
 
 - Octave value entry, increase or reduce octave of the pattern. (1-6)
-- UP/Down note, increase or reduce notes of the pattern.
+- Transpose pattern UP or Down, increase or reduce notes of the pattern.
 
 
 
