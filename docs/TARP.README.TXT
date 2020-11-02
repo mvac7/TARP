@@ -1,5 +1,5 @@
 The Alan Randoms Project (TARP)
-Version: v1
+Version: v1 (Nov/2020)
 Author: mvac7/303bcn
 Architecture: MSX
 Format: ROM 16K (h4000)
@@ -44,7 +44,19 @@ A standard MSX computer with 64K RAM (or 16K if running from a FlashROM).
 
 
 --------------------------------------------------------------------------------
-4 User Guide
+4 Acknowledgments
+
+- Kun/Paxanga Soft - Second place in the Experimental Sound Minicompo with his 
+  application Noise Raiser. http://paxangasoft.retroinvaders.com/
+- Hap - Third place in the Experimental Sound Minicompo with his application 
+  VDP Music.
+- Fubukimaru for betatesting
+- Karoshi MSX Community (RIP 2007-2020)
+
+
+
+--------------------------------------------------------------------------------
+5 User Guide
 
 To start, press TAB to make it generate a random pattern and then press Return.
 
@@ -58,7 +70,7 @@ the pattern data is shown below.
 
 The control area is divided into three parts:
 
-4.1 Song:
+5.1 Song:
  
 - If you click on the title "Song", it will generate a random pattern, it will 
   activate the Rhythm and Melody channels and if it is not, it will go into 
@@ -75,7 +87,7 @@ The control area is divided into three parts:
 
 
 
-4.2 Rhythm:
+5.2 Rhythm:
 
 - When you press the title, the status of the rhythm channel changes.
 - Random button, generates a Rhythm pattern. 
@@ -87,7 +99,7 @@ Hi Hat (cyan).
 
 
 
-4.3 Melody:
+5.3 Melody:
  
 Tone generator control based on two square wave oscillators.
 
@@ -114,10 +126,9 @@ List of controls:
 
 
 
---------------------------------------------------------------------------------
-5 List of shortcuts keys:
+5.4 List of shortcuts keys:
 
-5.1 Main Screen:
+5.4.1 Main Screen:
 
 Using keyboard shortcuts you can operate many of the controls in the control 
 area, except those related to the wave envelope, but add controls that affect 
@@ -143,12 +154,12 @@ playback, such as those that limit the size of the pattern.
 - [SELECT] Drums kit: Standard/Casio
 - [Ins] Octave Up
 - [Del] Octave Down
-- [,] Note Up
-- [.] Note Down
+- [,] Transpose pattern Up
+- [.] Transpose pattern Down
 - [HOME] Show Help screen
 
 
-5.2 Help Screen:
+5.4.2 Help Screen:
 
 - Cursor/Joystick [Up] Up scroll text
 - Cursor/Joystick [Down] Down scroll text

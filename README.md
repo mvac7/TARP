@@ -28,6 +28,7 @@ Sound Minicompo 2012 contest.
 http://web.archive.org/web/20191116233848/http://karoshi.auic.es/index.php/topic,2294.0.html
 
 ![TARPv1_screenshot_main_x2](https://raw.githubusercontent.com/mvac7/TARP/master/_GFX/TARPv1_screenshot_main_x2.png)
+
 ![TARPv1_screenshot_title_TMS](https://raw.githubusercontent.com/mvac7/TARP/master/_GFX/TARPv1_screenshot_title_TMS.png) ![TARPv1_screenshot_help](https://raw.githubusercontent.com/mvac7/TARP/master/_GFX/TARPv1_screenshot_help.png)
 
 
@@ -135,8 +136,8 @@ Using keyboard shortcuts you can operate many of the controls in the control are
 * [SELECT] Drums kit: Standard/Casio
 * [Ins] Octave Up
 * [Del] Octave Down
-* [,] Note Up
-* [.] Note Down
+* [,] Transpose pattern Up
+* [.] Transpose pattern Down
 * [HOME] Show Help screen
 
 #### Help Screen:
