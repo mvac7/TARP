@@ -55,11 +55,17 @@
 
 #define GUI_PLAY_VADDR    0x1865  //Play/Stop button
 
+#define GUI_RADIO_A_VADDR 0x1882
+#define GUI_RADIO_B_VADDR 0x1885
+
 #define GUI_PLAY_ICON     22
 #define GUI_STOP_ICON     23
 
 #define GUI_SPEAKER_ON    217
 #define GUI_SPEAKER_OFF   216
+
+#define GUI_RADIOF_ICON   218
+#define GUI_RADION_ICON   219
 
 #define GUI_CURSOR        128 //menu cursor Tile Number
 #define GUI_SEQCURSOR     214 //sequencer cursor Tile number
@@ -157,7 +163,7 @@ void genDrumPattern();
 void genTonePattern();
 
 void ShowSequenceCursor();
-void ShowPatternLenght(char length);
+void SetPatternLenght(char length);
 
 void ShowPattern();
 void ShowDrumPattern();
@@ -765,10 +771,10 @@ void WorkWin()
         if(keyB0pressed==false)
         {
           //if (!(keyPressed&Bit0)) {keyB0pressed=true;}; // 0
-          if (!(keyPressed&Bit1)) {ShowPatternLenght(1);keyB0pressed=true;}; // 1 
-          if (!(keyPressed&Bit2)) {ShowPatternLenght(3);keyB0pressed=true;}; // 2
-          if (!(keyPressed&Bit3)) {ShowPatternLenght(7);keyB0pressed=true;}; // 3
-          if (!(keyPressed&Bit4)) {ShowPatternLenght(15);keyB0pressed=true;}; // 4
+          if (!(keyPressed&Bit1)) {SetPatternLenght(1);keyB0pressed=true;}; // 1 
+          if (!(keyPressed&Bit2)) {SetPatternLenght(3);keyB0pressed=true;}; // 2
+          if (!(keyPressed&Bit3)) {SetPatternLenght(7);keyB0pressed=true;}; // 3
+          if (!(keyPressed&Bit4)) {SetPatternLenght(15);keyB0pressed=true;}; // 4
           //if (!(keyPressed&Bit5)) {keyB0pressed=true;}; // 5
           //if (!(keyPressed&Bit6)) {keyB0pressed=true;}; // 6
           //if (!(keyPressed&Bit7)) {keyB0pressed=true;}; // 7
@@ -947,17 +953,20 @@ void ShowSequenceCursor()
 
 
 
-void ShowPatternLenght(char length)
+void SetPatternLenght(char length)
 {
     _newENDstep = length;
-    
+
+    if(_playerStatus==PLAYER_STOP) Play();
+
     if (_pattern_step<_newENDstep){
       VPOKE(GUI_SEQ_VADDR+_ENDstep,GUI_EMPTY_BLACK);
       _ENDstep = _newENDstep;      
-    } 
-
-    VPOKE(GUI_SEQ_VADDR+length,GUI_SEQLENCURSOR);
+    }
+    
+    VPOKE(GUI_SEQ_VADDR+length,GUI_SEQLENCURSOR);    
 }        
+        
 
 
 
@@ -973,15 +982,20 @@ void ShowPatternLenght(char length)
 
 void PlaySomething()
 { 
+    char i;
+    
     _DrumEnabled = true;
     _ToneEnabled = true;
     
     showSpeaker(GUI_DRUM_VADDR,_DrumEnabled);
     showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
 
-    //CopyPrevPatterns();
-    genDrumPattern();
-    genTonePattern();
+    for(i=0;i<2;i++)
+    {
+        ChangePattern();
+        genDrumPattern();
+        genTonePattern();
+    }    
      
     if(_playerStatus==PLAYER_STOP) Play();
 }
@@ -1068,7 +1082,9 @@ void PlayerInit()
     _pattern_step=0;
     _last_step=0;
     _ENDstep = 15;  //to control the size of the pattern
-    ShowPatternLenght(15);
+    _newENDstep = _ENDstep;
+    
+    //VPOKE(GUI_SEQ_VADDR+_ENDstep,GUI_SEQLENCURSOR);
     
     _pattern = (PATTERN *) patternA; 
     
@@ -1455,11 +1471,11 @@ void ChangePattern()
 void ShowPatternRadioButton()
 {
   if(_playPATT){
-    VPOKE(0x1882,219);
-    VPOKE(0x1885,218);
+    VPOKE(GUI_RADIO_A_VADDR,GUI_RADION_ICON);
+    VPOKE(GUI_RADIO_B_VADDR,GUI_RADIOF_ICON);
   }else{
-    VPOKE(0x1882,218);
-    VPOKE(0x1885,219);
+    VPOKE(GUI_RADIO_A_VADDR,GUI_RADIOF_ICON);
+    VPOKE(GUI_RADIO_B_VADDR,GUI_RADION_ICON);
   }
 }
 
