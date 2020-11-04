@@ -20,9 +20,9 @@ Main Screen------------------
 -[2] Loop first 4 steps
 -[3] Loop first 8 steps
 -[4] Restore to 16 steps
--[BS] Play previous pattern
--[SELECT] Drum kit: Standard 
- or Casio PT
+-[BS] Swap patterns A and B
+-[GRAPH] Copy current pattern
+-[SELECT] Change Drum Kit 
 -[Ins] Octave Up
 -[Del] Octave Down
 -[,] Note Up

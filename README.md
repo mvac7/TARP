@@ -73,9 +73,10 @@ The control area is divided into three parts:
 ### Song:
  
 - If you click on the title "Song", it will generate a random pattern, it will activate the Rhythm and Melody channels and if it is not, it will go into Play mode.  
-- Random button, generates Rhythm and Melody patterns.
+- Random button, generates Rhythm and Melody patterns. 
 - Play/Stop button, for change play mode.
-- Back button, load the previous pattern. 
+- A/B radio button, swap patterns A and B.
+- Copy option, copy the current pattern over the opposite. 
 - Speed controller. It is based on VBLANK cycles. [1 = very fast; 8 = quite slow]
 
 ### Rhythm:
@@ -128,11 +129,12 @@ Using keyboard shortcuts you can operate many of the controls in the control are
 * [TAB] Random Rhythm & Melody patterns
 * [CTRL] Random Rhythm pattern
 * [SHIFT] Random Melody pattern
-* [1] Play the first 2 steps
-* [2] Play the first 4 steps
-* [3] Play the first 8 steps
-* [4] Restore to 16 steps
-* [BS] Play previous pattern
+* [1] Loop first 2 steps
+* [2] Loop first 4 steps
+* [3] Loop first 8 steps
+* [4] Restore pattern length to 16 steps
+* [BS] Swap patterns A and B
+* [GRAPH] Copy the current pattern over the opposite
 * [SELECT] Drums kit: Standard/Casio
 * [Ins] Octave Up
 * [Del] Octave Down
