@@ -171,8 +171,8 @@ void ShowPattern();
 void ShowDrumPattern();
 void ShowTonePattern();
 
-void upNotePattern();
-void downNotePattern();
+void TransposeUP();
+void TransposeDown();
 
 int getFreq(char value);
 
@@ -627,7 +627,7 @@ void WorkWin()
                 downOctave(); 
                 break;
               case 16:
-                downNotePattern(); 
+                TransposeDown(); 
                 break;
             } 
           }
@@ -665,7 +665,7 @@ void WorkWin()
                 upOctave();
                 break;
               case 16:
-                upNotePattern(); 
+                TransposeUP(); 
                 break;
             } 
           }
@@ -745,7 +745,7 @@ void WorkWin()
                 downOctave(); 
                 break;
             case 16:
-                downNotePattern(); 
+                TransposeDown(); 
                 break;*/
             case 17:
                 Help();
@@ -784,8 +784,8 @@ void WorkWin()
         {
           //if (!(keyPressed&Bit0)) {keyB2pressed=true;}; // '
           //if (!(keyPressed&Bit1)) {keyB2pressed=true;}; // £
-          if (!(keyPressed&Bit2)) {upNotePattern();keyB2pressed=true;}; // ,/<
-          if (!(keyPressed&Bit3)) {downNotePattern();keyB2pressed=true;};   // ./>
+          if (!(keyPressed&Bit2)) {TransposeUP();keyB2pressed=true;}; // ,/<
+          if (!(keyPressed&Bit3)) {TransposeDown();keyB2pressed=true;};   // ./>
           //if (!(keyPressed&Bit4)) {keyB2pressed=true;}; // /
           //if (!(keyPressed&Bit5)) {keyB2pressed=true;}; // DEAD
           //if (!(keyPressed&Bit6)) {keyB2pressed=true;}; // A
@@ -1646,7 +1646,7 @@ void showABoffset()
 
 
 // sube una nota el patron de tono
-void downNotePattern()
+void TransposeDown()
 {
   char i;
   char value;
@@ -1654,7 +1654,7 @@ void downNotePattern()
   for(i=0;i<16;i++)
   {
     value = _pattern->tone[i];
-    if(value>0 && value<96) _pattern->tone[i]=value+1;
+    if(value>0 && value<12) _pattern->tone[i]++; //value>0 && value<96
   }
   
   return;  
@@ -1663,7 +1663,7 @@ void downNotePattern()
 
 
 // baja una nota el patron de tono
-void upNotePattern()
+void TransposeUP()
 {
   char i;
   char value;
@@ -1671,7 +1671,7 @@ void upNotePattern()
   for(i=0;i<16;i++)
   {
     value = _pattern->tone[i];
-    if(value>1) _pattern->tone[i]=value-1;
+    if(value>2) _pattern->tone[i]--;
   }
   
   return;  
