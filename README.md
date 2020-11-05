@@ -15,15 +15,13 @@ mail: mvac7303b@gmail.com
 
 ## Description:
 
-This software is an AY-3-8910 groovebox, with functions for random generation of 
-rhythm and melody patterns.
+TARP is an application for MSX computers to make music with functions for random generation of rhythm and melody patterns.
 
 It is only used for playing live, so it does not contain tools for editing sequences of various patterns, or for loading and save them.
 
 Use it in your Jam sessions, add effect generators and enjoy!
 
-The first version (0.9b) was presented in the Karoshi MSX Community eXperimental 
-Sound Minicompo 2012 contest.
+The first version (0.9b) was presented in the Karoshi MSX Community eXperimental Sound Minicompo 2012 contest.
 
 http://web.archive.org/web/20191116233848/http://karoshi.auic.es/index.php/topic,2294.0.html
 
@@ -103,7 +101,6 @@ List of controls:
 - A+B switcher, enables/disables square wave generator B.
 - OFFS value entry, frequency offset [0-255]
 - ENV selector, choose from 8 types of wave envelopes. `[0 \, 1 /, 2 \/, 3 /\, 4 ¯|_, 5 ~, 6 ¯\_, 7 \-\]`
-- Speed value entry, adjusts the speed of the wave envelope [1-3].
 - Loop switcher, changes the state of the wave envelope loop.
 
 - Octave value entry, increase or reduce octave of the pattern. [1-6]

@@ -111,6 +111,10 @@ typedef struct {
 typedef struct {
 
   char octave;
+  boolean AB_MIX;
+  char    AB_offset;
+  char Envelope;
+
   char drum[16];
   char tone[16];
     
@@ -145,7 +149,6 @@ void SetPalette(char number);
 
 void initGUI();
 
-void showEnv(char value);
 void showSpeaker(uint vaddr, boolean value);
 void switcher(uint vaddr, boolean value);
 
@@ -170,10 +173,16 @@ void ShowTonePattern();
 
 void upNotePattern();
 void downNotePattern();
+
 int getFreq(char value);
+
 void upOctave();
 void downOctave();
+
 void showOctave();
+void showABmix();
+void showABoffset();
+void showEnv();
 
 void SetDrumKit(boolean kit);
 
@@ -276,10 +285,10 @@ char _newENDstep;
 boolean _ToneEnabled; //_ToneEnabled
 boolean _DrumEnabled; //_DrumEnabled
 
-boolean _AB_MIX;
-char _AB_offset;
+//boolean _AB_MIX;
+//char _AB_offset;
 
-char _env_index;
+//char _env_index;
 //char _env_speed;
 char _env_step;
 
@@ -477,7 +486,8 @@ void WorkWin()
     _playerStatus=PLAYER_STOP;  
     
     _isCasio = false;
-    _AB_MIX = true;
+    
+    //_AB_MIX = true;
     
     SetDrumKit(_isCasio);    
     
@@ -597,20 +607,20 @@ void WorkWin()
                 switcher(GUI_CASIO_VADDR,true); 
                 break;
               case 11: //A+B
-                _AB_MIX=true;
-                switcher(GUI_ABMIX_VADDR,true); 
+                _pattern->AB_MIX=true;
+                showABmix(); 
                 break;
               case 12: //B offset
-                _AB_offset++;                
-                VPrintNum(GUI_OFFS_VADDR, _AB_offset, 3); 
+                _pattern->AB_offset++;              
+                showABoffset(); 
                 break;
               case 13: //envelope wave
-                if (_env_index<7) _env_index++;
-                else _env_index=0;
-                showEnv(_env_index); 
+                if (_pattern->Envelope<7) _pattern->Envelope++;
+                else _pattern->Envelope=0;
+                showEnv(); 
                 break;
               case 14: //loop Switcher
-                envelope_list[_env_index].isLoop=true;
+                envelope_list[_pattern->Envelope].isLoop=true;
                 switcher(GUI_ENVLOOP_VADDR,true);
                 break;
               case 15: // _octave +
@@ -635,20 +645,20 @@ void WorkWin()
                 switcher(GUI_CASIO_VADDR,false); 
                 break;
               case 11:
-                _AB_MIX=false;
-                switcher(GUI_ABMIX_VADDR,false); 
+                _pattern->AB_MIX=false;
+                showABmix(); 
                 break;
               case 12:
-                _AB_offset--;                
-                VPrintNum(GUI_OFFS_VADDR, _AB_offset, 3); 
+                _pattern->AB_offset--;                
+                showABoffset(); 
                 break;
               case 13:
-                if (_env_index>0) _env_index--;
-                else _env_index=7;
-                showEnv(_env_index); 
+                if (_pattern->Envelope>0) _pattern->Envelope--;
+                else _pattern->Envelope=7;
+                showEnv(); 
                 break;
               case 14:
-                envelope_list[_env_index].isLoop=false;
+                envelope_list[_pattern->Envelope].isLoop=false;
                 switcher(GUI_ENVLOOP_VADDR,false); 
                 break;
               case 15: //_octave -
@@ -691,7 +701,6 @@ void WorkWin()
                 break;
             case 3:    //
                 ChangePattern();
-                showOctave();
                 ShowPattern();
                 break;
             case 4:    //copy current pattern to other (A->B;B->A)
@@ -715,8 +724,8 @@ void WorkWin()
                 genTonePattern(); 
                 break;
             case 11:
-                _AB_MIX=!_AB_MIX;
-                switcher(GUI_ABMIX_VADDR,_AB_MIX); 
+                _pattern->AB_MIX=!_pattern->AB_MIX;
+                showABmix(); 
                 break;
 /*            case 11: //B offset
                 _AB_offset++;                
@@ -729,8 +738,8 @@ void WorkWin()
                 break;*/
             case 14:
                 //loop
-                envelope_list[_env_index].isLoop=!envelope_list[_env_index].isLoop;
-                switcher(GUI_ENVLOOP_VADDR,envelope_list[_env_index].isLoop); 
+                envelope_list[_pattern->Envelope].isLoop=!envelope_list[_pattern->Envelope].isLoop;
+                switcher(GUI_ENVLOOP_VADDR,envelope_list[_pattern->Envelope].isLoop); 
                 break;
 /*            case 15: // _octave +
                 downOctave(); 
@@ -822,7 +831,6 @@ void WorkWin()
           if (!(keyPressed&Bit4)) {Stop();keyB7pressed=true;}; // STOP
           if (!(keyPressed&Bit5)) {
             ChangePattern();  
-            showOctave();
             ShowPattern();
             keyB7pressed=true;
           }; // BS
@@ -895,14 +903,12 @@ void initGUI()
     
     switcher(GUI_CASIO_VADDR,_isCasio);
     
-    switcher(GUI_ABMIX_VADDR,_AB_MIX);
-    VPrintNum(GUI_OFFS_VADDR, _AB_offset, 3);
+    //switcher(GUI_ABMIX_VADDR,_pattern->AB_MIX);
+    //VPrintNum(GUI_OFFS_VADDR,_pattern->AB_offset, 3);
         
-    showEnv(_env_index);
+    //showEnv(_env_index);
     //VPrintNum(GUI_WSPEED_VADDR, _env_speed, 1);
     //switcher(GUI_ENVLOOP_VADDR,envelope_list[_env_index].isLoop);
-    
-    showOctave();
     
     ShowPattern();            
     
@@ -1023,7 +1029,14 @@ void initPatternsData()
     //_pattern = (PATTERN *) patternA;
     
     patternA.octave = 2;
+    patternA.AB_MIX = true;
+    patternA.AB_offset = 3;
+    patternA.Envelope = 0;
+    
     patternB.octave = 2;
+    patternB.AB_MIX = true;
+    patternB.AB_offset = 3;
+    patternB.Envelope = 0;
     
     for(i=0;i<16;i++)
     {
@@ -1046,8 +1059,8 @@ void initPatternsData()
 void PlayerInit()
 {
     _songSpeed = 4;
-    _AB_offset = 3;
-    _env_index=0;
+    //_AB_offset = 3;
+    //_env_index=0;
     //_env_speed=1;
     _env_step=0;
     //_octave=2;
@@ -1125,8 +1138,8 @@ void PlayerDecode()
       tone_note = _pattern->tone[_pattern_step];
       if(tone_note>0)
       {
-        freqA = getFreq(tone_note+(_pattern->octave*12)); //+ variacion;
-        freqB = freqA + _AB_offset;
+        freqA = getFreq(tone_note+(_pattern->octave*12)); //+ variacion; 
+        freqB = freqA + _pattern->AB_offset;
         //VPrintNumber(20,0, tone_note, 3);   // TEST ##########################
         //VPrintNumber(24,0, freq1, 5);
         
@@ -1158,7 +1171,7 @@ void PlayerDecode()
     //control de volumen del tono (envolvente) ###############################
     if (_ToneEnabled==true)
     {        
-      _toneAmp = envelope_list[_env_index].ampValues[_env_step];        
+      _toneAmp = envelope_list[_pattern->Envelope].ampValues[_env_step];        
     }else{
       _toneAmp = 0;
     }      
@@ -1168,13 +1181,13 @@ void PlayerDecode()
     
     if (_env_step>15) //control de tamaño de envolvente
     {
-      if (envelope_list[_env_index].isLoop==true) _env_step=0;
+      if (envelope_list[_pattern->Envelope].isLoop==true) _env_step=0;
       else _env_step=15; // ultimo valor de la envolvente
     }
     
     AYREGS[8] = _toneAmp;
     
-    if(_AB_MIX==true) AYREGS[9] = _toneAmp;
+    if(_pattern->AB_MIX==true) AYREGS[9] = _toneAmp;
     else AYREGS[9] = 0;
 
 
@@ -1444,7 +1457,10 @@ void CopyPattern()
      _destination->tone[i]=_pattern->tone[i];
   }
   
-  _destination->octave=_pattern->octave;
+  _destination->octave = _pattern->octave;
+  _destination->AB_MIX = _pattern->AB_MIX;
+  _destination->AB_offset = _pattern->AB_offset;
+  _destination->Envelope = _pattern->Envelope;
     
 }
 
@@ -1554,9 +1570,15 @@ void genTonePattern()
 
 void ShowPattern()
 {
-    ShowDrumPattern();
-    ShowTonePattern();
+  showOctave();
+  showABmix();
+  showABoffset();
+  showEnv();
+  
+  ShowDrumPattern();
+  ShowTonePattern();
 }
+
 
 
  //draw in screen a Drum pattern
@@ -1605,9 +1627,22 @@ void downOctave()
 
 void showOctave()
 {
-    VPrintNum(GUI_OCTA_VADDR, _pattern->octave, 1);
+  VPrintNum(GUI_OCTA_VADDR, _pattern->octave, 1);
 }
 
+
+
+void showABmix()
+{
+  switcher(GUI_ABMIX_VADDR,_pattern->AB_MIX);
+}
+
+
+
+void showABoffset()
+{
+  VPrintNum(GUI_OFFS_VADDR, _pattern->AB_offset, 3);
+}
 
 
 // sube una nota el patron de tono
@@ -1814,14 +1849,18 @@ void switcher(uint vaddr, boolean value)
 
 
 // muestra el valor de la envolvente
-void showEnv(char value)
+void showEnv()
 {
+  char value = _pattern->Envelope;
   uint vaddr = GUI_ENV_VADDR;
+  
+  switcher(GUI_ENVLOOP_VADDR,envelope_list[value].isLoop);
+  
   VPrintNum(vaddr+2, value, 1);
+  
   value=value*2+192;
   VPOKE(vaddr++,value++);
   VPOKE(vaddr,value);
-  switcher(GUI_ENVLOOP_VADDR,envelope_list[_env_index].isLoop);
 }
 
 
