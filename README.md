@@ -135,8 +135,8 @@ Using keyboard shortcuts you can operate many of the controls in the control are
 * [SELECT] Drums kit: Standard/Casio
 * [Ins] Octave Up
 * [Del] Octave Down
-* [,] Transpose pattern Up
-* [.] Transpose pattern Down
+* [,] Transpose pattern Down
+* [.] Transpose pattern Up
 * [HOME] Show Help screen
 
 #### Help Screen:

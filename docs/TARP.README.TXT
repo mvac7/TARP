@@ -154,8 +154,8 @@ playback, such as those that limit the size of the pattern.
 - [SELECT] Drums kit: Standard/Casio
 - [Ins] Octave Up
 - [Del] Octave Down
-- [,] Transpose pattern Up
-- [.] Transpose pattern Down
+- [,] Transpose pattern Down
+- [.] Transpose pattern Up
 - [HOME] Show Help screen
 
 
