@@ -111,6 +111,8 @@ typedef struct {
 typedef struct {
 
   char octave;
+  char transpose;
+  
   boolean AB_MIX;
   char    AB_offset;
   char Envelope;
@@ -280,7 +282,7 @@ char _last_step;
 char _ENDstep;  //to control the size of the pattern
 char _newENDstep;
 
-//char _octave;
+char _transpose;
 
 boolean _ToneEnabled; //_ToneEnabled
 boolean _DrumEnabled; //_DrumEnabled
@@ -587,7 +589,7 @@ void WorkWin()
             switch (_cursor_pos)   //{0x1841,0x1901,0x19A1,0x19C1,0x1A01,0x1A21,0x1A41,0x1A81,0x1AA1};
             {
               case 5: //tempo
-                if (_songSpeed<8) _songSpeed++;                
+                if (_songSpeed<9) _songSpeed++;                
                 VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1);
                 break;
               case 8: //Drum KIT Switcher
@@ -1017,12 +1019,14 @@ void initPatternsData()
     
     //_pattern = (PATTERN *) patternA;
     
-    patternA.octave = 2;
+    patternA.octave = 1;
+    patternA.transpose = 12;
     patternA.AB_MIX = true;
     patternA.AB_offset = 3;
     patternA.Envelope = 0;
     
-    patternB.octave = 2;
+    patternB.octave = 1;
+    patternB.transpose = 12;
     patternB.AB_MIX = true;
     patternB.AB_offset = 3;
     patternB.Envelope = 0;
@@ -1048,21 +1052,14 @@ void initPatternsData()
 void PlayerInit()
 {
     _songSpeed = 4;
-    //_AB_offset = 3;
-    //_env_index=0;
-    //_env_speed=1;
+
     _env_step=0;
-    //_octave=2;
-    
-    //prev_octave=_octave;
-    
+       
     _songSpeedStep = _songSpeed;
     _pattern_step=0;
     _last_step=0;
     _ENDstep = 15;  //to control the size of the pattern
     _newENDstep = _ENDstep;
-    
-    //VPOKE(GUI_SEQ_VADDR+_ENDstep,GUI_SEQLENCURSOR);
     
     _pattern = (PATTERN *) patternA; 
     
@@ -1447,6 +1444,7 @@ void CopyPattern()
   }
   
   _destination->octave = _pattern->octave;
+  _destination->transpose = _pattern->transpose;
   _destination->AB_MIX = _pattern->AB_MIX;
   _destination->AB_offset = _pattern->AB_offset;
   _destination->Envelope = _pattern->Envelope;
@@ -1530,20 +1528,21 @@ void genTonePattern()
   
   char i;
   
+  _pattern->transpose = 12;
   
-  for(i=0;i<16;i++) _pattern->tone[i]=0;
+  for(i=0;i<16;i++) _pattern->tone[i]=0; //empty
   
-  type=Rnd(3)+1; 
-  if (type==1) increment=0;
+  type=Rnd(3)+1;  //determines the number of notes
+  //if (type==1) increment=0;  //It is not necessary
   if (type==2) increment=4;
   if (type>2) increment=2;
    
   type++;
   for(i=1;i<type;i++)
   {
-    value=Rnd(15);
-    if(value>11) value=0;
-    _pattern->tone[conta]=value+1;
+    value=Rnd(15);    // generate random note
+    if(value>11) _pattern->tone[conta]=0;  //empty
+    else _pattern->tone[conta]=value+1+12; //adds an octave (12) for the transpose functionality    
     conta=conta+increment;
   }
   
@@ -1599,7 +1598,7 @@ void ShowTonePattern()
 void upOctave()
 {
   if (_pattern->octave>0) _pattern->octave--;
-  else _pattern->octave=6;
+  //else _pattern->octave=6;
   showOctave();
 }
 
@@ -1607,8 +1606,8 @@ void upOctave()
 
 void downOctave()
 {
-   if (_pattern->octave<6) _pattern->octave++;
-   else _pattern->octave=0;
+   if (_pattern->octave<5) _pattern->octave++;
+   //else _pattern->octave=1;
    showOctave();
 }
 
@@ -1616,7 +1615,7 @@ void downOctave()
 
 void showOctave()
 {
-  VPrintNum(GUI_OCTA_VADDR, _pattern->octave, 1);
+  VPrintNum(GUI_OCTA_VADDR, _pattern->octave+1, 1);
 }
 
 
@@ -1634,16 +1633,23 @@ void showABoffset()
 }
 
 
+
 // sube una nota el patron de tono
 void TransposeUp()
 {
   char i;
   char value;
   
-  for(i=0;i<16;i++)
+  if (_pattern->transpose<24)
   {
-    value = _pattern->tone[i];
-    if(value>0 && value<12) _pattern->tone[i]++; //value>0 && value<96
+    _pattern->transpose++;
+    
+    for(i=0;i<16;i++)
+    {
+        value = _pattern->tone[i];
+        if(value>0) _pattern->tone[i]++;
+        //if(value>0 && value<12)
+    }
   }
   
   return;  
@@ -1657,10 +1663,16 @@ void TransposeDown()
   char i;
   char value;
   
-  for(i=0;i<16;i++)
+  
+  if (_pattern->transpose>0)
   {
-    value = _pattern->tone[i];
-    if(value>2) _pattern->tone[i]--;
+    _pattern->transpose--;    
+    
+    for(i=0;i<16;i++)
+    {
+      value = _pattern->tone[i];
+      if(value>0) _pattern->tone[i]--;
+    }
   }
   
   return;  
