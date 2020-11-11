@@ -30,6 +30,8 @@ http://karoshi.auic.es/index.php/topic,2294.0.html
 
 A standard MSX computer with 64K RAM (or 16K if running from a FlashROM).
 
+On second-generation or higher MSX computers, an enhanced palette is used.
+
 
 
 --------------------------------------------------------------------------------

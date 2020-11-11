@@ -6,7 +6,9 @@ Architecture: **MSX**
 
 Format: **ROM 16K (h4000)** 
 
-Programming language: **C**
+Programming language: **C and Z80 Assembler**
+
+Compiler: **SDCC**
 
 mail: mvac7303b@gmail.com
 
@@ -43,6 +45,10 @@ http://web.archive.org/web/20191116233848/http://karoshi.auic.es/index.php/topic
 
 ### To run:
 
+A standard MSX computer with 64K RAM (or 16K if running from a FlashROM).
+
+On second-generation or higher MSX computers, an enhanced palette is used.
+
 * You can record it to a FlashROM and you can execute in a standard MSX computer with 16K RAM.
 * From disk, using tools like ODO, loadrom, execrom, etc. 
 * From cassette, using WAVeR or a similar tool.
@@ -75,7 +81,7 @@ The control area is divided into three parts:
 - Play/Stop button, for change play mode.
 - A/B radio button, swap patterns A and B.
 - Copy option, copy the current pattern over the opposite. 
-- Speed controller. It is based on VBLANK cycles. [1 = very fast; 8 = quite slow]
+- Speed controller. It is based on VBLANK cycles. [1 = very fast; 9 = quite slow]
 
 ### Rhythm:
 

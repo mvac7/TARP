@@ -34,6 +34,9 @@
 #define AY0write 0xA1
 #define AY0read  0xA2
 
+#define PATTERN_A 0
+#define PATTERN_B 1
+
 
 // ------------------------------------------------------------------------- GUI
 #define GUI_SWITCHER      223
@@ -161,6 +164,7 @@ void invertToneChannel();
 //void setChannelsState(boolean state);
 
 void ChangePattern();
+void SetPattern(char number);
 void CopyPattern();
 
 void genDrumPattern();
@@ -214,7 +218,7 @@ void num2Dec16(unsigned int value, char *address);
 
 
 // definicion variables globales <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-const char APPCODE[] = "MV0071";
+const char APPCODE[] = "MV0061";
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
 const char app_version[] = "1";
@@ -302,7 +306,7 @@ DRUM_INST _DrumKit[3];
 char AYREGS[14]; //PSG Registers Buffer R0-R13 
 // -----------------------------------------------------------------------------
 
-boolean _playPATT;
+char _playPatternNumber;
 
 PATTERN *_pattern;
 
@@ -339,7 +343,7 @@ void main(void) {
 
   checkMSX();
   
-  _playPATT = true;
+  _playPatternNumber = 0;
   
   COLOR(15,1,1);  
   SCREEN(2);  
@@ -588,6 +592,10 @@ void WorkWin()
           { 
             switch (_cursor_pos)   //{0x1841,0x1901,0x19A1,0x19C1,0x1A01,0x1A21,0x1A41,0x1A81,0x1AA1};
             {
+              case 3:    //set pattern B
+                SetPattern(PATTERN_B);
+                ShowPattern();
+                break;                
               case 5: //tempo
                 if (_songSpeed<9) _songSpeed++;                
                 VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1);
@@ -626,6 +634,10 @@ void WorkWin()
           { 
             switch (_cursor_pos) 
             {
+              case 3:    //set pattern A
+                SetPattern(PATTERN_A);
+                ShowPattern();
+                break;
               case 5:
                 if (_songSpeed>1) _songSpeed--;                
                 VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1); 
@@ -682,7 +694,6 @@ void WorkWin()
                 PlaySomething(); 
                 break;
             case 1:    //random All
-                //ChangePattern();
                 genDrumPattern();
                 genTonePattern(); 
                 break;
@@ -857,6 +868,103 @@ void WorkWin()
     
 
 }
+
+
+
+void Help()
+{
+  boolean isExit = false;
+  
+  boolean joybool = false;
+  boolean joytrigbool = true;
+  char joyval;
+  char joytrig;
+  
+  char helpLinePos=0;
+    
+  //Silence(); //Enjoy the...
+  //Stop();
+    
+  SetSpriteVisible(0,false);
+  SetSpriteVisible(1,false);
+  
+  //FillVRAM(BASE10, 768, 255); //clear screen
+      
+  if (VDP_type>0) SetPalette(2);
+  
+  showHelpScr();
+  
+  VPRINT(23,1,app_version);
+  
+  
+  HALT;
+  PlayAY(); //Dump values from RAM buffer to PSG (AY)
+  if (_playerStatus==PLAYER_PLAY) PlayerDecode();
+  
+  showHelpText(0);
+  showScrollbar(0);
+  
+  //SetSpritePattern(0, 31);
+  //SetSpritePattern(1, 31);
+
+    
+  while(isExit==false)
+  {
+    HALT;
+    PlayAY(); //Dump values from RAM buffer to PSG (AY)
+    
+    if (_playerStatus==PLAYER_PLAY) PlayerDecode();
+    
+    joytrig=STRIG(1);
+    if (joytrig==0) joytrig=STRIG(2);
+    if (joytrig>0)
+    {
+      if (joytrigbool==false)
+      {
+        //joytrigbool = true;
+        isExit=true;
+      }
+    }else{
+        joytrigbool = false;
+    }
+    
+    if (!(GetKeyMatrix(7)&Bit2)) isExit=true; // ESC
+    
+    joyval=STICK(0);
+    if (joyval==0) joyval=STICK(1);
+    if (joyval==0) joyval=STICK(2);
+    if (joyval>0)
+    {
+      if (joybool==false)
+      {
+        joybool = true;
+        
+        if(joyval==1) // arriba
+        {            
+          if(helpLinePos>0) {helpLinePos--;showHelpText(helpLinePos);showScrollbar(helpLinePos);}
+        }
+        if(joyval==5) // abajo
+        {            
+          if(helpLinePos<(HELP_LINES-20)) {helpLinePos++;showHelpText(helpLinePos);showScrollbar(helpLinePos);}           
+        }
+        //if(joyval==3) // right
+        //if(joyval==7) // left
+      }
+    }else{
+      joybool = false;
+    }  
+      
+  }
+  
+  //FillVRAM(BASE10, 768, 255); //clear screen
+  if (VDP_type>0) SetPalette(1);
+  showMainScr();
+  initGUI();
+    
+}
+
+
+
 
 
 
@@ -1418,13 +1526,21 @@ __endasm;
 void ChangePattern()
 {
   
-  _playPATT= !_playPATT;
+  _playPatternNumber++;
+  if (_playPatternNumber>1) _playPatternNumber=0;
   
-  if (_playPATT) _pattern = (PATTERN *) patternA; 
+  SetPattern(_playPatternNumber);
+}
+
+
+
+void SetPattern(char number)
+{
+  _playPatternNumber = number;
+  if (number==PATTERN_A) _pattern = (PATTERN *) patternA; 
   else _pattern = (PATTERN *) patternB;
     
   ShowPatternRadioButton();
-
 }
 
 
@@ -1434,7 +1550,7 @@ void CopyPattern()
   char i;
   PATTERN *_destination;
   
-  if (_playPATT) _destination = (PATTERN *) patternB; 
+  if (_playPatternNumber) _destination = (PATTERN *) patternB; 
   else _destination = (PATTERN *) patternA;
   
   
@@ -1453,10 +1569,9 @@ void CopyPattern()
 
 
 
-
 void ShowPatternRadioButton()
 {
-  if(_playPATT){
+  if(_playPatternNumber==PATTERN_A){
     VPOKE(GUI_RADIO_A_VADDR,GUI_RADION_ICON);
     VPOKE(GUI_RADIO_B_VADDR,GUI_RADIOF_ICON);
   }else{
@@ -1946,106 +2061,6 @@ HELP_TEXT:
 
   
 __endasm;
-}
-
-
-
-void Help()
-{
-  boolean isExit = false;
-  
-  boolean joybool = false;
-  boolean joytrigbool = true;
-  char joyval;
-  char joytrig;
-  
-  char helpLinePos=0;
-    
-  Silence(); //Enjoy the...
-  Stop();
-    
-  SetSpriteVisible(0,false);
-  SetSpriteVisible(1,false);
-  
-  FillVRAM(BASE10, 768, 255); //clear screen
-  
-  if (VDP_type>0) SetPalette(2);
-  
-  showHelpScr();
-  
-  VPRINT(23,1,app_version);
-  
-  showHelpText(0);
-  showScrollbar(0);
-  
-  //SetSpritePattern(0, 31);
-  //SetSpritePattern(1, 31);
-
-    
-  while(isExit==false)
-  {
-    HALT;
-    
-    joytrig=STRIG(1);
-    if (joytrig==0) joytrig=STRIG(2);
-    if (joytrig>0)
-    {
-      if (joytrigbool==false)
-      {
-        //joytrigbool = true;
-        isExit=true;
-      }
-    }else{
-        joytrigbool = false;
-    }
-    
-    if (!(GetKeyMatrix(7)&Bit2)) isExit=true; // ESC
-    
-    joyval=STICK(0);
-    if (joyval==0) joyval=STICK(1);
-    if (joyval==0) joyval=STICK(2);
-    if (joyval>0)
-    {
-      if (joybool==false)
-      {
-        joybool = true;
-        
-        if(joyval==1) // arriba
-        {            
-          if(helpLinePos>0) {helpLinePos--;showHelpText(helpLinePos);showScrollbar(helpLinePos);}
-        }
-        if(joyval==5) // abajo
-        {            
-          if(helpLinePos<(HELP_LINES-20)) {helpLinePos++;showHelpText(helpLinePos);showScrollbar(helpLinePos);}           
-        }
-        //if(joyval==3) // right
-        //if(joyval==7) // left
-      }
-    }else{
-      joybool = false;
-    }  
-      
-  }
-  
-  //FillVRAM(BASE10, 768, 255); //clear screen
-  if (VDP_type>0) SetPalette(1);
-  showMainScr();
-  initGUI();
-  
-/*
-  
-  
-  VPRINT(RNAME_X,RNAME_Y,_rhythm->name);
-  VPrintNumber(TEMPO_X,TEMPO_Y, _tempo, 2);
-  
-  setPattern();
-  
-  WAIT(30); //
-
-  SetSpritePattern(0, 7);
-  SetSpritePattern(1, 7);
-*/
-  
 }
 
 
