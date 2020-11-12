@@ -57,8 +57,8 @@ On second-generation or higher MSX computers, an enhanced palette is used.
 
 ## Acknowledgments
 
-* **Kun/Paxanga Soft** - Second place in the Experimental Sound Minicompo with his application Noise Raiser. http://paxangasoft.retroinvaders.com/
-* **Hap** - Third place in the Experimental Sound Minicompo with his application VDP Music.
+* **Kun/Paxanga Soft** - Participant in the Experimental Sound Minicompo with his application Noise Raiser. http://paxangasoft.retroinvaders.com/
+* **Hap** - Participant in the Experimental Sound Minicompo with his application VDP Music.
 * **Fubukimaru** for betatesting
 * **Karoshi MSX Community** (RIP 2007-2020)
 
@@ -120,18 +120,21 @@ List of controls:
 
 Using keyboard shortcuts you can operate many of the controls in the control area, except those related to the wave envelope, but add controls that affect playback, such as those that limit the size of the pattern.
 
+**Cursor keys and Joystick A or B:**
 * [Up] Menu cursor up
 * [Down] Menu cursor down
 * [Left] Switch left or decrease value
 * [Right] Switch right or increase value
 * [SPACE] or Joystick Button - Actuate the random buttons or the switchers
+ 
+**Keyboard:**
 * [RETURN] It goes into Play mode and moves to the first step of the sequence 
 * [STOP] Stop pattern playback
 * [F1] Rhythm channel On/Off
 * [F2] Melody channel On/Off
-* [TAB] Random Rhythm & Melody patterns
-* [CTRL] Random Rhythm pattern
-* [SHIFT] Random Melody pattern
+* [TAB] Generate random Rhythm and Melody patterns
+* [CTRL] Generate random Rhythm pattern
+* [SHIFT] Generate random Melody pattern
 * [1] Loop first 2 steps
 * [2] Loop first 4 steps
 * [3] Loop first 8 steps

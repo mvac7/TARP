@@ -43,7 +43,7 @@
 #define GUI_SWITCHER_ON   221
 #define GUI_SWITCHER_OFF  222
 
-#define GUI_CASIO_VADDR   0x1949
+#define GUI_DKIT_VADDR    0x1949
 #define GUI_ABMIX_VADDR   0x19C9
 #define GUI_ENVLOOP_VADDR 0x1A29
 
@@ -105,7 +105,6 @@ typedef struct {
 
   boolean isLoop;
   char ampValues[16];
-  //char length;
     
 } Envelope;
 
@@ -291,11 +290,6 @@ char _transpose;
 boolean _ToneEnabled; //_ToneEnabled
 boolean _DrumEnabled; //_DrumEnabled
 
-//boolean _AB_MIX;
-//char _AB_offset;
-
-//char _env_index;
-//char _env_speed;
 char _env_step;
 
 char _toneAmp;
@@ -313,12 +307,6 @@ PATTERN *_pattern;
 PATTERN patternA;
 PATTERN patternB;
 
-//char drum_pattern[16];
-//char tone_pattern[16]; //={46,0,49,0,50,0,51,0,46,0,49,0,50,0,51,0};
-
-//char prev_octave;
-//char prev_drum_pattern[16];  // #9
-//char prev_tone_pattern[16];
 
 Envelope envelope_list[8];
 
@@ -327,7 +315,8 @@ char SEED;
 
 signed char _cursor_pos;
 
-boolean _isCasio;
+char _isDrumKitB;
+
 
 // -----------------------------------------------------------------------------
 #define HELP_WIDTH    29
@@ -343,7 +332,7 @@ void main(void) {
 
   checkMSX();
   
-  _playPatternNumber = 0;
+  _playPatternNumber = PATTERN_A;
   
   COLOR(15,1,1);  
   SCREEN(2);  
@@ -487,9 +476,9 @@ void WorkWin()
     _playerHardware=0; //select internal AY
     _playerStatus=PLAYER_STOP;  
     
-    _isCasio = false;
+    _isDrumKitB = false;
       
-    SetDrumKit(_isCasio);    
+    SetDrumKit(_isDrumKitB);    
     
     PlayerInit();
     
@@ -601,9 +590,9 @@ void WorkWin()
                 VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1);
                 break;
               case 8: //Drum KIT Switcher
-                _isCasio=true;
-                SetDrumKit(_isCasio);
-                switcher(GUI_CASIO_VADDR,true); 
+                _isDrumKitB=true;
+                SetDrumKit(_isDrumKitB);
+                switcher(GUI_DKIT_VADDR,true); 
                 break;
               case 11: //A+B
                 _pattern->AB_MIX=true;
@@ -643,9 +632,9 @@ void WorkWin()
                 VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1); 
                 break;
               case 8:
-                _isCasio=false;
-                SetDrumKit(_isCasio);
-                switcher(GUI_CASIO_VADDR,false); 
+                _isDrumKitB=false;
+                SetDrumKit(_isDrumKitB);
+                switcher(GUI_DKIT_VADDR,false); 
                 break;
               case 11:
                 _pattern->AB_MIX=false;
@@ -715,9 +704,9 @@ void WorkWin()
                 genDrumPattern(); 
                 break;
             case 8:
-                _isCasio=!_isCasio;
-                SetDrumKit(_isCasio);
-                switcher(GUI_CASIO_VADDR,_isCasio); 
+                _isDrumKitB= !_isDrumKitB;
+                SetDrumKit(_isDrumKitB);
+                switcher(GUI_DKIT_VADDR,_isDrumKitB); 
                 break;
             case 9:    //Melody channel On/Off
                 invertToneChannel();
@@ -838,9 +827,9 @@ void WorkWin()
           }; // BS
           if (!(keyPressed&Bit6)) 
           {
-            _isCasio=!_isCasio;
-            SetDrumKit(_isCasio);
-            switcher(GUI_CASIO_VADDR,_isCasio);
+            _isDrumKitB= !_isDrumKitB;
+            SetDrumKit(_isDrumKitB);
+            switcher(GUI_DKIT_VADDR,_isDrumKitB);
             keyB7pressed=true;
           }; // SELECT
           if (!(keyPressed&Bit7)) {Play();keyB7pressed=true;}; // RETURN
@@ -1000,15 +989,8 @@ void initGUI()
     showSpeaker(GUI_DRUM_VADDR,_DrumEnabled);     
     showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
     
-    switcher(GUI_CASIO_VADDR,_isCasio);
-    
-    //switcher(GUI_ABMIX_VADDR,_pattern->AB_MIX);
-    //VPrintNum(GUI_OFFS_VADDR,_pattern->AB_offset, 3);
+    switcher(GUI_DKIT_VADDR,_isDrumKitB);
         
-    //showEnv(_env_index);
-    //VPrintNum(GUI_WSPEED_VADDR, _env_speed, 1);
-    //switcher(GUI_ENVLOOP_VADDR,envelope_list[_env_index].isLoop);
-    
     ShowPattern();            
     
     VPOKE(vaddr_cursor[_cursor_pos],GUI_CURSOR);
@@ -1122,11 +1104,8 @@ void initPatternsData()
 {
     char i;
     
-    //char pattern[16]={1,0,3,3,0,0,3,3,1,0,3,3,0,0,3,3}; 
     //char pattern[16]={1,0,3,0,2,0,2,0,1,0,3,0,2,0,3,0}; //rock1
-    
-    //_pattern = (PATTERN *) patternA;
-    
+      
     patternA.octave = 1;
     patternA.transpose = 12;
     patternA.AB_MIX = true;
@@ -1140,12 +1119,7 @@ void initPatternsData()
     patternB.Envelope = 0;
     
     for(i=0;i<16;i++)
-    {
-        //drum_pattern[i]=0;
-        //tone_pattern[i]=0;
-        //prev_drum_pattern[i]=0;
-        //prev_tone_pattern[i]=0;
-        
+    {       
         patternA.drum[i]=0;
         patternA.tone[i]=0;
         
@@ -1193,13 +1167,6 @@ void PlayerDecode()
     {
       _songSpeedStep=0;
       
-      /* cursor de patron
-      VPOKE(0x1AAE+last_step,239);    //borra la ultima posicion
-      VPOKE(0x1AAE+pattern_step,185); //muestra el cursor
-      last_step = pattern_step;
-      */ 
-      
-      
       // control de la percusion
       if(_DrumEnabled==true)
       {
@@ -1207,9 +1174,6 @@ void PlayerDecode()
         
         if(drum_type>0) //0 = there is no drum
         {
-          //if(_isCasio==true) _tmp_INST= &Percu_casio[drum_type-1];
-          //else _tmp_INST= &Percu_basic[drum_type-1];
-          
           _Drum=&_DrumKit[drum_type-1];
           
           SetMixer(2,_Drum->isTone,_Drum->isNoise);
@@ -1234,8 +1198,6 @@ void PlayerDecode()
       {
         freqA = getFreq(tone_note+(_pattern->octave*12)); //+ variacion; 
         freqB = freqA + _pattern->AB_offset;
-        //VPrintNumber(20,0, tone_note, 3);   // TEST ##########################
-        //VPrintNumber(24,0, freq1, 5);
         
         AYREGS[0] = freqA & 0xFF;      
         AYREGS[1] = (freqA & 0xFF00)/255;
@@ -1339,7 +1301,6 @@ ILOOP:
   inc  C
   out  (C),A 
   
-  ;xor  A
   ld   (HL),#0
     
   ret  
@@ -1372,7 +1333,6 @@ void SetMixer(char NumChannel, boolean isTone, boolean isNoise)
       if(isTone==true){newValue&=251;}else{newValue|=4;}
       if(isNoise==true){newValue&=223;}else{newValue|=32;}
   }
-  //sound_set(7,newValue);
   AYREGS[7] = newValue;
 }
 
@@ -1527,7 +1487,7 @@ void ChangePattern()
 {
   
   _playPatternNumber++;
-  if (_playPatternNumber>1) _playPatternNumber=0;
+  if (_playPatternNumber>PATTERN_B) _playPatternNumber=PATTERN_A;
   
   SetPattern(_playPatternNumber);
 }
@@ -1550,10 +1510,9 @@ void CopyPattern()
   char i;
   PATTERN *_destination;
   
-  if (_playPatternNumber) _destination = (PATTERN *) patternB; 
+  if (_playPatternNumber==PATTERN_A) _destination = (PATTERN *) patternB; 
   else _destination = (PATTERN *) patternA;
-  
-  
+ 
   for(i=0;i<16;i++){
      _destination->drum[i]=_pattern->drum[i];
      _destination->tone[i]=_pattern->tone[i];
@@ -1919,26 +1878,26 @@ __asm
   ld   D,7(ix)
   	
   ld   BC,#-10000
-	call $Num1
-	ld   BC,#-1000
-	call $Num1
-	ld   BC,#-100
-	call $Num1
-	ld   C,#-10
-	call $Num1
-	ld   C,B
-	call $Num1
+  call $Num1
+  ld   BC,#-1000
+  call $Num1
+  ld   BC,#-100
+  call $Num1
+  ld   C,#-10
+  call $Num1
+  ld   C,B
+  call $Num1
   jr   $Num3  
 $Num1:	
   ld   A,#-1 ;ASCII-1 47 
 $Num2:	
-  inc	 A
-	add	 HL,BC
-	jr	 C,$Num2
-	sbc	 HL,BC
-	ld	 (DE),A
-	inc	 DE
-	ret
+  inc  A
+  add  HL,BC
+  jr   C,$Num2
+  sbc  HL,BC
+  ld   (DE),A
+  inc  DE
+  ret
 $Num3:	
   ;END
   pop  IX
