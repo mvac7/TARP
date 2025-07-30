@@ -1,26 +1,40 @@
 /* =============================================================================
-   The Alan Randoms Project                                              
-   version: 1 (Nov/2020)
+# The Alan Randoms Project (TARP)                                              
    
-   Author: mvac7/303bcn                                                      
-   Architecture: MSX 
-   Format: ROM 16K (h4000) 
-   Programming language: C
-                                     
-   Description:                                                             
-     Random music maker
-     from Karoshi's eXperimental Sound Mini-compo 2012 contest                                                   
+- Version: 1.1 (30/07/2025)
+- Author: mvac7/303bcn
+- Architecture: MSX
+- Format: 16K ROM (BIOS+ROM+RAM+RAM)
+- Programming language: C and Z80 assembler
+- Compiler: SDCC 4.4 or newer
+
+## Description:
+
+rand0m mUsic maKer for mSX comput3rs.
+
+powered by fR3eL
+https://github.com/mvac7/SDCC_MSX_fR3eL
+    
+## History of versions (dd/mm/yyyy):
+- v1.1 (30/07/2025)
+	- Adapt code to new SDCC Z80 calling conventions
+	- add new fR3eL Libraries
+- v1.0 (12/11/2020) New features.
+- v0.9 (29/04/2012) Karoshi's eXperimental Sound Mini-compo 2012 contest
 ============================================================================= */
 
-
-#include "../include/msxSystemVars.h"
-#include "../include/msxBIOS.h"
 #include "../include/newTypes.h"
-#include "../include/VDP_TMS9918.h"
-#include "../include/VDP_sprites.h"
-#include "../include/joystick.h"
-#include "../include/keyboard.h"
-#include "../include/memory.h"
+#include "../include/msxBIOS.h"
+#include "../include/msxSystemVariables.h"
+
+#include "../include/memory_Z80.h"
+#include "../include/keyboard_MSX.h"
+#include "../include/joystick_MSX.h"
+
+#include "../include/VDP_TMS9918A_MSXBIOS.h"
+//#include "../include/VDP_PRINT.h"
+#include "../include/VDP_SPRITES.h"
+
 #include "../include/unRLEWBtoVRAM.h"
 #include "../include/unRLEWBtoRAM.h"
 
@@ -127,84 +141,84 @@ typedef struct {
 
 
 
-void logoScreen();
-void WorkWin();
+void logoScreen(void);
+void WorkWin(void);
 
-void wipe2theMiddle();
+void wipe2theMiddle(void);
 
-void setSprites();
+void setSprites(void);
 
-void setTileset();
-void showMainScr();
+void setTileset(void);
+void showMainScr(void);
 
-void initWaveEnvelopes();
-void initPatternsData();
+void initWaveEnvelopes(void);
+void initPatternsData(void);
 
-void Help();
-void showHelpScr();
-void initHelpText();
+void Help(void);
+void showHelpScr(void);
+void initHelpText(void);
 void showHelpText(char line);
 void showScrollbar(char line);
 
-void showLogoScreen();
+void showLogoScreen(void);
 
-void setMSX2Palette();
+void setMSX2Palette(void);
 void SetPalette(char number);
 
-void initGUI();
+void initGUI(void);
 
 void showSpeaker(uint vaddr, boolean value);
-void switcher(uint vaddr, boolean value);
+void GUI_switcher(uint vaddr, boolean value);
 
-void ShowPatternRadioButton();
+void ShowPatternRadioButton(void);
 
-void invertDrumChannel();
-void invertToneChannel();
+void invertDrumChannel(void);
+void invertToneChannel(void);
 //void setChannelsState(boolean state);
 
-void ChangePattern();
+void ChangePattern(void);
 void SetPattern(char number);
-void CopyPattern();
+void CopyPattern(void);
 
-void genDrumPattern();
-void genTonePattern();
+void genDrumPattern(void);
+void genTonePattern(void);
 
-void ShowSequenceCursor();
+void ShowSequenceCursor(void);
 void SetPatternLenght(char length);
 
-void ShowPattern();
-void ShowDrumPattern();
-void ShowTonePattern();
+void ShowPattern(void);
+void ShowDrumPattern(void);
+void ShowTonePattern(void);
 
-void TransposeUp();
-void TransposeDown();
+void TransposeUp(void);
+void TransposeDown(void);
 
-int getFreq(char value);
+unsigned int getFreq(char value);
 
-void upOctave();
-void downOctave();
+void upOctave(void);
+void downOctave(void);
 
-void showOctave();
-void showABmix();
-void showABoffset();
-void showEnv();
+void showOctave(void);
+void showABmix(void);
+void showABoffset(void);
+void showEnv(void);
 
 void SetDrumKit(boolean kit);
 
-void checkMSX();
+void checkMSX(void);
 
 char Rnd(char value);
 
-void PlayerInit();
-void PlayerDecode();
-void PlayAY();
+void PlayerInit(void);
+void PlayerDecode(void);
+void PlayAY(void);
 void SetMixer(char NumChannel, boolean isTone, boolean isNoise);
-void Silence();
+void Silence(void);
 
-void Play();
-void Stop();
+void Play(void);
+void Stop(void);
 
-void PlaySomething();
+void PlaySomething(void);
 
 uint GetVAddressByPosition(char column, char line);
 void VPRINT(char column, char line, char* text);
@@ -220,7 +234,7 @@ void num2Dec16(unsigned int value, char *address);
 const char APPCODE[] = "MV0061";
 const char app_name[] = "THE ALAN RANDOMS PROJECT"; 
 const char app_author[] = "MVAC7/303BCN";
-const char app_version[] = "1";
+const char app_version[] = "1.1";
 
 
 const char enve_data[128]={
@@ -356,7 +370,7 @@ void main(void) {
 
 
 
-void wipe2theMiddle()
+void wipe2theMiddle(void)
 {
   signed char x;
   char y;
@@ -380,7 +394,7 @@ void wipe2theMiddle()
 }
 
 
-void logoScreen()
+void logoScreen(void)
 {
   int timec = 700;
   
@@ -410,13 +424,12 @@ void logoScreen()
     if (STRIG(2)>0) break; //button 1, joy B    
   }
 
-  return;
 }
 
 
 
 
-void WorkWin()
+void WorkWin(void)
 {
     
     // key press control
@@ -592,7 +605,7 @@ void WorkWin()
               case 8: //Drum KIT Switcher
                 _isDrumKitB=true;
                 SetDrumKit(_isDrumKitB);
-                switcher(GUI_DKIT_VADDR,true); 
+                GUI_switcher(GUI_DKIT_VADDR,true); 
                 break;
               case 11: //A+B
                 _pattern->AB_MIX=true;
@@ -609,7 +622,7 @@ void WorkWin()
                 break;
               case 14: //loop Switcher
                 envelope_list[_pattern->Envelope].isLoop=true;
-                switcher(GUI_ENVLOOP_VADDR,true);
+                GUI_switcher(GUI_ENVLOOP_VADDR,true);
                 break;
               case 15: // _octave +
                 downOctave(); 
@@ -634,7 +647,7 @@ void WorkWin()
               case 8:
                 _isDrumKitB=false;
                 SetDrumKit(_isDrumKitB);
-                switcher(GUI_DKIT_VADDR,false); 
+                GUI_switcher(GUI_DKIT_VADDR,false); 
                 break;
               case 11:
                 _pattern->AB_MIX=false;
@@ -651,7 +664,7 @@ void WorkWin()
                 break;
               case 14:
                 envelope_list[_pattern->Envelope].isLoop=false;
-                switcher(GUI_ENVLOOP_VADDR,false); 
+                GUI_switcher(GUI_ENVLOOP_VADDR,false); 
                 break;
               case 15: //_octave -
                 upOctave();
@@ -706,7 +719,7 @@ void WorkWin()
             case 8:
                 _isDrumKitB= !_isDrumKitB;
                 SetDrumKit(_isDrumKitB);
-                switcher(GUI_DKIT_VADDR,_isDrumKitB); 
+                GUI_switcher(GUI_DKIT_VADDR,_isDrumKitB); 
                 break;
             case 9:    //Melody channel On/Off
                 invertToneChannel();
@@ -730,7 +743,7 @@ void WorkWin()
             case 14:
                 //loop
                 envelope_list[_pattern->Envelope].isLoop=!envelope_list[_pattern->Envelope].isLoop;
-                switcher(GUI_ENVLOOP_VADDR,envelope_list[_pattern->Envelope].isLoop); 
+                GUI_switcher(GUI_ENVLOOP_VADDR,envelope_list[_pattern->Envelope].isLoop); 
                 break;
 /*            case 15: // _octave +
                 downOctave(); 
@@ -829,7 +842,7 @@ void WorkWin()
           {
             _isDrumKitB= !_isDrumKitB;
             SetDrumKit(_isDrumKitB);
-            switcher(GUI_DKIT_VADDR,_isDrumKitB);
+            GUI_switcher(GUI_DKIT_VADDR,_isDrumKitB);
             keyB7pressed=true;
           }; // SELECT
           if (!(keyPressed&Bit7)) {Play();keyB7pressed=true;}; // RETURN
@@ -860,7 +873,7 @@ void WorkWin()
 
 
 
-void Help()
+void Help(void)
 {
   boolean isExit = false;
   
@@ -982,14 +995,14 @@ its_60hz:
 
 
 
-void initGUI()
+void initGUI(void)
 {    
     VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1); 
     
     showSpeaker(GUI_DRUM_VADDR,_DrumEnabled);     
     showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
     
-    switcher(GUI_DKIT_VADDR,_isDrumKitB);
+    GUI_switcher(GUI_DKIT_VADDR,_isDrumKitB);
         
     ShowPattern();            
     
@@ -1004,7 +1017,7 @@ void initGUI()
 
 
 
-void ShowSequenceCursor()
+void ShowSequenceCursor(void)
 {
   // cursor de patron
   if (_last_step==_newENDstep) VPOKE(GUI_SEQ_VADDR+_last_step,GUI_SEQLENCURSOR);    
@@ -1043,7 +1056,7 @@ void SetPatternLenght(char length)
 
 
 
-void PlaySomething()
+void PlaySomething(void)
 { 
     char i;
     
@@ -1065,7 +1078,7 @@ void PlaySomething()
 
 
 
-void invertDrumChannel()
+void invertDrumChannel(void)
 {
     _DrumEnabled=!_DrumEnabled;              
     showSpeaker(GUI_DRUM_VADDR,_DrumEnabled); 
@@ -1073,7 +1086,7 @@ void invertDrumChannel()
 
 
 
-void invertToneChannel()
+void invertToneChannel(void)
 {
     _ToneEnabled=!_ToneEnabled;
     showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
@@ -1081,7 +1094,7 @@ void invertToneChannel()
 
 
 
-void initWaveEnvelopes()
+void initWaveEnvelopes(void)
 {
   char i,o;
   char conta=0;
@@ -1100,7 +1113,7 @@ void initWaveEnvelopes()
 
 
 
-void initPatternsData()
+void initPatternsData(void)
 {
     char i;
     
@@ -1131,7 +1144,7 @@ void initPatternsData()
 
 
 
-void PlayerInit()
+void PlayerInit(void)
 {
     _songSpeed = 4;
 
@@ -1154,7 +1167,7 @@ void PlayerInit()
 Decode a frame from song. 
 Write AY registers values to buffer 
 */
-void PlayerDecode()
+void PlayerDecode(void)
 {
     char drum_type;
     char tone_note;
@@ -1193,11 +1206,13 @@ void PlayerDecode()
       
 
       // control del intrumento de acompañamiento
-      tone_note = _pattern->tone[_pattern_step];
+      tone_note = _pattern->tone[_pattern_step];	  
       if(tone_note>0)
       {
         freqA = getFreq(tone_note+(_pattern->octave*12)); //+ variacion; 
         freqB = freqA + _pattern->AB_offset;
+		
+		//VPrintNum(0x180d,freqA,5);				//<-------------------------- TEST
         
         AYREGS[0] = freqA & 0xFF;      
         AYREGS[1] = (freqA & 0xFF00)/255;
@@ -1246,7 +1261,6 @@ void PlayerDecode()
     if(_pattern->AB_MIX==true) AYREGS[9] = _toneAmp;
     else AYREGS[9] = 0;
 
-
 }
 
 
@@ -1254,7 +1268,7 @@ void PlayerDecode()
 // vuelca desde una area de la RAM (AYREGS), 
 // los valores de los registros del PSG
 // a tres diferentes chips (AY interno, AY Pazos y SCC)
-void PlayAY()
+void PlayAY(void)
 {
 __asm
   ld HL,#_AYREGS ; direccion de memoria del buffer	
@@ -1399,16 +1413,16 @@ void SetDrumKit(boolean kit)
 
 
 
-void Silence()
+void Silence(void)	__naked
 {
 __asm  
-  call GICINI   ;Init PSG
+  jp   BIOS_GICINI   //Init PSG
 __endasm;
 }
 
 
 
-void Play()
+void Play(void)
 {
     _songSpeedStep = _songSpeed;
     _pattern_step=0;
@@ -1420,7 +1434,7 @@ void Play()
 
 
 
-void Stop()
+void Stop(void)
 {
     AYREGS[8]=0;
     AYREGS[9]=0;
@@ -1438,11 +1452,8 @@ char Rnd(char value) __naked
 {
 value;
 __asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
   
-  ld   C,4(ix) ;recoge el valor de la mascara  	
+  ld   C,A //recoge el valor de la mascara  	
   
   ld   A,R		;  
   ld   B,A
@@ -1464,26 +1475,22 @@ __asm
     
   AND  C  ;aplica la mascara     
   
-  
-  ld   L,A
-  pop  IX
-  
-  ret   
+  ret	//return A
 __endasm;
 }
 
 
 
-void pressKey()
+void pressKey(void) __naked
 {
 __asm   
-    call CHGET
+    jp   BIOS_CHGET
 __endasm;
 }
 
 
 
-void ChangePattern()
+void ChangePattern(void)
 {
   
   _playPatternNumber++;
@@ -1505,7 +1512,7 @@ void SetPattern(char number)
 
 
 
-void CopyPattern()
+void CopyPattern(void)
 {
   char i;
   PATTERN *_destination;
@@ -1528,7 +1535,7 @@ void CopyPattern()
 
 
 
-void ShowPatternRadioButton()
+void ShowPatternRadioButton(void)
 {
   if(_playPatternNumber==PATTERN_A){
     VPOKE(GUI_RADIO_A_VADDR,GUI_RADION_ICON);
@@ -1542,7 +1549,7 @@ void ShowPatternRadioButton()
 
 
 // genera un patron de ritmo de forma aleatoria
-void genDrumPattern()
+void genDrumPattern(void)
 {
   char hits;
   char kicks;
@@ -1593,7 +1600,7 @@ void genDrumPattern()
 
 
 // genera un patron de tono de forma aleatoria
-void genTonePattern()
+void genTonePattern(void)
 {
   char type;
   char value;
@@ -1624,13 +1631,11 @@ void genTonePattern()
   for(i=0;i<8;i++) _pattern->tone[i+8]=_pattern->tone[i];
   
   ShowTonePattern();
-    
-  return;
 }
 
 
 
-void ShowPattern()
+void ShowPattern(void)
 {
   showOctave();
   showABmix();
@@ -1644,7 +1649,7 @@ void ShowPattern()
 
 
  //draw in screen a Drum pattern
-void ShowDrumPattern()
+void ShowDrumPattern(void)
 {
   uint vaddr = GUI_SEQ_DRUM_VADDR;
   char i;
@@ -1656,7 +1661,7 @@ void ShowDrumPattern()
 
 
  //draw in screen a Tone pattern
-void ShowTonePattern()
+void ShowTonePattern(void)
 {
   uint vaddr = GUI_SEQ_TONE_VADDR;
   char i;
@@ -1669,7 +1674,7 @@ void ShowTonePattern()
 
 
 
-void upOctave()
+void upOctave(void)
 {
   if (_pattern->octave>0) _pattern->octave--;
   //else _pattern->octave=6;
@@ -1678,7 +1683,7 @@ void upOctave()
 
 
 
-void downOctave()
+void downOctave(void)
 {
    if (_pattern->octave<5) _pattern->octave++;
    //else _pattern->octave=1;
@@ -1687,21 +1692,21 @@ void downOctave()
 
 
 
-void showOctave()
+void showOctave(void)
 {
   VPrintNum(GUI_OCTA_VADDR, _pattern->octave+1, 1);
 }
 
 
 
-void showABmix()
+void showABmix(void)
 {
-  switcher(GUI_ABMIX_VADDR,_pattern->AB_MIX);
+  GUI_switcher(GUI_ABMIX_VADDR,_pattern->AB_MIX);
 }
 
 
 
-void showABoffset()
+void showABoffset(void)
 {
   VPrintNum(GUI_OFFS_VADDR, _pattern->AB_offset, 3);
 }
@@ -1709,7 +1714,7 @@ void showABoffset()
 
 
 // sube una nota el patron de tono
-void TransposeUp()
+void TransposeUp(void)
 {
   char i;
   char value;
@@ -1725,14 +1730,12 @@ void TransposeUp()
         //if(value>0 && value<12)
     }
   }
-  
-  return;  
 }
 
 
 
 // baja una nota el patron de tono
-void TransposeDown()
+void TransposeDown(void)
 {
   char i;
   char value;
@@ -1748,36 +1751,33 @@ void TransposeDown()
       if(value>0) _pattern->tone[i]--;
     }
   }
-  
-  return;  
 }
 
 
 
-// proporciona la frecuencia a partir de un numero de nota
-// A=num de nota (0>96) HL=valor freq
-int getFreq(char value) __naked
-{
-value;
-__asm 
-  push IX
-  ld   IX,#0
-  add  IX,SP
-  
-  ld A,4(IX)  
+/* =============================================================================
+getFreq
 
-;GETFREQ:  
-  SLA A    ; x2 (rotacion izquierda sin acarreo) 
-  ld D,#0
-  ld E,A
-  ld IY,#VNOTAS
-  add IY,DE
-  
-  ld L,(IY)
-  ld H,1(IY)
-  
-  pop IX
-  ret
+Function:
+		proporciona el valor de frecuencia a partir de un numero de nota
+Input:	[char] nota (0>96)
+Output:	[unsigned int]	valor de frecuencia
+============================================================================= */
+unsigned int getFreq(char value) __naked
+{
+value;	//A
+__asm 
+//GETFREQ: 
+	add  A	
+	//SLA  A    ; x2 (rotacion izquierda sin acarreo) 
+	ld   D,#0
+	ld   E,A
+	ld   IY,#VNOTAS
+	add  IY,DE  
+	ld   E,(IY)
+	ld   D,1(IY)
+	
+	ret	//return DE
 
 VNOTAS:				
   .dw 0
@@ -1862,20 +1862,11 @@ void VPrintNum(unsigned int vaddr, unsigned int value, char length)
 
 
 
-void num2Dec16(unsigned int value, char *address)
+void num2Dec16(unsigned int value, char *address)	__naked
 {
-  value;
-  address;
+  value;	//HL
+  address;	//DE
 __asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
-  
-  ld   L,4(ix)
-  ld   H,5(ix)
-  
-  ld   E,6(ix)
-  ld   D,7(ix)
   	
   ld   BC,#-10000
   call $Num1
@@ -1887,7 +1878,8 @@ __asm
   call $Num1
   ld   C,B
   call $Num1
-  jr   $Num3  
+  ret
+//  jr   $Num3  
 $Num1:	
   ld   A,#-1 ;ASCII-1 47 
 $Num2:	
@@ -1898,9 +1890,9 @@ $Num2:
   ld   (DE),A
   inc  DE
   ret
-$Num3:	
-  ;END
-  pop  IX
+//$Num3:	
+//  ;END
+//  pop  IX
   
 __endasm;
 }
@@ -1908,7 +1900,7 @@ __endasm;
 
 
 // muestra un control tipo switch (interruptor)
-void switcher(uint vaddr, boolean value)
+void GUI_switcher(uint vaddr, boolean value)
 {
   if(value==true)
   {
@@ -1924,12 +1916,12 @@ void switcher(uint vaddr, boolean value)
 
 
 // muestra el valor de la envolvente
-void showEnv()
+void showEnv(void)
 {
   char value = _pattern->Envelope;
   uint vaddr = GUI_ENV_VADDR;
   
-  switcher(GUI_ENVLOOP_VADDR,envelope_list[value].isLoop);
+  GUI_switcher(GUI_ENVLOOP_VADDR,envelope_list[value].isLoop);
   
   VPrintNum(vaddr+2, value, 1);
   
@@ -1952,7 +1944,7 @@ void showSpeaker(uint vaddr, boolean value)
 
 
 
-void initHelpText() __naked
+void initHelpText(void) __naked
 {
 __asm
 
@@ -2026,13 +2018,10 @@ __endasm;
 
 void showHelpText(char line) __naked
 {
-line;
+line;	//A
 __asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
   
-  ld   E,4(IX)    ;<--- line number
+  ld   E,A    //<--- line number
   ld   D,#0
   
   ld   BC,#HELP_WIDTH
@@ -2050,7 +2039,7 @@ printAline:
   push DE  
   
   ld   BC,#HELP_WIDTH  ; line size 
-  call LDIRVM
+  call BIOS_LDIRVM
 
   pop  DE
   ex   DE,HL
@@ -2065,14 +2054,13 @@ printAline:
   pop  BC
   djnz printAline
 
-  pop  IX
   ret
   
-;
-; Multiply 16-bit values (with 16-bit result)
-; In: Multiply BC with DE
-; Out: HL = result
-;
+/* ---------------------------------------------
+Multiply 16-bit values (with 16-bit result)
+In: Multiply BC with DE
+Out: HL = result
+--------------------------------------------- */
 Mult16:
     ld   A,B
     ld   B,#16
@@ -2130,7 +2118,7 @@ void showScrollbar(char line)
 
 
 
-void showLogoScreen() __naked
+void showLogoScreen(void) __naked
 {
 __asm
   ld   HL,#titlescreen_PAT
@@ -2287,14 +2275,12 @@ titlescreen_SPRPATTERNS:
 .db 0x40,0x40,0x20,0x10,0x08,0x04,0x04,0x02,0x01,0x01,0x88,0x80,0x02,0x00,0x88,0x80
 .db 0x1A,0x00,0x80,0xFF
 
-
-
 __endasm;
 }
 
 
 
-void setTileset() __naked
+void setTileset(void) __naked
 {
 __asm
   ld hl,#TILESET_PAT
@@ -2481,7 +2467,7 @@ __endasm;
 
 
 // set sprites data in vram
-void setSprites() __naked
+void setSprites(void) __naked
 {
 __asm
 
@@ -2515,7 +2501,7 @@ __endasm;
 
 
 // pantalla principal
-void showMainScr() __naked
+void showMainScr(void) __naked
 {
 __asm
 
@@ -2561,7 +2547,7 @@ __endasm;
 
 
 
-void showHelpScr() __naked
+void showHelpScr(void) __naked
 {
 __asm
 
@@ -2597,29 +2583,22 @@ __endasm;
 ----------------------------------------------------------------------------- */
 void SetPalette(char number) __naked
 {
-number;
+number;	//A <-- numero de paleta
 __asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
+//recoge la posicion de los datos del mapa usando un indice 
+  ld   IY,#palIndex
   
-  ld   A,4(ix)  ;<-- numero de paleta
-
-;recoge la posicion de los datos del mapa usando un indice 
-  ld   IX,#palIndex
-  
-;get ADDR of page data
-  or   A
-  jr   Z,readPALaddr    ;si es 0 no calcula nada, recoge el primer valor
-  sla  A
+//get ADDR of page data
+  add  A
   ld   E,A
   ld   D,#0
-  add  IX,DE
+  add  IY,DE
 
-readPALaddr:
-  ld   H,1(IX)
-  ld   L,(IX)
-    
+  ld   H,1(IY)
+  ld   L,(IY)
+
+// HL <-- Color Palette Data (32B)
+SetV9938Palette:    
   xor  A
   di
   out  (#0x99),A
@@ -2629,8 +2608,8 @@ readPALaddr:
   otir
   ei
   
-  pop  IX  
   ret 
+  
   
 palIndex:
 .dw TITLE_PAL,MAIN_PAL,HELP_PAL

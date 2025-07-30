@@ -1,31 +1,14 @@
-<msxOpenDocument app="tMSgfX devtool" version="0.9.4.0">
-  <info name="The Alan Random Project (TARP)" group="303bcn" version="0.9.7b" author="mvac7" startDate="637308864000000000" lastUpdate="637406496000000000">
-    <description>
-    </description>
+<msxOpenDocument app="tMSgfX devtool" version="0.9.19.0">
+  <info ProjectName="tarp_GFX" Name="" Version="1.1" Author="mvac7" Group="303bcn" StartDate="638892576000000000" LastUpdate="638892576000000000">
+    <Description>
+    </Description>
   </info>
   <screens name="">
-    <screen name="help" ScreenMode="2" SpriteSize="2" SpriteZoom="0" PaletteID="6849756" ForegroundColor="15" BackgroundColor="4" MapID="66968808" TilesetA_ID="15361866" TilesetB_ID="15361866" TilesetC_ID="15361866" SpritesetID="0" OAMID="0" />
-    <screen name="main_screen" ScreenMode="2" SpriteSize="2" SpriteZoom="0" PaletteID="60384317" ForegroundColor="15" BackgroundColor="4" MapID="50184984" TilesetA_ID="54890288" TilesetB_ID="54890288" TilesetC_ID="54890288" SpritesetID="0" OAMID="0" />
-    <screen name="TARP_titlescreen_BG" ScreenMode="2" SpriteSize="2" SpriteZoom="0" PaletteID="52313669" ForegroundColor="15" BackgroundColor="4" MapID="4410728" TilesetA_ID="9487824" TilesetB_ID="18281552" TilesetC_ID="30316242" SpritesetID="56885004" OAMID="11040173" />
+    <screen name="help" ScreenMode="2" SpriteSize="2" SpriteZoom="0" paletteID="0" ForegroundColor="15" BackgroundColor="4" MapID="66968808" OneBANK="True" TilesetA_ID="54890288" TilesetB_ID="54890288" TilesetC_ID="54890288" SpritesetID="0" OAMID="0" />
+    <screen name="main_screen" ScreenMode="2" SpriteSize="2" SpriteZoom="0" paletteID="0" ForegroundColor="15" BackgroundColor="4" MapID="50184984" OneBANK="True" TilesetA_ID="54890288" TilesetB_ID="54890288" TilesetC_ID="54890288" SpritesetID="0" OAMID="0" />
+    <screen name="TARP_titlescreen_BG" ScreenMode="2" SpriteSize="2" SpriteZoom="0" paletteID="0" ForegroundColor="15" BackgroundColor="4" MapID="4410728" OneBANK="False" TilesetA_ID="9487824" TilesetB_ID="18281552" TilesetC_ID="30316242" SpritesetID="56885004" OAMID="11040173" />
   </screens>
   <palettes>
-    <palette id="52313669" name="title_msx2">
-      <color index="1" red="0" green="0" blue="0" />
-      <color index="2" red="0" green="6" blue="1" />
-      <color index="3" red="0" green="7" blue="3" />
-      <color index="4" red="2" green="3" blue="4" />
-      <color index="5" red="2" green="3" blue="7" />
-      <color index="6" red="5" green="1" blue="1" />
-      <color index="7" red="2" green="6" blue="7" />
-      <color index="8" red="7" green="1" blue="1" />
-      <color index="9" red="7" green="3" blue="3" />
-      <color index="10" red="6" green="6" blue="1" />
-      <color index="11" red="6" green="6" blue="4" />
-      <color index="12" red="0" green="5" blue="1" />
-      <color index="13" red="6" green="2" blue="5" />
-      <color index="14" red="5" green="5" blue="5" />
-      <color index="15" red="7" green="7" blue="7" />
-    </palette>
     <palette id="6849756" name="help_pal">
       <color index="1" red="0" green="0" blue="0" />
       <color index="2" red="4" green="4" blue="4" />
@@ -58,6 +41,23 @@
       <color index="12" red="1" green="4" blue="1" />
       <color index="13" red="5" green="3" blue="5" />
       <color index="14" red="6" green="6" blue="6" />
+      <color index="15" red="7" green="7" blue="7" />
+    </palette>
+    <palette id="52313669" name="title_msx2">
+      <color index="1" red="0" green="0" blue="0" />
+      <color index="2" red="0" green="6" blue="1" />
+      <color index="3" red="0" green="7" blue="3" />
+      <color index="4" red="2" green="3" blue="4" />
+      <color index="5" red="2" green="3" blue="7" />
+      <color index="6" red="5" green="1" blue="1" />
+      <color index="7" red="2" green="6" blue="7" />
+      <color index="8" red="7" green="1" blue="1" />
+      <color index="9" red="7" green="3" blue="3" />
+      <color index="10" red="6" green="6" blue="1" />
+      <color index="11" red="6" green="6" blue="4" />
+      <color index="12" red="0" green="5" blue="1" />
+      <color index="13" red="6" green="2" blue="5" />
+      <color index="14" red="5" green="5" blue="5" />
       <color index="15" red="7" green="7" blue="7" />
     </palette>
     <palette id="60384317" name="main_msx2">
@@ -1113,85 +1113,7 @@
     </tileset>
   </gfx>
   <maps>
-    <map id="50184984" name="main_v4.7" maptype="1" tiletype="0" width="32" height="24" tileset="54890288">
-      <line index="0">A0A1A1A1A1A1A1A1A1A1A1A2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1C1D1E1F</line>
-      <line index="1">A720938F8E872020202020A8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="2">A7202020BB1011B7B8B9BAA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="3">A7202020BB7B18191A1BBAA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="4">A720DA4120DA4220BB0FBAA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="5">A720436F707920BBD6D7BAA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="6">A72053706565642020BCBEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="7">A3A4A4A4A4A4A4A4A4A4A4A6FFFFFFFFFFFFFFE0E1E2E3E4E5FFFFFFFFFFFFFF</line>
-      <line index="8">A72092889994888D0C0DD8A8FFFFFFFFFFFFE6E7E8E8E8E8E9EAFFFFFFFFFFFF</line>
-      <line index="9">A7202020BB1213B7B8B9BAA8FFFFFFFFFFFFEBE8E8E8E8E8E8ECFFFFFFFFFFFF</line>
-      <line index="10">A7204B697420202020DFDEA8FFFFFFFFFFFFEDE8E8E8E8E8E8EEFFFFFFFFFFFF</line>
-      <line index="11">A3A4A4A4A4A4A4A4A4A4A4A6FFFFFFFFFFFFEFE8E8E8E8E8E8F0FFFFFFFFFFFF</line>
-      <line index="12">A7208D858C8F84990C0ED8A8FFFFFFFFFFFFF1E8E8E8E8E8E8F2FFFFFFFFFFFF</line>
-      <line index="13">A7202020BB1415B7B8B9BAA8FFFFFFFFFFFFF3F4E8E8E8E8F5F6FFFFFFFFFFFF</line>
-      <line index="14">A720412B4220202020DFDEA8FFFFFFFFFFFFFFF7F8F9FAFBFCFFFFFFFFFFFFFF</line>
-      <line index="15">A7204F666673202020BCBEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="16">A720456E7620202020BCBEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="17">A7204C6F6F70202020DFDEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="18">A720202020202020202020A8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="19">A7204F637461766520BCBEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="20">A720446F776E2F5570BCBEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="21">A3A4A4A4A4A4A4A4A4A4A4A6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
-      <line index="22">A7202020BB7B7C7D1918BAA8FF9FD1D1D1D1D1D1D1D1D1D1D1D1D1D1D1D1FFFF</line>
-      <line index="23">ACADADADADADADADADADADAEFF9ED1D1D1D1D1D1D1D1D1D1D1D1D1D1D1D1FFFF</line>
-    </map>
-    <map id="4410728" name="TARP_titlescreen_BG_MAP" maptype="0" tiletype="0" width="32" height="24" tileset="9487824" tilesetB="18281552" tilesetC="30316242">
-      <line index="0">000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F</line>
-      <line index="1">202122232425262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3F</line>
-      <line index="2">404142434445464748494A4B4C4D4E4F505152535455565758595A5B5C5D5E5F</line>
-      <line index="3">606162636465666768696A6B6C6D6E6F707172737475767778797A7B7C7D7E7F</line>
-      <line index="4">808182838485868788898A8B8C8D8E8F909192939495969798999A9B9C9D9E9F</line>
-      <line index="5">A0A1A2A3A4A5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF</line>
-      <line index="6">C0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF</line>
-      <line index="7">E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF</line>
-      <line index="8">000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F</line>
-      <line index="9">202122232425262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3F</line>
-      <line index="10">404142434445464748494A4B4C4D4E4F505152535455565758595A5B5C5D5E5F</line>
-      <line index="11">606162636465666768696A6B6C6D6E6F707172737475767778797A7B7C7D7E7F</line>
-      <line index="12">808182838485868788898A8B8C8D8E8F909192939495969798999A9B9C9D9E9F</line>
-      <line index="13">A0A1A2A3A4A5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF</line>
-      <line index="14">C0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF</line>
-      <line index="15">E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF</line>
-      <line index="16">000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F</line>
-      <line index="17">202122232425262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3F</line>
-      <line index="18">404142434445464748494A4B4C4D4E4F505152535455565758595A5B5C5D5E5F</line>
-      <line index="19">606162636465666768696A6B6C6D6E6F707172737475767778797A7B7C7D7E7F</line>
-      <line index="20">808182838485868788898A8B8C8D8E8F909192939495969798999A9B9C9D9E9F</line>
-      <line index="21">A0A1A2A3A4A5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF</line>
-      <line index="22">C0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF</line>
-      <line index="23">E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF</line>
-    </map>
-    <map id="66968808" name="help_v3" maptype="1" tiletype="0" width="32" height="24" tileset="54890288">
-      <line index="0">A0A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1B1A1A1A1A1A1A1A1A1A2B6</line>
-      <line index="1">A788858C9020202020202020202020202020202020A99620202020202020A8B6</line>
-      <line index="2">A3A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4AAA4A4A4A4A4A4A4A4A6B6</line>
-      <line index="3">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="4">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="5">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="6">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="7">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="8">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="9">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="10">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="11">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="12">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="13">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="14">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="15">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="16">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="17">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="18">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="19">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="20">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="21">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="22">A72020202020202020202020202020202020202020202020202020202020A87E</line>
-      <line index="23">ACADADADADADADADADADADADADADADADADADADADADADADADADADADADADADAEB6</line>
-    </map>
-    <map id="33761356" name="helptext" maptype="1" tiletype="0" width="29" height="36" tileset="15361866">
+    <map id="33761356" name="helptext" maptype="1" tiletype="0" width="29" height="36" paletteID="0" tileset="15361866" tilesetB="15361866" tilesetC="15361866">
       <line index="0">4B6579204C697374202020202020202020202020202020202020202020</line>
       <line index="1">2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D</line>
       <line index="2">8D81898E2093839285858E9B2020202020202020202020202020202020</line>
@@ -1229,9 +1151,87 @@
       <line index="34">2D5B446F776E5D20446F776E207363726F6C6C20746578742020202020</line>
       <line index="35">2D5B4553435D2052657475726E20746F206D61696E2073637265656E20</line>
     </map>
+    <map id="66968808" name="help_v3" maptype="1" tiletype="0" width="32" height="24" paletteID="0" tileset="54890288" tilesetB="54890288" tilesetC="54890288">
+      <line index="0">A0A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1B1A1A1A1A1A1A1A1A1A2B6</line>
+      <line index="1">A788858C9020202020202020202020202020202020A99620202020202020A8B6</line>
+      <line index="2">A3A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4A4AAA4A4A4A4A4A4A4A4A6B6</line>
+      <line index="3">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="4">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="5">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="6">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="7">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="8">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="9">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="10">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="11">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="12">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="13">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="14">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="15">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="16">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="17">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="18">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="19">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="20">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="21">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="22">A72020202020202020202020202020202020202020202020202020202020A87E</line>
+      <line index="23">ACADADADADADADADADADADADADADADADADADADADADADADADADADADADADADAEB6</line>
+    </map>
+    <map id="50184984" name="main_v4.7" maptype="1" tiletype="0" width="32" height="24" paletteID="0" tileset="54890288" tilesetB="54890288" tilesetC="54890288">
+      <line index="0">A0A1A1A1A1A1A1A1A1A1A1A2FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1C1D1E1F</line>
+      <line index="1">A720938F8E872020202020A8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="2">A7202020BB1011B7B8B9BAA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="3">A7202020BB7B18191A1BBAA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="4">A720DA4120DA4220BB0FBAA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="5">A720436F707920BBD6D7BAA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="6">A72053706565642020BCBEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="7">A3A4A4A4A4A4A4A4A4A4A4A6FFFFFFFFFFFFFFE0E1E2E3E4E5FFFFFFFFFFFFFF</line>
+      <line index="8">A72092889994888D0C0DD8A8FFFFFFFFFFFFE6E7E8E8E8E8E9EAFFFFFFFFFFFF</line>
+      <line index="9">A7202020BB1213B7B8B9BAA8FFFFFFFFFFFFEBE8E8E8E8E8E8ECFFFFFFFFFFFF</line>
+      <line index="10">A7204B697420202020DFDEA8FFFFFFFFFFFFEDE8E8E8E8E8E8EEFFFFFFFFFFFF</line>
+      <line index="11">A3A4A4A4A4A4A4A4A4A4A4A6FFFFFFFFFFFFEFE8E8E8E8E8E8F0FFFFFFFFFFFF</line>
+      <line index="12">A7208D858C8F84990C0ED8A8FFFFFFFFFFFFF1E8E8E8E8E8E8F2FFFFFFFFFFFF</line>
+      <line index="13">A7202020BB1415B7B8B9BAA8FFFFFFFFFFFFF3F4E8E8E8E8F5F6FFFFFFFFFFFF</line>
+      <line index="14">A720412B4220202020DFDEA8FFFFFFFFFFFFFFF7F8F9FAFBFCFFFFFFFFFFFFFF</line>
+      <line index="15">A7204F666673202020BCBEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="16">A720456E7620202020BCBEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="17">A7204C6F6F70202020DFDEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="18">A720202020202020202020A8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="19">A7204F637461766520BCBEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="20">A720446F776E2F5570BCBEA8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="21">A3A4A4A4A4A4A4A4A4A4A4A6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</line>
+      <line index="22">A7202020BB7B7C7D1918BAA8FF9FD1D1D1D1D1D1D1D1D1D1D1D1D1D1D1D1FFFF</line>
+      <line index="23">ACADADADADADADADADADADAEFF9ED1D1D1D1D1D1D1D1D1D1D1D1D1D1D1D1FFFF</line>
+    </map>
+    <map id="4410728" name="TARP_titlescreen_BG_MAP" maptype="0" tiletype="0" width="32" height="24" paletteID="0" tileset="9487824">
+      <line index="0">000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F</line>
+      <line index="1">202122232425262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3F</line>
+      <line index="2">404142434445464748494A4B4C4D4E4F505152535455565758595A5B5C5D5E5F</line>
+      <line index="3">606162636465666768696A6B6C6D6E6F707172737475767778797A7B7C7D7E7F</line>
+      <line index="4">808182838485868788898A8B8C8D8E8F909192939495969798999A9B9C9D9E9F</line>
+      <line index="5">A0A1A2A3A4A5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF</line>
+      <line index="6">C0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF</line>
+      <line index="7">E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF</line>
+      <line index="8">000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F</line>
+      <line index="9">202122232425262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3F</line>
+      <line index="10">404142434445464748494A4B4C4D4E4F505152535455565758595A5B5C5D5E5F</line>
+      <line index="11">606162636465666768696A6B6C6D6E6F707172737475767778797A7B7C7D7E7F</line>
+      <line index="12">808182838485868788898A8B8C8D8E8F909192939495969798999A9B9C9D9E9F</line>
+      <line index="13">A0A1A2A3A4A5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF</line>
+      <line index="14">C0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF</line>
+      <line index="15">E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF</line>
+      <line index="16">000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F</line>
+      <line index="17">202122232425262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3F</line>
+      <line index="18">404142434445464748494A4B4C4D4E4F505152535455565758595A5B5C5D5E5F</line>
+      <line index="19">606162636465666768696A6B6C6D6E6F707172737475767778797A7B7C7D7E7F</line>
+      <line index="20">808182838485868788898A8B8C8D8E8F909192939495969798999A9B9C9D9E9F</line>
+      <line index="21">A0A1A2A3A4A5A6A7A8A9AAABACADAEAFB0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF</line>
+      <line index="22">C0C1C2C3C4C5C6C7C8C9CACBCCCDCECFD0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF</line>
+      <line index="23">E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEFF0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF</line>
+    </map>
   </maps>
   <sprites>
-    <spriteset id="21224086" name="SPRITES_DATA" size="2" mode="1" paletteID="52313669">
+    <spriteset id="21224086" name="SPRITES_DATA" size="2" mode="1" paletteID="6849756">
       <sprite index="0" name="0" InkColor="15" BGcolor="1">
         <gfxData>0000000000000001010000000000000000000000000000808000000000000000</gfxData>
       </sprite>
@@ -1257,7 +1257,7 @@
         <gfxData>071F3F7F7FFFFFFFFFFFFF7F7F3F1F07E0F8FCFEFEFFFFFFFFFFFFFEFEFCF8E0</gfxData>
       </sprite>
     </spriteset>
-    <spriteset id="56885004" name="TARP_titlescreen_sprpatterns_SSET" size="2" mode="1" paletteID="0">
+    <spriteset id="56885004" name="TARP_titlescreen_sprpatterns_SSET" size="2" mode="1" paletteID="52313669">
       <sprite index="0" name="" InkColor="12" BGcolor="1">
         <gfxData>010F386040C0C0C0C0C0406030180C06C0F01C06060303030302060408081818</gfxData>
       </sprite>
@@ -1276,39 +1276,103 @@
     </spriteset>
   </sprites>
   <OAMs>
-    <oamset id="11040173" name="OAMset00">
-      <sprite layer="0" x="74" y="58" pattern="0" color="1" />
-      <sprite layer="1" x="73" y="74" pattern="1" color="1" />
-      <sprite layer="2" x="96" y="57" pattern="2" color="1" />
-      <sprite layer="3" x="95" y="73" pattern="3" color="1" />
-      <sprite layer="4" x="102" y="62" pattern="4" color="12" />
-      <sprite layer="5" x="80" y="64" pattern="4" color="12" />
-      <sprite layer="6" x="0" y="209" pattern="6" color="15" />
-      <sprite layer="7" x="0" y="209" pattern="7" color="15" />
-      <sprite layer="8" x="0" y="209" pattern="8" color="15" />
-      <sprite layer="9" x="0" y="209" pattern="9" color="15" />
-      <sprite layer="10" x="0" y="209" pattern="10" color="15" />
-      <sprite layer="11" x="0" y="209" pattern="11" color="15" />
-      <sprite layer="12" x="0" y="209" pattern="12" color="15" />
-      <sprite layer="13" x="0" y="209" pattern="13" color="15" />
-      <sprite layer="14" x="0" y="209" pattern="14" color="15" />
-      <sprite layer="15" x="0" y="209" pattern="15" color="15" />
-      <sprite layer="16" x="0" y="209" pattern="16" color="15" />
-      <sprite layer="17" x="0" y="209" pattern="17" color="15" />
-      <sprite layer="18" x="0" y="209" pattern="18" color="15" />
-      <sprite layer="19" x="0" y="209" pattern="19" color="15" />
-      <sprite layer="20" x="0" y="209" pattern="20" color="15" />
-      <sprite layer="21" x="0" y="209" pattern="21" color="15" />
-      <sprite layer="22" x="0" y="209" pattern="22" color="15" />
-      <sprite layer="23" x="0" y="209" pattern="23" color="15" />
-      <sprite layer="24" x="0" y="209" pattern="24" color="15" />
-      <sprite layer="25" x="0" y="209" pattern="25" color="15" />
-      <sprite layer="26" x="0" y="209" pattern="26" color="15" />
-      <sprite layer="27" x="0" y="209" pattern="27" color="15" />
-      <sprite layer="28" x="0" y="209" pattern="28" color="15" />
-      <sprite layer="29" x="0" y="209" pattern="29" color="15" />
-      <sprite layer="30" x="0" y="209" pattern="30" color="15" />
-      <sprite layer="31" x="0" y="209" pattern="31" color="15" />
+    <oamset id="11040173" name="OAMset00" type="1">
+      <sprite layer="0" x="74" y="58" pattern="0" color="12">
+        <colorData>0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C</colorData>
+      </sprite>
+      <sprite layer="1" x="73" y="74" pattern="1" color="12">
+        <colorData>0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C</colorData>
+      </sprite>
+      <sprite layer="2" x="96" y="57" pattern="2" color="12">
+        <colorData>0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C</colorData>
+      </sprite>
+      <sprite layer="3" x="95" y="73" pattern="3" color="12">
+        <colorData>0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C</colorData>
+      </sprite>
+      <sprite layer="4" x="102" y="62" pattern="4" color="2">
+        <colorData>02020202020202020202020202020202</colorData>
+      </sprite>
+      <sprite layer="5" x="80" y="64" pattern="4" color="2">
+        <colorData>02020202020202020202020202020202</colorData>
+      </sprite>
+      <sprite layer="6" x="0" y="209" pattern="6" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="7" x="0" y="209" pattern="7" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="8" x="0" y="209" pattern="8" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="9" x="0" y="209" pattern="9" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="10" x="0" y="209" pattern="10" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="11" x="0" y="209" pattern="11" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="12" x="0" y="209" pattern="12" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="13" x="0" y="209" pattern="13" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="14" x="0" y="209" pattern="14" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="15" x="0" y="209" pattern="15" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="16" x="0" y="209" pattern="16" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="17" x="0" y="209" pattern="17" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="18" x="0" y="209" pattern="18" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="19" x="0" y="209" pattern="19" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="20" x="0" y="209" pattern="20" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="21" x="0" y="209" pattern="21" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="22" x="0" y="209" pattern="22" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="23" x="0" y="209" pattern="23" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="24" x="0" y="209" pattern="24" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="25" x="0" y="209" pattern="25" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="26" x="0" y="209" pattern="26" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="27" x="0" y="209" pattern="27" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="28" x="0" y="209" pattern="28" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="29" x="0" y="209" pattern="29" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="30" x="0" y="209" pattern="30" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
+      <sprite layer="31" x="0" y="209" pattern="31" color="15">
+        <colorData>0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F</colorData>
+      </sprite>
     </oamset>
   </OAMs>
 </msxOpenDocument>
