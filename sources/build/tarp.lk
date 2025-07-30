@@ -1,0 +1,17 @@
+-mjwx
+-i build\tarp.ihx
+-b _CODE = 0x4020
+-b _DATA = 0xc000
+-k C:\Program Files\SDCC\bin\..\lib\z80
+-l z80
+build\tarp.rel
+libs\crt_MSX816kROM4000.rel
+libs\memory_Z80.rel
+libs\joystick_MSXBIOS.rel
+libs\keyboard_MSXBIOS.rel
+libs\VDP_TMS9918A_MSXBIOS.rel
+libs\VDP_SPRITES.rel
+libs\unRLEWBtoVRAM.rel
+libs\unRLEWBtoRAM.rel
+
+-e

@@ -104,12 +104,12 @@ https://github.com/mvac7/SDCC_MSX_fR3eL
 
 typedef struct {
 
-  boolean isTone;
-  boolean isNoise;
-  uint Tone;
-  char Noise;
-  char Shape;
-  uint Period;
+	boolean isTone;
+	boolean isNoise;
+	uint Tone;
+	char Noise;
+	char Shape;
+	uint Period;
     
 } DRUM_INST;
 
@@ -117,8 +117,8 @@ typedef struct {
 
 typedef struct {
 
-  boolean isLoop;
-  char ampValues[16];
+	boolean isLoop;
+	char ampValues[16];
     
 } Envelope;
 
@@ -126,15 +126,15 @@ typedef struct {
 
 typedef struct {
 
-  char octave;
-  char transpose;
-  
-  boolean AB_MIX;
-  char    AB_offset;
-  char Envelope;
+	char octave;
+	char transpose;
 
-  char drum[16];
-  char tone[16];
+	boolean AB_MIX;
+	char    AB_offset;
+	char Envelope;
+
+	char drum[16];
+	char tone[16];
     
 } PATTERN;
 
@@ -144,7 +144,7 @@ typedef struct {
 void logoScreen(void);
 void WorkWin(void);
 
-void wipe2theMiddle(void);
+void FXwipe2theMiddle(void);
 
 void setSprites(void);
 
@@ -263,19 +263,19 @@ const uint vaddr_cursor[OPTIONS_SIZE+1]={
 0x1AC1};
 
 const char yvalues[64]={
-  72,65,59,53,47,41,35,30,26,21,18,15,12,10,8,8,
-  8,8,9,11,13,16,20,24,28,33,38,44,50,56,62,68,
-  75,81,87,93,99,105,110,115,119,123,127,130,132,134,135,135,
-  135,135,133,131,128,125,122,117,113,108,102,96,90,84,78,72
+72,65,59,53,47,41,35,30,26,21,18,15,12,10,8,8,
+8,8,9,11,13,16,20,24,28,33,38,44,50,56,62,68,
+75,81,87,93,99,105,110,115,119,123,127,130,132,134,135,135,
+135,135,133,131,128,125,122,117,113,108,102,96,90,84,78,72
 };   //sin 8,136     
 
 
 
 const char xvalues[64]={
-     96,96,97,98,101,103,107,110,115,120,125,130,136,142,148,155,
-     161,167,174,180,186,192,197,202,206,211,214,217,220,222,223,223,
-     223,223,222,220,217,214,211,206,202,197,192,186,180,174,167,161,
-     155,148,142,136,130,125,120,115,110,107,103,101,98,97,96,96
+96,96,97,98,101,103,107,110,115,120,125,130,136,142,148,155,
+161,167,174,180,186,192,197,202,206,211,214,217,220,222,223,223,
+223,223,222,220,217,214,211,206,202,197,192,186,180,174,167,161,
+155,148,142,136,130,125,120,115,110,107,103,101,98,97,96,96
 };   //cos 96,224     
 
 
@@ -344,85 +344,85 @@ char    HELP_TXTADDR[(HELP_LINES+1)*29];
 
 void main(void) {
 
-  checkMSX();
-  
-  _playPatternNumber = PATTERN_A;
-  
-  COLOR(15,1,1);  
-  SCREEN(2);  
-  
-  POKE(CLIKSW,0);
-  
-  initWaveEnvelopes();
-  initPatternsData();
-  
-  initHelpText();
-  
-  logoScreen();
-  
+	checkMSX();
 
-  wipe2theMiddle(); //screen transition
-  //FillVRAM(BASE10, 768, 255); //clear screen
-    
-    
-  WorkWin();
+	_playPatternNumber = PATTERN_A;
+
+	COLOR(15,1,1);  
+	SCREEN(2);  
+
+	POKE(CLIKSW,0);
+
+	initWaveEnvelopes();
+	initPatternsData();
+
+	initHelpText();
+
+	logoScreen();
+
+
+	FXwipe2theMiddle(); //screen transition
+	//FillVRAM(BASE10, 768, 255); //clear screen
+
+
+	WorkWin();
 }
 
 
 
-void wipe2theMiddle(void)
+void FXwipe2theMiddle(void)
 {
-  signed char x;
-  char y;
-    
-  HALT;
-  ClearSprites();
-    
-  FillVRAM(BASE11+0x7F8, 8, 0x11); //clear screen
-  FillVRAM(BASE11+0x0FF8, 8, 0x11); //clear screen
-  FillVRAM(BASE11+0x17F8, 8, 0x11); //clear screen
-  
-  for (x=0;x<16;x++)
-  {
-    for (y=0;y<24;y++)
-    {
-        VPOKE(BASE10+(y*32)+x,255);
-        VPOKE(BASE10+(y*32)+(31-x),255);    
-    } 
-    HALT;
-  }
+	signed char x;
+	char y;
+
+	HALT;
+	ClearSprites();
+
+	FillVRAM(BASE11+0x7F8, 8, 0x11);	//clear bank A tile 0 
+	FillVRAM(BASE11+0x0FF8, 8, 0x11);	//clear bank B tile 0
+	FillVRAM(BASE11+0x17F8, 8, 0x11);	//clear bank C tile 0
+
+	for (x=0;x<16;x++)
+	{
+		for (y=0;y<24;y++)
+		{
+			VPOKE(BASE10+(y*32)+x,255);
+			VPOKE(BASE10+(y*32)+(31-x),255);    
+		} 
+		HALT;
+	}
 }
 
 
 void logoScreen(void)
 {
-  int timec = 700;
-  
-  SetSpritesSize(1);
-  //SetSpritesZoom(false);
-   
-  showLogoScreen();  
-  
-  //Show Sprites to add more colors to the drawing.
-  PUTSPRITE(0,74,58,12,0);
-  PUTSPRITE(1,73,74,12,1);    
-  PUTSPRITE(2,96,57,12,2);     
-  PUTSPRITE(3,95,73,12,3);
-  PUTSPRITE(4,80,64,2,4);
-  PUTSPRITE(5,102,62,2,4);
- 
-  
-  if (VDP_type>0) SetPalette(0);  
-  
-  while(timec-->0)
-  {
-    HALT;
-    if (!(GetKeyMatrix(7)&Bit2)) break; // ESC
-    if (!(GetKeyMatrix(7)&Bit7)) break; // RETURN
-    if (!(GetKeyMatrix(8)&Bit0)) break; // SPACE 
-    if (STRIG(1)>0) break; //button 1, joy A
-    if (STRIG(2)>0) break; //button 1, joy B    
-  }
+	int timec = 700;
+
+	SetSpritesSize(1);
+	//SetSpritesZoom(false);
+
+	showLogoScreen();  
+
+	//Show Sprites to add more colors to the drawing.
+	PUTSPRITE(0,74,58,12,0);
+	PUTSPRITE(1,73,74,12,1);    
+	PUTSPRITE(2,96,57,12,2);     
+	PUTSPRITE(3,95,73,12,3);
+	PUTSPRITE(4,80,64,2,4);
+	PUTSPRITE(5,102,62,2,4);
+
+
+	if (VDP_type>0) SetPalette(0);  
+
+	while(timec-->0)
+	{
+	HALT;
+		if (!(GetKeyMatrix(7)&Bit2)) break; // ESC
+		if (!(GetKeyMatrix(7)&Bit7)) break; // RETURN
+		if (!(GetKeyMatrix(8)&Bit0)) break; // SPACE 
+		if (STRIG(1)>0) break; //button 1, joy A
+		if (STRIG(2)>0) break; //button 1, joy B    
+	}
 
 }
 
@@ -509,365 +509,387 @@ void WorkWin(void)
     
     while(1)
     {
-      HALT;
-      PlayAY(); //Dump values from RAM buffer to PSG (AY)
-     
+		HALT;
+		PlayAY(); //Dump values from RAM buffer to PSG (AY)
 
-      // ############################################################### VISUALS
-      if (_playerStatus==PLAYER_PLAY && _songSpeedStep==0) //control de tempo por ciclos de Vblank 
-      {
-        ShowSequenceCursor();               
-        
-        // control de la percusion
-        if(_DrumEnabled==true)
-        {
-          drum_type = _pattern->drum[_pattern_step];
-          if(drum_type>0)
-          {                       
-            sdrum_size=7;
-            sdrum_color=drumcolor[drum_type];     
-          }
-        }           
-      }
-      
-                     
-      //Tone
-      stone_size = AYREGS[8];
-      stone_size = stone_size>>1;   // /2
-      //SetSpritePosition(0,xvalues[stone_step],yvalues[stone_step]);
-      //SetSpritePattern(0,stone_size);
-      if (stone_size>0) stone_color = 15;
-      else stone_color = 14;
-      //SetSpriteColor(0,stone_color);      
-      PUTSPRITE(0,xvalues[stone_step],yvalues[stone_step],stone_color,stone_size);
-      
-      //Drum
-      if (_DrumEnabled==false) sdrum_size=0;
-            
-      if (sdrum_size==0) sdrum_color=drumcolor[0];
-      //SetSpritePosition(1,xvalues[sdrum_step],yvalues[sdrum_step]);
-      //SetSpritePattern(1,sdrum_size);
-      //SetSpriteColor(1,sdrum_color);
-      PUTSPRITE(1,xvalues[sdrum_step],yvalues[sdrum_step],sdrum_color,sdrum_size);
-      
-      
-      if (sdrum_size>0) sdrum_size--;
-      
-      if (vumeterStep>=_songSpeed-1)
-      {
-        vumeterStep=0;
-              
-        stone_step++;
-        if (stone_step>63) stone_step=0;
-        sdrum_step++;
-        if (sdrum_step>63) sdrum_step=0;
-      }else{
-          vumeterStep++;
-      }
-      // ########################################################### END VISUALS
-      
-      
-      if (_playerStatus==PLAYER_PLAY) PlayerDecode();
-      
-      
-      joyval=STICK(0);
-      if (joyval==0) joyval=STICK(1);
-      if (joyval==0) joyval=STICK(2);
-      if (joyval>0)
-      {
-        if (joybool==false)
-        {
-          joybool = true;
-          VPOKE(vaddr_cursor[_cursor_pos],32);       
-          
-          if(joyval==1) // arriba
-          { 
-            _cursor_pos--;
-            if(_cursor_pos<0) _cursor_pos=OPTIONS_SIZE; 
-          }
-          if(joyval==5) // abajo
-          {
-            _cursor_pos++;
-            if(_cursor_pos>OPTIONS_SIZE) _cursor_pos=0;           
-          }
-          if(joyval==3) // right
-          { 
-            switch (_cursor_pos)   //{0x1841,0x1901,0x19A1,0x19C1,0x1A01,0x1A21,0x1A41,0x1A81,0x1AA1};
-            {
-              case 3:    //set pattern B
-                SetPattern(PATTERN_B);
-                ShowPattern();
-                break;                
-              case 5: //tempo
-                if (_songSpeed<9) _songSpeed++;                
-                VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1);
-                break;
-              case 8: //Drum KIT Switcher
-                _isDrumKitB=true;
-                SetDrumKit(_isDrumKitB);
-                GUI_switcher(GUI_DKIT_VADDR,true); 
-                break;
-              case 11: //A+B
-                _pattern->AB_MIX=true;
-                showABmix(); 
-                break;
-              case 12: //B offset
-                _pattern->AB_offset++;              
-                showABoffset(); 
-                break;
-              case 13: //envelope wave
-                if (_pattern->Envelope<7) _pattern->Envelope++;
-                else _pattern->Envelope=0;
-                showEnv(); 
-                break;
-              case 14: //loop Switcher
-                envelope_list[_pattern->Envelope].isLoop=true;
-                GUI_switcher(GUI_ENVLOOP_VADDR,true);
-                break;
-              case 15: // _octave +
-                downOctave(); 
-                break;
-              case 16:
-                TransposeUp(); 
-                break;
-            } 
-          }
-          if(joyval==7) // left
-          { 
-            switch (_cursor_pos) 
-            {
-              case 3:    //set pattern A
-                SetPattern(PATTERN_A);
-                ShowPattern();
-                break;
-              case 5:
-                if (_songSpeed>1) _songSpeed--;                
-                VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1); 
-                break;
-              case 8:
-                _isDrumKitB=false;
-                SetDrumKit(_isDrumKitB);
-                GUI_switcher(GUI_DKIT_VADDR,false); 
-                break;
-              case 11:
-                _pattern->AB_MIX=false;
-                showABmix(); 
-                break;
-              case 12:
-                _pattern->AB_offset--;                
-                showABoffset(); 
-                break;
-              case 13:
-                if (_pattern->Envelope>0) _pattern->Envelope--;
-                else _pattern->Envelope=7;
-                showEnv(); 
-                break;
-              case 14:
-                envelope_list[_pattern->Envelope].isLoop=false;
-                GUI_switcher(GUI_ENVLOOP_VADDR,false); 
-                break;
-              case 15: //_octave -
-                upOctave();
-                break;
-              case 16:
-                TransposeDown(); 
-                break;
-            } 
-          }
-          VPOKE(vaddr_cursor[_cursor_pos],GUI_CURSOR);
-        }
-      }else{
-        joybool = false;
-      }
-      
-      
-    joytrig = STRIG(0);       
-    if (joytrig==0) joytrig=STRIG(1);
-    if (joytrig==0) joytrig=STRIG(2);
-    if (joytrig>0)
-    {
-      if (joytrigbool==false)
-      {
-        joytrigbool = true;
-        
-        switch (_cursor_pos) 
-        {
-            case 0:    //audio on/off
-                PlaySomething(); 
-                break;
-            case 1:    //random All
-                genDrumPattern();
-                genTonePattern(); 
-                break;
-            case 2:    //Play
-                if(_playerStatus==PLAYER_STOP) Play();
-                else Stop(); 
-                break;
-            case 3:    //
-                ChangePattern();
-                ShowPattern();
-                break;
-            case 4:    //copy current pattern to other (A->B;B->A)
-                CopyPattern();
-                break;    
-            case 6:    //Rhythm channel On/Off
-                invertDrumChannel();
-                break;
-            case 7:    //random Rhithm
-                genDrumPattern(); 
-                break;
-            case 8:
-                _isDrumKitB= !_isDrumKitB;
-                SetDrumKit(_isDrumKitB);
-                GUI_switcher(GUI_DKIT_VADDR,_isDrumKitB); 
-                break;
-            case 9:    //Melody channel On/Off
-                invertToneChannel();
-                break;
-            case 10:    //random Melody
-                genTonePattern(); 
-                break;
-            case 11:
-                _pattern->AB_MIX=!_pattern->AB_MIX;
-                showABmix(); 
-                break;
-/*            case 11: //B offset
-                _AB_offset++;                
-                VPrintNum(GUI_OFFS_VADDR, _AB_offset, 3); 
-                break;
-            case 12: //envelope wave
-                if (_env_index<7) _env_index++;
-                else _env_index=0;
-                showEnv(_env_index); 
-                break;*/
-            case 14:
-                //loop
-                envelope_list[_pattern->Envelope].isLoop=!envelope_list[_pattern->Envelope].isLoop;
-                GUI_switcher(GUI_ENVLOOP_VADDR,envelope_list[_pattern->Envelope].isLoop); 
-                break;
-/*            case 15: // _octave +
-                downOctave(); 
-                break;
-            case 16:
-                TransposeDown(); 
-                break;*/
-            case 17:
-                Help();
-                break;
-            
-        }    
-      }       
-    }else joytrigbool = false;
-    
-      
-      
-      
 
-      keyPressed = GetKeyMatrix(0);
-      if (keyPressed!=0xFF)
-      {
-        if(keyB0pressed==false)
-        {
-          //if (!(keyPressed&Bit0)) {keyB0pressed=true;}; // 0
-          if (!(keyPressed&Bit1)) {SetPatternLenght(1);keyB0pressed=true;}; // 1 
-          if (!(keyPressed&Bit2)) {SetPatternLenght(3);keyB0pressed=true;}; // 2
-          if (!(keyPressed&Bit3)) {SetPatternLenght(7);keyB0pressed=true;}; // 3
-          if (!(keyPressed&Bit4)) {SetPatternLenght(15);keyB0pressed=true;}; // 4
-          //if (!(keyPressed&Bit5)) {keyB0pressed=true;}; // 5
-          //if (!(keyPressed&Bit6)) {keyB0pressed=true;}; // 6
-          //if (!(keyPressed&Bit7)) {keyB0pressed=true;}; // 7
-        }      
-      }else keyB0pressed=false;
+		// ############################################################### VISUALS
+		if (_playerStatus==PLAYER_PLAY && _songSpeedStep==0) //control de tempo por ciclos de Vblank 
+		{
+			ShowSequenceCursor();               
+
+			// control de la percusion
+			if(_DrumEnabled==true)
+			{
+				drum_type = _pattern->drum[_pattern_step];
+				if(drum_type>0)
+				{                       
+					sdrum_size=7;
+					sdrum_color=drumcolor[drum_type];
+				}
+			}
+		}
+
+				 
+		//Tone
+		stone_size = AYREGS[8];
+		stone_size = stone_size>>1;   // /2
+		//SetSpritePosition(0,xvalues[stone_step],yvalues[stone_step]);
+		//SetSpritePattern(0,stone_size);
+		if (stone_size>0) stone_color = 15;
+		else stone_color = 14;
+		//SetSpriteColor(0,stone_color);      
+		PUTSPRITE(0,xvalues[stone_step],yvalues[stone_step],stone_color,stone_size);
+
+		//Drum
+		if (_DrumEnabled==false) sdrum_size=0;
+
+		if (sdrum_size==0) sdrum_color=drumcolor[0];
+		//SetSpritePosition(1,xvalues[sdrum_step],yvalues[sdrum_step]);
+		//SetSpritePattern(1,sdrum_size);
+		//SetSpriteColor(1,sdrum_color);
+		PUTSPRITE(1,xvalues[sdrum_step],yvalues[sdrum_step],sdrum_color,sdrum_size);
+
+
+		if (sdrum_size>0) sdrum_size--;
+
+		if (vumeterStep>=_songSpeed-1)
+		{
+			vumeterStep=0;
+			  
+			stone_step++;
+			if (stone_step>63) stone_step=0;
+			sdrum_step++;
+			if (sdrum_step>63) sdrum_step=0;
+		}else vumeterStep++;
+		// ########################################################### END VISUALS
       
       
-      
-      keyPressed = GetKeyMatrix(2);
-      if (keyPressed!=0xFF)
-      {
-        if(keyB2pressed==false)
-        {
-          //if (!(keyPressed&Bit0)) {keyB2pressed=true;}; // '
-          //if (!(keyPressed&Bit1)) {keyB2pressed=true;}; // £
-          if (!(keyPressed&Bit2)) {TransposeDown();keyB2pressed=true;}; // ,/<
-          if (!(keyPressed&Bit3)) {TransposeUp();keyB2pressed=true;};   // ./>
-          //if (!(keyPressed&Bit4)) {keyB2pressed=true;}; // /
-          //if (!(keyPressed&Bit5)) {keyB2pressed=true;}; // DEAD
-          //if (!(keyPressed&Bit6)) {keyB2pressed=true;}; // A
-          //if (!(keyPressed&Bit7)) {keyB2pressed=true;}; // B
-        }      
-      }else keyB2pressed=false;
-      
-      
-      
-      keyPressed = GetKeyMatrix(6);
-      if (keyPressed!=0xFF)
-      {
-        if(keyB6pressed==false)
-        {
-          if (!(keyPressed&Bit0)) {genTonePattern();keyB6pressed=true;}; // SHIFT
-          if (!(keyPressed&Bit1)) {genDrumPattern();keyB6pressed=true;};// CTRL
-          if (!(keyPressed&Bit2)) {CopyPattern();keyB6pressed=true;};   // GRAPH
-          //if (!(keyPressed&Bit3)) {keyB6pressed=true;}; // CAPS
-          //if (!(keyPressed&Bit4)) {keyB6pressed=true;}; // CODE
-          if (!(keyPressed&Bit5)) {invertDrumChannel();keyB6pressed=true;}; // F1
-          if (!(keyPressed&Bit6)) {invertToneChannel();keyB6pressed=true;}; // F2
-          //if (!(keyPressed&Bit7)) {keyB6pressed=true;}; // F3
-        }      
-      }else keyB6pressed=false;
-      
-      
-     
-      
-      keyPressed = GetKeyMatrix(7);
-      if (keyPressed!=0xFF)
-      {
-        if(keyB7pressed==false)
-        {
-          //if (!(keyPressed&Bit0)) {keyB7pressed=true;}; // F4
-          //if (!(keyPressed&Bit1)) {keyB7pressed=true;}; // F5
-          //if (!(keyPressed&Bit2)){}; // ESC
-          if (!(keyPressed&Bit3)) {
-            //ChangePattern();
-            genDrumPattern();
-            genTonePattern();
-            keyB7pressed=true;
-          }; // TAB
-          if (!(keyPressed&Bit4)) {Stop();keyB7pressed=true;}; // STOP
-          if (!(keyPressed&Bit5)) {
-            ChangePattern();  
-            ShowPattern();
-            keyB7pressed=true;
-          }; // BS
-          if (!(keyPressed&Bit6)) 
-          {
-            _isDrumKitB= !_isDrumKitB;
-            SetDrumKit(_isDrumKitB);
-            GUI_switcher(GUI_DKIT_VADDR,_isDrumKitB);
-            keyB7pressed=true;
-          }; // SELECT
-          if (!(keyPressed&Bit7)) {Play();keyB7pressed=true;}; // RETURN
-        }
-      }else keyB7pressed=false;
-      
-   
-      keyPressed = GetKeyMatrix(8);
-      if (keyPressed!=0xFF)
-      {
-        if(keyB8pressed==false)
-        {
-          //if (!(keyPressed&Bit0)) {keyB8pressed=true;}; // Space
-          if (!(keyPressed&Bit1)) {Help();keyB8pressed=true;}; // Home
-          if (!(keyPressed&Bit2)) {upOctave();keyB8pressed=true;}; // Ins
-          if (!(keyPressed&Bit3)) {downOctave();keyB8pressed=true;}; // Del
-          //if (!(keyPressed&Bit4)) {keyB8pressed=true;}; // Left
-          //if (!(keyPressed&Bit5)) {keyB8pressed=true;}; // Up
-          //if (!(keyPressed&Bit6)) {keyB8pressed=true;}; // Down
-          //if (!(keyPressed&Bit7)) {keyB8pressed=true;}; // Right
-        }      
-      }else keyB8pressed=false;      
+		if (_playerStatus==PLAYER_PLAY) PlayerDecode();
+
+
+		joyval=STICK(0);
+		if (joyval==0) joyval=STICK(1);
+		if (joyval==0) joyval=STICK(2);
+		if (joyval>0)
+		{
+			if (joybool==false)
+			{
+				joybool = true;
+				VPOKE(vaddr_cursor[_cursor_pos],32);       
+
+				if(joyval==1) // arriba
+				{ 
+					_cursor_pos--;
+					if(_cursor_pos<0) _cursor_pos=OPTIONS_SIZE; 
+				}
+				if(joyval==5) // abajo
+				{
+					_cursor_pos++;
+					if(_cursor_pos>OPTIONS_SIZE) _cursor_pos=0;
+				}
+				if(joyval==3) // right
+				{ 
+					switch (_cursor_pos)   //{0x1841,0x1901,0x19A1,0x19C1,0x1A01,0x1A21,0x1A41,0x1A81,0x1AA1};
+					{
+						case 3:    //set pattern B
+							SetPattern(PATTERN_B);
+							ShowPattern();
+							break;
+							
+						case 5: //tempo
+							if (_songSpeed<9) _songSpeed++;                
+							VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1);
+							break;
+							
+						case 8: //Drum KIT Switcher
+							_isDrumKitB=true;
+							SetDrumKit(_isDrumKitB);
+							GUI_switcher(GUI_DKIT_VADDR,true); 
+							break;
+							
+						case 11: //A+B
+							_pattern->AB_MIX=true;
+							showABmix(); 
+							break;
+							
+						case 12: //B offset
+							_pattern->AB_offset++;              
+							showABoffset(); 
+							break;
+							
+						case 13: //envelope wave
+							if (_pattern->Envelope<7) _pattern->Envelope++;
+							else _pattern->Envelope=0;
+							showEnv(); 
+							break;
+							
+						case 14: //loop Switcher
+							envelope_list[_pattern->Envelope].isLoop=true;
+							GUI_switcher(GUI_ENVLOOP_VADDR,true);
+							break;
+							
+						case 15: // _octave +
+							downOctave(); 
+							break;
+							
+						case 16:
+							TransposeUp(); 
+							break;
+					}//END switch
+				}
+				
+				if(joyval==7) // left
+				{ 
+					switch (_cursor_pos) 
+					{
+						case 3:    //set pattern A
+							SetPattern(PATTERN_A);
+							ShowPattern();
+							break;
+							
+						case 5:
+							if (_songSpeed>1) _songSpeed--;                
+							VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1); 
+							break;
+							
+						case 8:
+							_isDrumKitB=false;
+							SetDrumKit(_isDrumKitB);
+							GUI_switcher(GUI_DKIT_VADDR,false); 
+							break;
+							
+						case 11:
+							_pattern->AB_MIX=false;
+							showABmix(); 
+							break;
+							
+						case 12:
+							_pattern->AB_offset--;                
+							showABoffset(); 
+							break;
+							
+						case 13:
+							if (_pattern->Envelope>0) _pattern->Envelope--;
+							else _pattern->Envelope=7;
+							showEnv(); 
+							break;
+							
+						case 14:
+							envelope_list[_pattern->Envelope].isLoop=false;
+							GUI_switcher(GUI_ENVLOOP_VADDR,false); 
+							break;
+							
+						case 15: //_octave -
+							upOctave();
+							break;
+							
+						case 16:
+							TransposeDown(); 
+							break;
+					}//END switch
+				}
+				VPOKE(vaddr_cursor[_cursor_pos],GUI_CURSOR);
+			}
+		}else joybool = false;
+
+
+		joytrig = STRIG(0);       
+		if (joytrig==0) joytrig=STRIG(1);
+		if (joytrig==0) joytrig=STRIG(2);
+		if (joytrig>0)
+		{
+			if (joytrigbool==false)
+			{
+				joytrigbool = true;
+
+				switch (_cursor_pos) 
+				{
+					case 0:    //audio on/off
+						PlaySomething(); 
+						break;
+						
+					case 1:    //random All
+						genDrumPattern();
+						genTonePattern(); 
+						break;
+						
+					case 2:    //Play
+						if(_playerStatus==PLAYER_STOP) Play();
+						else Stop(); 
+						break;
+						
+					case 3:    //
+						ChangePattern();
+						ShowPattern();
+						break;
+						
+					case 4:    //copy current pattern to other (A->B;B->A)
+						CopyPattern();
+						break;   
+						
+					case 6:    //Rhythm channel On/Off
+						invertDrumChannel();
+						break;
+						
+					case 7:    //random Rhithm
+						genDrumPattern(); 
+						break;
+						
+					case 8:
+						_isDrumKitB= !_isDrumKitB;
+						SetDrumKit(_isDrumKitB);
+						GUI_switcher(GUI_DKIT_VADDR,_isDrumKitB); 
+						break;
+						
+					case 9:    //Melody channel On/Off
+						invertToneChannel();
+						break;
+						
+					case 10:    //random Melody
+						genTonePattern(); 
+						break;
+						
+					case 11:
+						_pattern->AB_MIX=!_pattern->AB_MIX;
+						showABmix(); 
+						break;
+				/*            case 11: //B offset
+						_AB_offset++;                
+						VPrintNum(GUI_OFFS_VADDR, _AB_offset, 3); 
+						break;
+					case 12: //envelope wave
+						if (_env_index<7) _env_index++;
+						else _env_index=0;
+						showEnv(_env_index); 
+						break;*/
+					case 14:
+						//loop
+						envelope_list[_pattern->Envelope].isLoop=!envelope_list[_pattern->Envelope].isLoop;
+						GUI_switcher(GUI_ENVLOOP_VADDR,envelope_list[_pattern->Envelope].isLoop); 
+						break;
+				/*            case 15: // _octave +
+						downOctave(); 
+						break;
+					case 16:
+						TransposeDown(); 
+						break;*/
+					case 17:
+						Help();
+						break;
+					
+				}
+			}
+		}else joytrigbool = false;
+
+
+
+
+
+		keyPressed = GetKeyMatrix(0);
+		if (keyPressed!=0xFF)
+		{
+			if(keyB0pressed==false)
+			{
+				//if (!(keyPressed&Bit0)) {keyB0pressed=true;}; // 0
+				if (!(keyPressed&Bit1)) {SetPatternLenght(1);keyB0pressed=true;}; // 1 
+				if (!(keyPressed&Bit2)) {SetPatternLenght(3);keyB0pressed=true;}; // 2
+				if (!(keyPressed&Bit3)) {SetPatternLenght(7);keyB0pressed=true;}; // 3
+				if (!(keyPressed&Bit4)) {SetPatternLenght(15);keyB0pressed=true;}; // 4
+				//if (!(keyPressed&Bit5)) {keyB0pressed=true;}; // 5
+				//if (!(keyPressed&Bit6)) {keyB0pressed=true;}; // 6
+				//if (!(keyPressed&Bit7)) {keyB0pressed=true;}; // 7
+			}      
+		}else keyB0pressed=false;
+
+
+
+		keyPressed = GetKeyMatrix(2);
+		if (keyPressed!=0xFF)
+		{
+			if(keyB2pressed==false)
+			{
+				//if (!(keyPressed&Bit0)) {keyB2pressed=true;}; // '
+				//if (!(keyPressed&Bit1)) {keyB2pressed=true;}; // £
+				if (!(keyPressed&Bit2)) {TransposeDown();keyB2pressed=true;}; // ,/<
+				if (!(keyPressed&Bit3)) {TransposeUp();keyB2pressed=true;};   // ./>
+				//if (!(keyPressed&Bit4)) {keyB2pressed=true;}; // /
+				//if (!(keyPressed&Bit5)) {keyB2pressed=true;}; // DEAD
+				//if (!(keyPressed&Bit6)) {keyB2pressed=true;}; // A
+				//if (!(keyPressed&Bit7)) {keyB2pressed=true;}; // B
+			}      
+		}else keyB2pressed=false;
+
+
+
+		keyPressed = GetKeyMatrix(6);
+		if (keyPressed!=0xFF)
+		{
+			if(keyB6pressed==false)
+			{
+				if (!(keyPressed&Bit0)) {genTonePattern();keyB6pressed=true;}; // SHIFT
+				if (!(keyPressed&Bit1)) {genDrumPattern();keyB6pressed=true;};// CTRL
+				if (!(keyPressed&Bit2)) {CopyPattern();keyB6pressed=true;};   // GRAPH
+				//if (!(keyPressed&Bit3)) {keyB6pressed=true;}; // CAPS
+				//if (!(keyPressed&Bit4)) {keyB6pressed=true;}; // CODE
+				if (!(keyPressed&Bit5)) {invertDrumChannel();keyB6pressed=true;}; // F1
+				if (!(keyPressed&Bit6)) {invertToneChannel();keyB6pressed=true;}; // F2
+				//if (!(keyPressed&Bit7)) {keyB6pressed=true;}; // F3
+			}
+		}else keyB6pressed=false;
+
+
+
+
+		keyPressed = GetKeyMatrix(7);
+		if (keyPressed!=0xFF)
+		{
+			if(keyB7pressed==false)
+			{
+				//if (!(keyPressed&Bit0)) {keyB7pressed=true;}; // F4
+				//if (!(keyPressed&Bit1)) {keyB7pressed=true;}; // F5
+				//if (!(keyPressed&Bit2)){}; // ESC
+				if (!(keyPressed&Bit3)) {
+					//ChangePattern();
+					genDrumPattern();
+					genTonePattern();
+					keyB7pressed=true;
+				}; // TAB
+				if (!(keyPressed&Bit4)) {Stop();keyB7pressed=true;}; // STOP
+				if (!(keyPressed&Bit5)) {
+					ChangePattern();  
+					ShowPattern();
+					keyB7pressed=true;
+				}; // BS
+				if (!(keyPressed&Bit6)) 
+				{
+					_isDrumKitB=!_isDrumKitB;
+					SetDrumKit(_isDrumKitB);
+					GUI_switcher(GUI_DKIT_VADDR,_isDrumKitB);
+					keyB7pressed=true;
+				}; // SELECT
+				if (!(keyPressed&Bit7)) {Play();keyB7pressed=true;}; // RETURN
+			}
+		}else keyB7pressed=false;
+
+
+		keyPressed = GetKeyMatrix(8);
+		if (keyPressed!=0xFF)
+		{
+			if(keyB8pressed==false)
+			{
+			  //if (!(keyPressed&Bit0)) {keyB8pressed=true;}; // Space
+			  if (!(keyPressed&Bit1)) {Help();keyB8pressed=true;}; // Home
+			  if (!(keyPressed&Bit2)) {upOctave();keyB8pressed=true;}; // Ins
+			  if (!(keyPressed&Bit3)) {downOctave();keyB8pressed=true;}; // Del
+			  //if (!(keyPressed&Bit4)) {keyB8pressed=true;}; // Left
+			  //if (!(keyPressed&Bit5)) {keyB8pressed=true;}; // Up
+			  //if (!(keyPressed&Bit6)) {keyB8pressed=true;}; // Down
+			  //if (!(keyPressed&Bit7)) {keyB8pressed=true;}; // Right
+			}      
+		}else keyB8pressed=false;      
             
-    }// Infinite loop
-    
+    }// END while (Infinite loop)
 
 }
 
@@ -875,93 +897,96 @@ void WorkWin(void)
 
 void Help(void)
 {
-  boolean isExit = false;
-  
-  boolean joybool = false;
-  boolean joytrigbool = true;
-  char joyval;
-  char joytrig;
-  
-  char helpLinePos=0;
-    
-  //Silence(); //Enjoy the...
-  //Stop();
-    
-  SetSpriteVisible(0,false);
-  SetSpriteVisible(1,false);
-  
-  //FillVRAM(BASE10, 768, 255); //clear screen
-      
-  if (VDP_type>0) SetPalette(2);
-  
-  showHelpScr();
-  
-  VPRINT(23,1,app_version);
-  
-  
-  HALT;
-  PlayAY(); //Dump values from RAM buffer to PSG (AY)
-  if (_playerStatus==PLAYER_PLAY) PlayerDecode();
-  
-  showHelpText(0);
-  showScrollbar(0);
-  
-  //SetSpritePattern(0, 31);
-  //SetSpritePattern(1, 31);
+	boolean isExit = false;
 
-    
-  while(isExit==false)
-  {
-    HALT;
-    PlayAY(); //Dump values from RAM buffer to PSG (AY)
-    
-    if (_playerStatus==PLAYER_PLAY) PlayerDecode();
-    
-    joytrig=STRIG(1);
-    if (joytrig==0) joytrig=STRIG(2);
-    if (joytrig>0)
-    {
-      if (joytrigbool==false)
-      {
-        //joytrigbool = true;
-        isExit=true;
-      }
-    }else{
-        joytrigbool = false;
-    }
-    
-    if (!(GetKeyMatrix(7)&Bit2)) isExit=true; // ESC
-    
-    joyval=STICK(0);
-    if (joyval==0) joyval=STICK(1);
-    if (joyval==0) joyval=STICK(2);
-    if (joyval>0)
-    {
-      if (joybool==false)
-      {
-        joybool = true;
-        
-        if(joyval==1) // arriba
-        {            
-          if(helpLinePos>0) {helpLinePos--;showHelpText(helpLinePos);showScrollbar(helpLinePos);}
-        }
-        if(joyval==5) // abajo
-        {            
-          if(helpLinePos<(HELP_LINES-20)) {helpLinePos++;showHelpText(helpLinePos);showScrollbar(helpLinePos);}           
-        }
-        //if(joyval==3) // right
-        //if(joyval==7) // left
-      }
-    }else{
-      joybool = false;
-    }  
-      
-  }
-  
-  //FillVRAM(BASE10, 768, 255); //clear screen
-  if (VDP_type>0) SetPalette(1);
-  showMainScr();
-  initGUI();
+	boolean joybool = false;
+	boolean joytrigbool = true;
+	char joyval;
+	char joytrig;
+
+	char helpLinePos=0;
+
+	//Silence(); //Enjoy the...
+	//Stop();
+
+	SetSpriteVisible(0,false);
+	SetSpriteVisible(1,false);
+
+	//FillVRAM(BASE10, 768, 255); //clear screen
+
+	if (VDP_type>0) SetPalette(2);
+
+	showHelpScr();
+
+	VPRINT(23,1,app_version);
+
+
+	HALT;
+	PlayAY(); //Dump values from RAM buffer to PSG (AY)
+	if (_playerStatus==PLAYER_PLAY) PlayerDecode();
+
+	showHelpText(0);
+	showScrollbar(0);
+
+	//SetSpritePattern(0, 31);
+	//SetSpritePattern(1, 31);
+
+
+	while(isExit==false)
+	{
+		HALT;
+		PlayAY(); //Dump values from RAM buffer to PSG (AY)
+
+		if (_playerStatus==PLAYER_PLAY) PlayerDecode();
+
+		joytrig=STRIG(1);
+		if (joytrig==0) joytrig=STRIG(2);
+		if (joytrig>0)
+		{
+			if (joytrigbool==false) isExit=true;
+		}else joytrigbool = false;
+
+
+		if (!(GetKeyMatrix(7)&Bit2)) isExit=true; // ESC
+
+		joyval=STICK(0);
+		if (joyval==0) joyval=STICK(1);
+		if (joyval==0) joyval=STICK(2);
+		if (joyval>0)
+		{
+			if (joybool==false)
+			{
+				joybool = true;
+
+				if(joyval==1) // arriba
+				{            
+					if(helpLinePos>0) 
+					{
+						helpLinePos--;
+						showHelpText(helpLinePos);
+						showScrollbar(helpLinePos);
+					}
+				}
+				if(joyval==5) // abajo
+				{            
+					if(helpLinePos<(HELP_LINES-20)) 
+					{
+						helpLinePos++;
+						showHelpText(helpLinePos);
+						showScrollbar(helpLinePos);
+					}
+				}
+				//if(joyval==3) // right
+				//if(joyval==7) // left
+			}
+		}else joybool = false;
+
+	}//END while
+
+	//FillVRAM(BASE10, 768, 255); //clear screen
+	if (VDP_type>0) SetPalette(1);
+	showMainScr();
+	initGUI();
     
 }
 
@@ -973,9 +998,9 @@ void Help(void)
 void checkMSX(void) 
 {
   
-  // identifica modelo de MSX
-  //0 - MSX1, 1 - MSX2, 2 - MSX2+, 3 - TR, 4 - OCM
-  VDP_type = PEEK(0x2D);
+	// identifica modelo de MSX
+	//0 - MSX1, 1 - MSX2, 2 - MSX2+, 3 - TR, 4 - OCM
+	VDP_type = PEEK(0x2D);
 
   
 //2BH b7	   Periodo de sincronismo (VSYNC) 0:60Hz	1:50Hz   
@@ -997,50 +1022,50 @@ its_60hz:
 
 void initGUI(void)
 {    
-    VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1); 
-    
-    showSpeaker(GUI_DRUM_VADDR,_DrumEnabled);     
-    showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
-    
-    GUI_switcher(GUI_DKIT_VADDR,_isDrumKitB);
-        
-    ShowPattern();            
-    
-    VPOKE(vaddr_cursor[_cursor_pos],GUI_CURSOR);
-    
-    VPOKE(GUI_PLAY_VADDR,GUI_PLAY_ICON);
-    
-    VPOKE(GUI_SEQ_VADDR+_ENDstep,GUI_SEQLENCURSOR);
-    
-    ShowPatternRadioButton();
+	VPrintNum(GUI_TEMPO_VADDR, _songSpeed, 1); 
+
+	showSpeaker(GUI_DRUM_VADDR,_DrumEnabled);     
+	showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
+
+	GUI_switcher(GUI_DKIT_VADDR,_isDrumKitB);
+		
+	ShowPattern();            
+
+	VPOKE(vaddr_cursor[_cursor_pos],GUI_CURSOR);
+
+	VPOKE(GUI_PLAY_VADDR,GUI_PLAY_ICON);
+
+	VPOKE(GUI_SEQ_VADDR+_ENDstep,GUI_SEQLENCURSOR);
+
+	ShowPatternRadioButton();
 }
 
 
 
 void ShowSequenceCursor(void)
 {
-  // cursor de patron
-  if (_last_step==_newENDstep) VPOKE(GUI_SEQ_VADDR+_last_step,GUI_SEQLENCURSOR);    
-  else VPOKE(GUI_SEQ_VADDR+_last_step,GUI_EMPTY_BLACK);    //borra la ultima posicion del
-  
-  VPOKE(GUI_SEQ_VADDR+_pattern_step,GUI_SEQCURSOR);  //muestra el cursor
-  _last_step = _pattern_step;
+	// cursor de patron
+	if (_last_step==_newENDstep) VPOKE(GUI_SEQ_VADDR+_last_step,GUI_SEQLENCURSOR);    
+	else VPOKE(GUI_SEQ_VADDR+_last_step,GUI_EMPTY_BLACK);    //borra la ultima posicion del
+
+	VPOKE(GUI_SEQ_VADDR+_pattern_step,GUI_SEQCURSOR);  //muestra el cursor
+	_last_step = _pattern_step;
 }
 
 
 
 void SetPatternLenght(char length)
 {
-    _newENDstep = length;
+	_newENDstep = length;
 
-    if(_playerStatus==PLAYER_STOP) Play();
+	if(_playerStatus==PLAYER_STOP) Play();
 
-    if (_pattern_step<_newENDstep){
-      VPOKE(GUI_SEQ_VADDR+_ENDstep,GUI_EMPTY_BLACK);
-      _ENDstep = _newENDstep;      
-    }
-    
-    VPOKE(GUI_SEQ_VADDR+length,GUI_SEQLENCURSOR);    
+	if (_pattern_step<_newENDstep){
+		VPOKE(GUI_SEQ_VADDR+_ENDstep,GUI_EMPTY_BLACK);
+		_ENDstep = _newENDstep;
+	}
+
+	VPOKE(GUI_SEQ_VADDR+length,GUI_SEQLENCURSOR);
 }        
         
 
@@ -1058,22 +1083,22 @@ void SetPatternLenght(char length)
 
 void PlaySomething(void)
 { 
-    char i;
-    
-    _DrumEnabled = true;
-    _ToneEnabled = true;
-    
-    showSpeaker(GUI_DRUM_VADDR,_DrumEnabled);
-    showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
+	char i;
 
-    for(i=0;i<2;i++)
-    {
-        ChangePattern();
-        genDrumPattern();
-        genTonePattern();
-    }    
-     
-    if(_playerStatus==PLAYER_STOP) Play();
+	_DrumEnabled = true;
+	_ToneEnabled = true;
+
+	showSpeaker(GUI_DRUM_VADDR,_DrumEnabled);
+	showSpeaker(GUI_TONE_VADDR,_ToneEnabled);
+
+	for(i=0;i<2;i++)
+	{
+		ChangePattern();
+		genDrumPattern();
+		genTonePattern();
+	}    
+
+	if(_playerStatus==PLAYER_STOP) Play();
 }
 
 
@@ -1096,49 +1121,49 @@ void invertToneChannel(void)
 
 void initWaveEnvelopes(void)
 {
-  char i,o;
-  char conta=0;
-  
-  // initialize data structures of volume envelopes
-  for(i=0;i<8;i++)
-  {
-    envelope_list[i].isLoop = enve_loop[i];
-    for(o=0;o<16;o++)
-    {
-      envelope_list[i].ampValues[o] = enve_data[conta++];
-    }    
-  }
-  // end
+	char i,o;
+	char conta=0;
+
+	// initialize data structures of volume envelopes
+	for(i=0;i<8;i++)
+	{
+		envelope_list[i].isLoop = enve_loop[i];
+		for(o=0;o<16;o++)
+		{
+			envelope_list[i].ampValues[o] = enve_data[conta++];
+		}    
+	}
+	// end
 }
 
 
 
 void initPatternsData(void)
 {
-    char i;
-    
-    //char pattern[16]={1,0,3,0,2,0,2,0,1,0,3,0,2,0,3,0}; //rock1
-      
-    patternA.octave = 1;
-    patternA.transpose = 12;
-    patternA.AB_MIX = true;
-    patternA.AB_offset = 3;
-    patternA.Envelope = 0;
-    
-    patternB.octave = 1;
-    patternB.transpose = 12;
-    patternB.AB_MIX = true;
-    patternB.AB_offset = 3;
-    patternB.Envelope = 0;
-    
-    for(i=0;i<16;i++)
-    {       
-        patternA.drum[i]=0;
-        patternA.tone[i]=0;
-        
-        patternB.drum[i]=0;
-        patternB.tone[i]=0;
-    }
+	char i;
+
+	//char pattern[16]={1,0,3,0,2,0,2,0,1,0,3,0,2,0,3,0}; //rock1
+
+	patternA.octave = 1;
+	patternA.transpose = 12;
+	patternA.AB_MIX = true;
+	patternA.AB_offset = 3;
+	patternA.Envelope = 0;
+
+	patternB.octave = 1;
+	patternB.transpose = 12;
+	patternB.AB_MIX = true;
+	patternB.AB_offset = 3;
+	patternB.Envelope = 0;
+
+	for(i=0;i<16;i++)
+	{       
+		patternA.drum[i]=0;
+		patternA.tone[i]=0;
+
+		patternB.drum[i]=0;
+		patternB.tone[i]=0;
+	}
 }
 
 
@@ -1146,19 +1171,19 @@ void initPatternsData(void)
 
 void PlayerInit(void)
 {
-    _songSpeed = 4;
+	_songSpeed = 4;
 
-    _env_step=0;
-       
-    _songSpeedStep = _songSpeed;
-    _pattern_step=0;
-    _last_step=0;
-    _ENDstep = 15;  //to control the size of the pattern
-    _newENDstep = _ENDstep;
-    
-    _pattern = (PATTERN *) patternA; 
-    
-    FillRAM((uint) AYREGS,14,0);  //borra el area del buffer de registros del PSG
+	_env_step=0;
+	   
+	_songSpeedStep = _songSpeed;
+	_pattern_step=0;
+	_last_step=0;
+	_ENDstep = 15;  //to control the size of the pattern
+	_newENDstep = _ENDstep;
+
+	_pattern = (PATTERN *) patternA; 
+
+	FillRAM((uint) AYREGS,14,0);  //borra el area del buffer de registros del PSG
 }
 
 
@@ -1169,155 +1194,148 @@ Write AY registers values to buffer
 */
 void PlayerDecode(void)
 {
-    char drum_type;
-    char tone_note;
-    
-    uint freqA;
-    uint freqB;
-    
-    
-    if (_songSpeedStep>=_songSpeed) //control de tempo por ciclos de Vblank 
-    {
-      _songSpeedStep=0;
-      
-      // control de la percusion
-      if(_DrumEnabled==true)
-      {
-        drum_type = _pattern->drum[_pattern_step];
-        
-        if(drum_type>0) //0 = there is no drum
-        {
-          _Drum=&_DrumKit[drum_type-1];
-          
-          SetMixer(2,_Drum->isTone,_Drum->isNoise);
-          AYREGS[4]  = _Drum->Tone & 0xFF;      
-          AYREGS[5]  = (_Drum->Tone & 0xFF00)/255;      
-          AYREGS[6]  = _Drum->Noise; //noise
-          AYREGS[10] = 16; //volumen canal C (16=envolvente)
-          AYREGS[11] = _Drum->Period & 0xFF;      
-          AYREGS[12] = (_Drum->Period & 0xFF00)/255;
-          AYREGS[13] = _Drum->Shape; //envelope wave form   
-                      
-        }else{
-          // there is no drum
-          //POKE(AYREGS+10,0); //volumen canal C          
-        }
-      }     
-      
+	char drum_type;
+	char tone_note;
 
-      // control del intrumento de acompañamiento
-      tone_note = _pattern->tone[_pattern_step];	  
-      if(tone_note>0)
-      {
-        freqA = getFreq(tone_note+(_pattern->octave*12)); //+ variacion; 
-        freqB = freqA + _pattern->AB_offset;
-		
-		//VPrintNum(0x180d,freqA,5);				//<-------------------------- TEST
-        
-        AYREGS[0] = freqA & 0xFF;      
-        AYREGS[1] = (freqA & 0xFF00)/255;
-        AYREGS[2] = freqB & 0xFF;      
-        AYREGS[3] = (freqB & 0xFF00)/255;
-        
-        _env_step=0;          
-      }
-      
-             
-      // control de posicion de pattern
-      _pattern_step++;
-      if(_pattern_step>_ENDstep)
-      {
-        _pattern_step=0;
-        _ENDstep = _newENDstep;
-      } 
-      
-    }else{
-      _songSpeedStep++;
-      //AYREGS[13]=0; //envelope wave form 
-      //drum_type=0;    
-    }
-    
-    
-    
-    //control de volumen del tono (envolvente) ###############################
-    if (_ToneEnabled==true)
-    {        
-      _toneAmp = envelope_list[_pattern->Envelope].ampValues[_env_step];        
-    }else{
-      _toneAmp = 0;
-    }      
-    
-    // calcula siguiente posicion.
-    _env_step++;  //=_env_speed;
-    
-    if (_env_step>15) //control de tamaño de envolvente
-    {
-      if (envelope_list[_pattern->Envelope].isLoop==true) _env_step=0;
-      else _env_step=15; // ultimo valor de la envolvente
-    }
-    
-    AYREGS[8] = _toneAmp;
-    
-    if(_pattern->AB_MIX==true) AYREGS[9] = _toneAmp;
-    else AYREGS[9] = 0;
+	uint freqA;
+	uint freqB;
+
+
+	if (_songSpeedStep>=_songSpeed) //control de tempo por ciclos de Vblank 
+	{
+		_songSpeedStep=0;
+
+		// control de la percusion
+		if(_DrumEnabled==true)
+		{
+			drum_type = _pattern->drum[_pattern_step];
+
+			if(drum_type>0) //0 = there is no drum
+			{
+				_Drum=&_DrumKit[drum_type-1];
+
+				SetMixer(2,_Drum->isTone,_Drum->isNoise);
+				AYREGS[4]  = _Drum->Tone & 0xFF;      
+				AYREGS[5]  = (_Drum->Tone & 0xFF00)/255;      
+				AYREGS[6]  = _Drum->Noise; //noise
+				AYREGS[10] = 16; //volumen canal C (16=envolvente)
+				AYREGS[11] = _Drum->Period & 0xFF;      
+				AYREGS[12] = (_Drum->Period & 0xFF00)/255;
+				AYREGS[13] = _Drum->Shape; //envelope wave form   
+					  
+			}else{
+				// there is no drum
+				//POKE(AYREGS+10,0); //volumen canal C
+			}
+		}     
+
+
+		// control del intrumento de acompañamiento
+		tone_note = _pattern->tone[_pattern_step];	  
+		if(tone_note>0)
+		{
+			freqA = getFreq(tone_note+(_pattern->octave*12)); //+ variacion; 
+			freqB = freqA + _pattern->AB_offset;
+
+			//VPrintNum(0x180d,freqA,5);				//<-------------------------- TEST
+
+			AYREGS[0] = freqA & 0xFF;      
+			AYREGS[1] = (freqA & 0xFF00)/255;
+			AYREGS[2] = freqB & 0xFF;      
+			AYREGS[3] = (freqB & 0xFF00)/255;
+
+			_env_step=0;
+		}
+
+		 
+		// control de posicion de pattern
+		_pattern_step++;
+		if(_pattern_step>_ENDstep)
+		{
+			_pattern_step=0;
+			_ENDstep = _newENDstep;
+		}
+
+	}else _songSpeedStep++;
+
+
+	//control de volumen del tono (envolvente) ###############################
+	if (_ToneEnabled==true)	_toneAmp = envelope_list[_pattern->Envelope].ampValues[_env_step];        
+	else _toneAmp = 0;
+     
+
+	// calcula siguiente posicion.
+	_env_step++;  //=_env_speed;
+
+	if (_env_step>15) //control de tamaño de envolvente
+	{
+		if (envelope_list[_pattern->Envelope].isLoop==true) _env_step=0;
+		else _env_step=15; // ultimo valor de la envolvente
+	}
+
+	AYREGS[8] = _toneAmp;
+
+	if(_pattern->AB_MIX==true) AYREGS[9] = _toneAmp;
+	else AYREGS[9] = 0;
 
 }
 
 
-
-// vuelca desde una area de la RAM (AYREGS), 
-// los valores de los registros del PSG
-// a tres diferentes chips (AY interno, AY Pazos y SCC)
-void PlayAY(void)
+/*
+ vuelca desde una area de la RAM (AYREGS), 
+los valores de los registros del PSG
+a diferentes chips (AY interno y AY Pazos)
+*/
+void PlayAY(void) __naked
 {
 __asm
-  ld HL,#_AYREGS ; direccion de memoria del buffer	
+	ld HL,#_AYREGS	//direccion de memoria del buffer	
 
-  ld   A,(#_AYREGS+7)
-  AND  #0b00111111
-  ld   B,A
-      
-  ld   A,#7
-  out  (#AY0index),A
-  in   A,(#AY0read) ; read mixer register value 
-  and  #0b11000000  ; Mascara para coger dos bits de joys 
-  or   B            ; Añado Byte de B
-  
-  ld   (#_AYREGS+7),A
-	
-  ld   A,(#__playerHardware) ;//indica que chip utiliza (0=AY interno, 1=AY MEGAFLASHROM)
-  or   A
-  jr   Z,PSGinternal
+	ld   A,(#_AYREGS+7)
+	AND  #0b00111111
+	ld   B,A
+	  
+	ld   A,#7
+	out  (#AY0index),A
+	in   A,(#AY0read)	//read mixer register value 
+	and  #0b11000000	//Mascara para coger dos bits de joys 
+	or   B				//Añado Byte de B
 
-;MEGAFLASHROM FPGA AY
-  xor A
-  ld   C,#0x10
-  jr   ILOOP
+	ld   (#_AYREGS+7),A
+
+	ld   A,(#__playerHardware)	//indica que chip utiliza (0=AY interno, 1=AY MEGAFLASHROM)
+	or   A
+	jr   Z,PSGinternal
+
+//MEGAFLASHROM FPGA AY
+	xor A
+	ld   C,#0x10
+	jr   ILOOP
   
 PSGinternal:
-  xor A	
-  ld   C,#AY0index  ; MSX Internal PSG
+	xor A	
+	ld   C,#AY0index	//MSX Internal PSG
   
 ILOOP:
-  out  (C),A
-  inc  C
-  outi
-  dec  C
-  inc  A
-  cp   #13  
-  jr   NZ,ILOOP
-  
-  out  (C),A
-  ld   A,(HL)
-  or   A
-  ret  Z
-  
-  inc  C
-  out  (C),A 
-  
-  ld   (HL),#0
-    
-  ret  
+	out  (C),A
+	inc  C
+	outi
+	dec  C
+	inc  A
+	cp   #13  
+	jr   NZ,ILOOP
+
+	out  (C),A
+	ld   A,(HL)
+	or   A
+	ret  Z
+
+	inc  C
+	out  (C),A 
+
+	ld   (HL),#0
+
+	ret
 
 __endasm;
 }
@@ -1328,26 +1346,26 @@ __endasm;
 // activa tono y ruido de uno de los tres canales del PSG
 void SetMixer(char NumChannel, boolean isTone, boolean isNoise)
 {
-  char newValue;
-  
-  newValue = AYREGS[7]; //GetSound(7);
-  
-  if(NumChannel==0) 
-  {
-      if(isTone==true){newValue&=254;}else{newValue|=1;}
-      if(isNoise==true){newValue&=247;}else{newValue|=8;}
-  }
-  if(NumChannel==1)    
-  {
-      if(isTone==true){newValue&=253;}else{newValue|=2;}
-      if(isNoise==true){newValue&=239;}else{newValue|=16;}
-  }
-  if(NumChannel==2)
-  { 
-      if(isTone==true){newValue&=251;}else{newValue|=4;}
-      if(isNoise==true){newValue&=223;}else{newValue|=32;}
-  }
-  AYREGS[7] = newValue;
+	char newValue;
+
+	newValue = AYREGS[7]; //GetSound(7);
+
+	if(NumChannel==0) 
+	{
+		if(isTone==true){newValue&=254;}else{newValue|=1;}
+		if(isNoise==true){newValue&=247;}else{newValue|=8;}
+	}
+	if(NumChannel==1)    
+	{
+		if(isTone==true){newValue&=253;}else{newValue|=2;}
+		if(isNoise==true){newValue&=239;}else{newValue|=16;}
+	}
+	if(NumChannel==2)
+	{ 
+		if(isTone==true){newValue&=251;}else{newValue|=4;}
+		if(isNoise==true){newValue&=223;}else{newValue|=32;}
+	}
+	AYREGS[7] = newValue;
 }
 
 
@@ -1355,59 +1373,59 @@ void SetMixer(char NumChannel, boolean isTone, boolean isNoise)
 void SetDrumKit(boolean kit)
 {
 
-    if (kit==false)
-    {
-      // Instrumentos percusion default Kit
-      // Kick
-      _DrumKit[0].isTone=true;
-      _DrumKit[0].isNoise=false;
-      _DrumKit[0].Tone=1700;
-      _DrumKit[0].Noise=0;
-      _DrumKit[0].Shape=1;
-      _DrumKit[0].Period=800;
-      
-      // Snare
-      _DrumKit[1].isTone=true;
-      _DrumKit[1].isNoise=true;
-      _DrumKit[1].Tone=1000;
-      _DrumKit[1].Noise=0;
-      _DrumKit[1].Shape=1;
-      _DrumKit[1].Period=1400;
-      
-      // Hi
-      _DrumKit[2].isTone=false;
-      _DrumKit[2].isNoise=true;
-      _DrumKit[2].Tone=0;
-      _DrumKit[2].Noise=0;
-      _DrumKit[2].Shape=1;
-      _DrumKit[2].Period=400;  //200
-    
-    }else{
-      // Instrumentos percusion - Kit PT1
-      // Kick
-      _DrumKit[0].isTone=true;
-      _DrumKit[0].isNoise=false;
-      _DrumKit[0].Tone=140;
-      _DrumKit[0].Noise=0;
-      _DrumKit[0].Shape=1;
-      _DrumKit[0].Period=800;
-      
-      // Snare
-      _DrumKit[1].isTone=false;
-      _DrumKit[1].isNoise=true;
-      _DrumKit[1].Tone=0;
-      _DrumKit[1].Noise=0;
-      _DrumKit[1].Shape=1;
-      _DrumKit[1].Period=1600;
-      
-      // Hi
-      _DrumKit[2].isTone=true;
-      _DrumKit[2].isNoise=false;
-      _DrumKit[2].Tone=66;
-      _DrumKit[2].Noise=0;
-      _DrumKit[2].Shape=1;
-      _DrumKit[2].Period=400;    
-    }
+	if (kit==false)
+	{
+		// Instrumentos percusion default Kit
+		// Kick
+		_DrumKit[0].isTone=true;
+		_DrumKit[0].isNoise=false;
+		_DrumKit[0].Tone=1700;
+		_DrumKit[0].Noise=0;
+		_DrumKit[0].Shape=1;
+		_DrumKit[0].Period=800;
+
+		// Snare
+		_DrumKit[1].isTone=true;
+		_DrumKit[1].isNoise=true;
+		_DrumKit[1].Tone=1000;
+		_DrumKit[1].Noise=0;
+		_DrumKit[1].Shape=1;
+		_DrumKit[1].Period=1400;
+
+		// Hi
+		_DrumKit[2].isTone=false;
+		_DrumKit[2].isNoise=true;
+		_DrumKit[2].Tone=0;
+		_DrumKit[2].Noise=0;
+		_DrumKit[2].Shape=1;
+		_DrumKit[2].Period=400;		//200
+
+	}else{
+		// Instrumentos percusion - Kit PT1
+		// Kick
+		_DrumKit[0].isTone=true;
+		_DrumKit[0].isNoise=false;
+		_DrumKit[0].Tone=140;
+		_DrumKit[0].Noise=0;
+		_DrumKit[0].Shape=1;
+		_DrumKit[0].Period=800;
+
+		// Snare
+		_DrumKit[1].isTone=false;
+		_DrumKit[1].isNoise=true;
+		_DrumKit[1].Tone=0;
+		_DrumKit[1].Noise=0;
+		_DrumKit[1].Shape=1;
+		_DrumKit[1].Period=1600;
+
+		// Hi
+		_DrumKit[2].isTone=true;
+		_DrumKit[2].isNoise=false;
+		_DrumKit[2].Tone=66;
+		_DrumKit[2].Noise=0;
+		_DrumKit[2].Shape=1;
+		_DrumKit[2].Period=400;
+	}
 
 }
 
@@ -1416,7 +1434,7 @@ void SetDrumKit(boolean kit)
 void Silence(void)	__naked
 {
 __asm  
-  jp   BIOS_GICINI   //Init PSG
+	jp   BIOS_GICINI   //Init PSG
 __endasm;
 }
 
@@ -1424,23 +1442,23 @@ __endasm;
 
 void Play(void)
 {
-    _songSpeedStep = _songSpeed;
-    _pattern_step=0;
-    ShowSequenceCursor();
-    //setChannelsState(true);
-    _playerStatus=PLAYER_PLAY;
-    VPOKE(GUI_PLAY_VADDR,GUI_STOP_ICON);
+	_songSpeedStep = _songSpeed;
+	_pattern_step=0;
+	ShowSequenceCursor();
+	//setChannelsState(true);
+	_playerStatus=PLAYER_PLAY;
+	VPOKE(GUI_PLAY_VADDR,GUI_STOP_ICON);
 }
 
 
 
 void Stop(void)
 {
-    AYREGS[8]=0;
-    AYREGS[9]=0;
-    AYREGS[10]=0;
-    _playerStatus=PLAYER_STOP;
-    VPOKE(GUI_PLAY_VADDR,GUI_PLAY_ICON);
+	AYREGS[8]=0;
+	AYREGS[9]=0;
+	AYREGS[10]=0;
+	_playerStatus=PLAYER_STOP;
+	VPOKE(GUI_PLAY_VADDR,GUI_PLAY_ICON);
 }
 
 
@@ -1453,29 +1471,29 @@ char Rnd(char value) __naked
 value;
 __asm
   
-  ld   C,A //recoge el valor de la mascara  	
-  
-  ld   A,R		;  
-  ld   B,A
-  
-  ld   A,(#_SEED)
-  SRA  A
-  
-  add  A,B		
-  ;add	A,A
-	
-  ld   B,A
-	
-  ld   A,R		;  
-  add  A,B
-	
-  inc  A
-  
-  ld   (#_SEED),A
-    
-  AND  C  ;aplica la mascara     
-  
-  ret	//return A
+	ld   C,A //recoge el valor de la mascara  	
+
+	ld   A,R		;  
+	ld   B,A
+
+	ld   A,(#_SEED)
+	SRA  A
+
+	add  A,B		
+	;add	A,A
+
+	ld   B,A
+
+	ld   A,R		;  
+	add  A,B
+
+	inc  A
+
+	ld   (#_SEED),A
+
+	AND  C  ;aplica la mascara     
+
+	ret	//return A
 __endasm;
 }
 
@@ -1492,44 +1510,43 @@ __endasm;
 
 void ChangePattern(void)
 {
-  
-  _playPatternNumber++;
-  if (_playPatternNumber>PATTERN_B) _playPatternNumber=PATTERN_A;
-  
-  SetPattern(_playPatternNumber);
+	_playPatternNumber++;
+	if (_playPatternNumber>PATTERN_B) _playPatternNumber=PATTERN_A;
+
+	SetPattern(_playPatternNumber);
 }
 
 
 
 void SetPattern(char number)
 {
-  _playPatternNumber = number;
-  if (number==PATTERN_A) _pattern = (PATTERN *) patternA; 
-  else _pattern = (PATTERN *) patternB;
-    
-  ShowPatternRadioButton();
+	_playPatternNumber = number;
+	if (number==PATTERN_A) _pattern = (PATTERN *) patternA; 
+	else _pattern = (PATTERN *) patternB;
+
+	ShowPatternRadioButton();
 }
 
 
 
 void CopyPattern(void)
 {
-  char i;
-  PATTERN *_destination;
-  
-  if (_playPatternNumber==PATTERN_A) _destination = (PATTERN *) patternB; 
-  else _destination = (PATTERN *) patternA;
- 
-  for(i=0;i<16;i++){
-     _destination->drum[i]=_pattern->drum[i];
-     _destination->tone[i]=_pattern->tone[i];
-  }
-  
-  _destination->octave = _pattern->octave;
-  _destination->transpose = _pattern->transpose;
-  _destination->AB_MIX = _pattern->AB_MIX;
-  _destination->AB_offset = _pattern->AB_offset;
-  _destination->Envelope = _pattern->Envelope;
+	char i;
+	PATTERN *_destination;
+
+	if (_playPatternNumber==PATTERN_A) _destination = (PATTERN *) patternB; 
+	else _destination = (PATTERN *) patternA;
+
+	for(i=0;i<16;i++){
+		_destination->drum[i]=_pattern->drum[i];
+		_destination->tone[i]=_pattern->tone[i];
+	}
+
+	_destination->octave = _pattern->octave;
+	_destination->transpose = _pattern->transpose;
+	_destination->AB_MIX = _pattern->AB_MIX;
+	_destination->AB_offset = _pattern->AB_offset;
+	_destination->Envelope = _pattern->Envelope;
     
 }
 
@@ -1537,13 +1554,13 @@ void CopyPattern(void)
 
 void ShowPatternRadioButton(void)
 {
-  if(_playPatternNumber==PATTERN_A){
-    VPOKE(GUI_RADIO_A_VADDR,GUI_RADION_ICON);
-    VPOKE(GUI_RADIO_B_VADDR,GUI_RADIOF_ICON);
-  }else{
-    VPOKE(GUI_RADIO_A_VADDR,GUI_RADIOF_ICON);
-    VPOKE(GUI_RADIO_B_VADDR,GUI_RADION_ICON);
-  }
+	if(_playPatternNumber==PATTERN_A){
+		VPOKE(GUI_RADIO_A_VADDR,GUI_RADION_ICON);
+		VPOKE(GUI_RADIO_B_VADDR,GUI_RADIOF_ICON);
+	}else{
+		VPOKE(GUI_RADIO_A_VADDR,GUI_RADIOF_ICON);
+		VPOKE(GUI_RADIO_B_VADDR,GUI_RADION_ICON);
+	}
 }
 
 
@@ -1551,49 +1568,49 @@ void ShowPatternRadioButton(void)
 // genera un patron de ritmo de forma aleatoria
 void genDrumPattern(void)
 {
-  char hits;
-  char kicks;
-  char snares;
-  char conta=0;
-  char increment=0;
-  uint vaddr = GUI_SEQ_DRUM_VADDR;
-  
-  char i;  
-  
-  
-  for(i=0;i<16;i++) _pattern->drum[i]=0;
-  
-  hits=Rnd(3);  
-  if(hits>0)
-  {
-    //hits++;
-    do{
-      conta+=hits;
-      if(conta<16) _pattern->drum[conta]=3;       
-    }while(conta<16); 
-  }
-  
-  conta=0;
-  kicks=Rnd(3)*2;
-  if(kicks>0)
-  {
-    do{      
-      _pattern->drum[conta]=1;
-      conta+=kicks;       
-    }while(conta<16); 
-  }
-  
-  conta=0;
-  snares=Rnd(3)*4;
-  if(snares>0)
-  {
-    do{
-      conta+=snares;
-      if(conta<16) _pattern->drum[conta]=2;       
-    }while(conta<16); 
-  }
-  
-  ShowDrumPattern();
+	char hits;
+	char kicks;
+	char snares;
+	char conta=0;
+	char increment=0;
+	uint vaddr = GUI_SEQ_DRUM_VADDR;
+
+	char i;  
+
+
+	for(i=0;i<16;i++) _pattern->drum[i]=0;
+
+	hits=Rnd(3);  
+	if(hits>0)
+	{
+		//hits++;
+		do{
+			conta+=hits;
+			if(conta<16) _pattern->drum[conta]=3;       
+		}while(conta<16); 
+	}
+
+	conta=0;
+	kicks=Rnd(3)*2;
+	if(kicks>0)
+	{
+		do{      
+			_pattern->drum[conta]=1;
+			conta+=kicks;       
+		}while(conta<16); 
+	}
+
+	conta=0;
+	snares=Rnd(3)*4;
+	if(snares>0)
+	{
+		do{
+			conta+=snares;
+			if(conta<16) _pattern->drum[conta]=2;
+		}while(conta<16); 
+	}
+
+	ShowDrumPattern();
   
 }
 
@@ -1602,48 +1619,48 @@ void genDrumPattern(void)
 // genera un patron de tono de forma aleatoria
 void genTonePattern(void)
 {
-  char type;
-  char value;
-  char conta=0;
-  char increment=0;
-  
-  char i;
-  
-  _pattern->transpose = 12;
-  
-  for(i=0;i<16;i++) _pattern->tone[i]=0; //empty
-  
-  type=Rnd(3)+1;  //determines the number of notes
-  //if (type==1) increment=0;  //It is not necessary
-  if (type==2) increment=4;
-  if (type>2) increment=2;
-   
-  type++;
-  for(i=1;i<type;i++)
-  {
-    value=Rnd(15);    // generate random note
-    if(value>11) _pattern->tone[conta]=0;  //empty
-    else _pattern->tone[conta]=value+1+12; //adds an octave (12) for the transpose functionality    
-    conta=conta+increment;
-  }
-  
-  //copy first 8 steps sequence to next 8 steps 
-  for(i=0;i<8;i++) _pattern->tone[i+8]=_pattern->tone[i];
-  
-  ShowTonePattern();
+	char type;
+	char value;
+	char conta=0;
+	char increment=0;
+
+	char i;
+
+	_pattern->transpose = 12;
+
+	for(i=0;i<16;i++) _pattern->tone[i]=0; //empty
+
+	type=Rnd(3)+1;  //determines the number of notes
+	//if (type==1) increment=0;  //It is not necessary
+	if (type==2) increment=4;
+	if (type>2) increment=2;
+
+	type++;
+	for(i=1;i<type;i++)
+	{
+		value=Rnd(15);    // generate random note
+		if(value>11) _pattern->tone[conta]=0;  //empty
+		else _pattern->tone[conta]=value+1+12; //adds an octave (12) for the transpose functionality    
+		conta=conta+increment;
+	}
+
+	//copy first 8 steps sequence to next 8 steps 
+	for(i=0;i<8;i++) _pattern->tone[i+8]=_pattern->tone[i];
+
+	ShowTonePattern();
 }
 
 
 
 void ShowPattern(void)
 {
-  showOctave();
-  showABmix();
-  showABoffset();
-  showEnv();
-  
-  ShowDrumPattern();
-  ShowTonePattern();
+	showOctave();
+	showABmix();
+	showABoffset();
+	showEnv();
+
+	ShowDrumPattern();
+	ShowTonePattern();
 }
 
 
@@ -1651,10 +1668,10 @@ void ShowPattern(void)
  //draw in screen a Drum pattern
 void ShowDrumPattern(void)
 {
-  uint vaddr = GUI_SEQ_DRUM_VADDR;
-  char i;
-  
-  for (i=0;i<16;i++) VPOKE(vaddr++,_pattern->drum[i]+GUI_SEQ_INSTR);
+	uint vaddr = GUI_SEQ_DRUM_VADDR;
+	char i;
+
+	for (i=0;i<16;i++) VPOKE(vaddr++,_pattern->drum[i]+GUI_SEQ_INSTR);
   
 }
 
@@ -1663,52 +1680,52 @@ void ShowDrumPattern(void)
  //draw in screen a Tone pattern
 void ShowTonePattern(void)
 {
-  uint vaddr = GUI_SEQ_TONE_VADDR;
-  char i;
-  
-  for (i=0;i<16;i++){
-    if(_pattern->tone[i]==0) VPOKE(vaddr++,GUI_SEQ_INSTR);
-    else VPOKE(vaddr++,GUI_SEQ_TONE);
-  }
+	uint vaddr = GUI_SEQ_TONE_VADDR;
+	char i;
+
+	for (i=0;i<16;i++){
+		if(_pattern->tone[i]==0) VPOKE(vaddr++,GUI_SEQ_INSTR);
+		else VPOKE(vaddr++,GUI_SEQ_TONE);
+	}
 }
 
 
 
 void upOctave(void)
 {
-  if (_pattern->octave>0) _pattern->octave--;
-  //else _pattern->octave=6;
-  showOctave();
+	if (_pattern->octave>0) _pattern->octave--;
+	//else _pattern->octave=6;
+	showOctave();
 }
 
 
 
 void downOctave(void)
 {
-   if (_pattern->octave<5) _pattern->octave++;
-   //else _pattern->octave=1;
-   showOctave();
+	if (_pattern->octave<5) _pattern->octave++;
+	//else _pattern->octave=1;
+	showOctave();
 }
 
 
 
 void showOctave(void)
 {
-  VPrintNum(GUI_OCTA_VADDR, _pattern->octave+1, 1);
+	VPrintNum(GUI_OCTA_VADDR, _pattern->octave+1, 1);
 }
 
 
 
 void showABmix(void)
 {
-  GUI_switcher(GUI_ABMIX_VADDR,_pattern->AB_MIX);
+	GUI_switcher(GUI_ABMIX_VADDR,_pattern->AB_MIX);
 }
 
 
 
 void showABoffset(void)
 {
-  VPrintNum(GUI_OFFS_VADDR, _pattern->AB_offset, 3);
+	VPrintNum(GUI_OFFS_VADDR, _pattern->AB_offset, 3);
 }
 
 
@@ -1716,20 +1733,20 @@ void showABoffset(void)
 // sube una nota el patron de tono
 void TransposeUp(void)
 {
-  char i;
-  char value;
-  
-  if (_pattern->transpose<24)
-  {
-    _pattern->transpose++;
-    
-    for(i=0;i<16;i++)
-    {
-        value = _pattern->tone[i];
-        if(value>0) _pattern->tone[i]++;
-        //if(value>0 && value<12)
-    }
-  }
+	char i;
+	char value;
+
+	if (_pattern->transpose<24)
+	{
+		_pattern->transpose++;
+
+		for(i=0;i<16;i++)
+		{
+			value = _pattern->tone[i];
+			if(value>0) _pattern->tone[i]++;
+			//if(value>0 && value<12)
+		}
+	}
 }
 
 
@@ -1737,20 +1754,20 @@ void TransposeUp(void)
 // baja una nota el patron de tono
 void TransposeDown(void)
 {
-  char i;
-  char value;
-  
-  
-  if (_pattern->transpose>0)
-  {
-    _pattern->transpose--;    
-    
-    for(i=0;i<16;i++)
-    {
-      value = _pattern->tone[i];
-      if(value>0) _pattern->tone[i]--;
-    }
-  }
+	char i;
+	char value;
+
+
+	if (_pattern->transpose>0)
+	{
+		_pattern->transpose--;    
+
+		for(i=0;i<16;i++)
+		{
+			value = _pattern->tone[i];
+			if(value>0) _pattern->tone[i]--;
+		}
+	}
 }
 
 
@@ -1780,23 +1797,23 @@ __asm
 	ret	//return DE
 
 VNOTAS:				
-  .dw 0
-	; Octava 0 (0)
-  .dw 0x0D5D,0x0C9C,0x0BE7,0x0B3C,0x0A9B,0x0A02,0x0973,0x08EB,0x086B,0x07F2,0x0780,0x0714 
-	; Octava 1 (24)
-	.dw	0x06AE,0x064E,0x05F4,0x059E,0x054D,0x0501,0x04B9,0x0475,0x0435,0x03F9,0x03C0,0x038A
-	; Octava 2 (48)
-	.dw	0x0357,0x0327,0x02FA,0x02CF,0x02AF,0x0281,0x025D,0x023B,0x021B,0x01FC,0x01E0,0x01C5
-	; Octava 3 (72)
-	.dw	0x01AC,0x0194,0x017D,0x0168,0x0153,0x0140,0x012E,0x011D,0x010D,0x00FE,0x00F0,0x00E2
-	; Octava 4 (96)
-	.dw	0x00D6,0x00CA,0x00BE,0x00B4,0x00AA,0x00A0,0x0097,0x008F,0x0087,0x007F,0x0078,0x0071
-	; Octava 5 (120)
-	.dw	0x006B,0x0065,0x005F,0x005A,0x0055,0x0050,0x004C,0x0047,0x0043,0x0040,0x003B,0x0039
-	; Octava 6 (144)
-	.dw	0x0035,0x0032,0x0030,0x002D,0x002A,0x0028,0x0026,0x0024,0x0022,0x0020,0x001E,0x001C
-	; Octava 7 (168)
-	.dw	0x001B,0x0019,0x0018,0x0016,0x0015,0x0014,0x0013,0x0012,0x0011,0x0010,0x000F,0x000E
+.dw 0
+; Octava 0 (0)
+.dw 0x0D5D,0x0C9C,0x0BE7,0x0B3C,0x0A9B,0x0A02,0x0973,0x08EB,0x086B,0x07F2,0x0780,0x0714 
+; Octava 1 (24)
+.dw	0x06AE,0x064E,0x05F4,0x059E,0x054D,0x0501,0x04B9,0x0475,0x0435,0x03F9,0x03C0,0x038A
+; Octava 2 (48)
+.dw	0x0357,0x0327,0x02FA,0x02CF,0x02AF,0x0281,0x025D,0x023B,0x021B,0x01FC,0x01E0,0x01C5
+; Octava 3 (72)
+.dw	0x01AC,0x0194,0x017D,0x0168,0x0153,0x0140,0x012E,0x011D,0x010D,0x00FE,0x00F0,0x00E2
+; Octava 4 (96)
+.dw	0x00D6,0x00CA,0x00BE,0x00B4,0x00AA,0x00A0,0x0097,0x008F,0x0087,0x007F,0x0078,0x0071
+; Octava 5 (120)
+.dw	0x006B,0x0065,0x005F,0x005A,0x0055,0x0050,0x004C,0x0047,0x0043,0x0040,0x003B,0x0039
+; Octava 6 (144)
+.dw	0x0035,0x0032,0x0030,0x002D,0x002A,0x0028,0x0026,0x0024,0x0022,0x0020,0x001E,0x001C
+; Octava 7 (168)
+.dw	0x001B,0x0019,0x0018,0x0016,0x0015,0x0014,0x0013,0x0012,0x0011,0x0010,0x000F,0x000E
 
 __endasm;
 }
@@ -1804,31 +1821,31 @@ __endasm;
 
 
 /* =============================================================================
- It provides the address of the video memory map tiles, from the screen position
- indicated.
- Proporciona la direccion de la memoria de video del mapa de tiles, a partir de
- la posicion de pantalla indicada.
- Inputs:
-   column (char) 0 - 31
-   line (char) 0 - 23
+GetVAddressByPosition
+Function:
+		It provides the address of the video memory map tiles, from the screen
+		position indicated. Only for Graphic1 and Graphic2 modes.
+Input:
+		[char] column (char) 0 - 31
+		[char] line (char) 0 - 23
 ============================================================================= */
 uint GetVAddressByPosition(char column, char line)
 {
-   return BASE10 + (line*32)+column;
+	return BASE10 + (line*32)+column;
 }
 
 
 
 void VPRINT(char column, char line, char* text)
 {
-  unsigned int vaddr = GetVAddressByPosition(column, line);
-  VPokeString(vaddr,text);
+	unsigned int vaddr = GetVAddressByPosition(column, line);
+	VPokeString(vaddr,text);
 }
 
 
 void VPokeString(unsigned int vaddr, char* text)
 {
-  while(*(text)) VPOKE(vaddr++,*(text++));
+	while(*(text)) VPOKE(vaddr++,*(text++));
 }
 
 
@@ -1841,22 +1858,22 @@ void VPokeString(unsigned int vaddr, char* text)
 
 
 /* =============================================================================
-   VPrintNum
-   Prints a number at the specified position on the screen.
-   Inputs:
-     [unsigned int] VRAM address in Pattern Name Table.
-     [unsigned int] number
-     [char] length
+VPrintNum
+		Prints a number at the specified position on the screen.
+Input:
+		[unsigned int] VRAM address in Pattern Name Table.
+		[unsigned int] number
+		[char] length
 ============================================================================= */
 void VPrintNum(unsigned int vaddr, unsigned int value, char length)
 {
-  char pos=5-length;
-  char text[]="     ";
+	char pos=5-length;
+	char text[]="     ";
 
-  num2Dec16(value, text); 
-  
-  //while (length-->0){ VPOKE(vaddr++,text[pos++]);}
-  CopyToVRAM((unsigned int) text + (5-length), vaddr, length);
+	num2Dec16(value, text); 
+
+	//while (length-->0){ VPOKE(vaddr++,text[pos++]);}
+	CopyToVRAM((unsigned int) text + (5-length), vaddr, length);
 }
 
 
@@ -1864,32 +1881,32 @@ void VPrintNum(unsigned int vaddr, unsigned int value, char length)
 
 void num2Dec16(unsigned int value, char *address)	__naked
 {
-  value;	//HL
-  address;	//DE
+value;	//HL
+address;	//DE
 __asm
   	
-  ld   BC,#-10000
-  call $Num1
-  ld   BC,#-1000
-  call $Num1
-  ld   BC,#-100
-  call $Num1
-  ld   C,#-10
-  call $Num1
-  ld   C,B
-  call $Num1
-  ret
+	ld   BC,#-10000
+	call $Num1
+	ld   BC,#-1000
+	call $Num1
+	ld   BC,#-100
+	call $Num1
+	ld   C,#-10
+	call $Num1
+	ld   C,B
+	call $Num1
+	ret
 //  jr   $Num3  
 $Num1:	
-  ld   A,#-1 ;ASCII-1 47 
+	ld   A,#-1 ;ASCII-1 47 
 $Num2:	
-  inc  A
-  add  HL,BC
-  jr   C,$Num2
-  sbc  HL,BC
-  ld   (DE),A
-  inc  DE
-  ret
+	inc  A
+	add  HL,BC
+	jr   C,$Num2
+	sbc  HL,BC
+	ld   (DE),A
+	inc  DE
+	ret
 //$Num3:	
 //  ;END
 //  pop  IX
@@ -1902,15 +1919,14 @@ __endasm;
 // muestra un control tipo switch (interruptor)
 void GUI_switcher(uint vaddr, boolean value)
 {
-  if(value==true)
-  {
-    VPOKE(vaddr++,GUI_SWITCHER_ON);
-    VPOKE(vaddr,GUI_SWITCHER);
-  }else{
-    VPOKE(vaddr++,GUI_SWITCHER);
-    VPOKE(vaddr,GUI_SWITCHER_OFF);  
-  }
-  return;
+	if(value==true)
+	{
+		VPOKE(vaddr++,GUI_SWITCHER_ON);
+		VPOKE(vaddr,GUI_SWITCHER);
+	}else{
+		VPOKE(vaddr++,GUI_SWITCHER);
+		VPOKE(vaddr,GUI_SWITCHER_OFF);
+	}
 }
 
 
@@ -1918,16 +1934,16 @@ void GUI_switcher(uint vaddr, boolean value)
 // muestra el valor de la envolvente
 void showEnv(void)
 {
-  char value = _pattern->Envelope;
-  uint vaddr = GUI_ENV_VADDR;
-  
-  GUI_switcher(GUI_ENVLOOP_VADDR,envelope_list[value].isLoop);
-  
-  VPrintNum(vaddr+2, value, 1);
-  
-  value=value*2+192;
-  VPOKE(vaddr++,value++);
-  VPOKE(vaddr,value);
+	char value = _pattern->Envelope;
+	uint vaddr = GUI_ENV_VADDR;
+
+	GUI_switcher(GUI_ENVLOOP_VADDR,envelope_list[value].isLoop);
+
+	VPrintNum(vaddr+2, value, 1);
+
+	value=value*2+192;
+	VPOKE(vaddr++,value++);
+	VPOKE(vaddr,value);
 }
 
 
@@ -1935,10 +1951,8 @@ void showEnv(void)
 // muestra el indicador de activación de canal de audio (altavoz)
 void showSpeaker(uint vaddr, boolean value)
 {
-  if(value==true) VPOKE(vaddr,GUI_SPEAKER_ON);
-  else VPOKE(vaddr,GUI_SPEAKER_OFF);
-    
-  return;
+	if(value==true) VPOKE(vaddr,GUI_SPEAKER_ON);
+	else VPOKE(vaddr,GUI_SPEAKER_OFF);
 }
 
 
@@ -1948,9 +1962,9 @@ void initHelpText(void) __naked
 {
 __asm
 
-  ld   HL,#HELP_TEXT
-  ld   DE,#_HELP_TXTADDR
-  jp   unRLEWBRAM
+	ld   HL,#HELP_TEXT
+	ld   DE,#_HELP_TXTADDR
+	jp   unRLEWBRAM
   
 ; map size width:29 height:36
 ; RLE WB compressed - Original size= 1044 - Compress size= 857
@@ -2021,40 +2035,40 @@ void showHelpText(char line) __naked
 line;	//A
 __asm
   
-  ld   E,A    //<--- line number
-  ld   D,#0
-  
-  ld   BC,#HELP_WIDTH
-  
-  call Mult16  ; HL = BC*DE 
-  ld   DE,#_HELP_TXTADDR
-  add  HL,DE
-  
-  ld   DE,#BASE10 + (3*32)+1  ;VRAM address
+	ld   E,A    //<--- line number
+	ld   D,#0
 
-  ld   B,#20
+	ld   BC,#HELP_WIDTH
+
+	call Mult16  ; HL = BC*DE 
+	ld   DE,#_HELP_TXTADDR
+	add  HL,DE
+
+	ld   DE,#BASE10 + (3*32)+1  ;VRAM address
+
+	ld   B,#20
 printAline:
-  push BC
-  push HL
-  push DE  
-  
-  ld   BC,#HELP_WIDTH  ; line size 
-  call BIOS_LDIRVM
+	push BC
+	push HL
+	push DE  
 
-  pop  DE
-  ex   DE,HL
-  ld   DE,#32
-  add  HL,DE
-  ex   DE,HL
-  
-  pop  HL
-  ld   BC,#HELP_WIDTH
-  add  HL,BC  
-  
-  pop  BC
-  djnz printAline
+	ld   BC,#HELP_WIDTH  ; line size 
+	call BIOS_LDIRVM
 
-  ret
+	pop  DE
+	ex   DE,HL
+	ld   DE,#32
+	add  HL,DE
+	ex   DE,HL
+
+	pop  HL
+	ld   BC,#HELP_WIDTH
+	add  HL,BC  
+
+	pop  BC
+	djnz printAline
+
+	ret
   
 /* ---------------------------------------------
 Multiply 16-bit values (with 16-bit result)
@@ -2062,17 +2076,17 @@ In: Multiply BC with DE
 Out: HL = result
 --------------------------------------------- */
 Mult16:
-    ld   A,B
-    ld   B,#16
+	ld   A,B
+	ld   B,#16
 Mult16_Loop:
-    add  HL,HL
-    sla  C
-    rla
-    jr   NC,Mult16_NoAdd
-    add  HL,DE
+	add  HL,HL
+	sla  C
+	rla
+	jr   NC,Mult16_NoAdd
+	add  HL,DE
 Mult16_NoAdd:
-    djnz Mult16_Loop
-    ret  
+	djnz Mult16_Loop
+	ret  
   
 __endasm;
 }
@@ -2081,38 +2095,39 @@ __endasm;
 
 void showScrollbar(char line)
 {
-    char i;
-    uint vaddr = 0x187F;
-    char barrPos;
-    //char temp;
-    boolean writeBar;
-    
-    //temp = (20/30)*8;
-    barrPos =(line<<4)>>1;
-    barrPos = barrPos>>4;
-    
-    //VPrintNumber(26,0, temp, 4);
+	char i;
+	uint vaddr = 0x187F;
+	char barrPos;
+	//char temp;
+	boolean writeBar;
 
-    char size=0;
-    
-    for (i=0;i<20;i++)
-    {
-        if(i>=barrPos){
-          if(size<HELP_sizeBar)
-          {
-            writeBar=true;
-            size++;
-          } 
-          else writeBar=false;
-        }        
-        else writeBar=false;
-        
-        if(writeBar) VPOKE(vaddr,GUI_SCROLLBAR); 
-        else VPOKE(vaddr,GUI_SCROLLBAR_EMPTY);
-        vaddr+=32;
-    }
-    
-    //HELP_sizeBar = 13;   //(20/HELP_LINES)*20
+	//temp = (20/30)*8;
+	barrPos =(line<<4)>>1;
+	barrPos = barrPos>>4;
+
+	//VPrintNumber(26,0, temp, 4);
+
+	char size=0;
+
+	for (i=0;i<20;i++)
+	{
+		if(i>=barrPos)
+		{
+			if(size<HELP_sizeBar)
+			{
+				writeBar=true;
+				size++;
+			} 
+			else writeBar=false;
+		}        
+		else writeBar=false;
+
+		if(writeBar) VPOKE(vaddr,GUI_SCROLLBAR); 
+		else VPOKE(vaddr,GUI_SCROLLBAR_EMPTY);
+		vaddr+=32;
+	}
+
+	//HELP_sizeBar = 13;   //(20/HELP_LINES)*20
 
 }
 
@@ -2121,18 +2136,18 @@ void showScrollbar(char line)
 void showLogoScreen(void) __naked
 {
 __asm
-  ld   HL,#titlescreen_PAT
-  ld   DE,#BASE12
-  call unRLEWBVRAM
-           
-  ld   HL,#titlescreen_COL
-  ld   DE,#BASE11
-  call unRLEWBVRAM
+	ld   HL,#titlescreen_PAT
+	ld   DE,#BASE12
+	call unRLEWBVRAM
+		   
+	ld   HL,#titlescreen_COL
+	ld   DE,#BASE11
+	call unRLEWBVRAM
 
-    
-  ld   HL,#titlescreen_SPRPATTERNS
-  ld   DE,#BASE14
-  jp   unRLEWBVRAM
+
+	ld   HL,#titlescreen_SPRPATTERNS
+	ld   DE,#BASE14
+	jp   unRLEWBVRAM
   
 
 
@@ -2283,29 +2298,29 @@ __endasm;
 void setTileset(void) __naked
 {
 __asm
-  ld hl,#TILESET_PAT
-  ld de,#BASE12
-  call unRLEWBVRAM
-  
-  ld hl,#TILESET_PAT
-  ld de,#BASE12 + 2048
-  call unRLEWBVRAM
-  
-  ld hl,#TILESET_PAT
-  ld de,#BASE12 + 4096
-  call unRLEWBVRAM
-           
-  ld hl,#TILESET_COL
-  ld de,#BASE11
-  call unRLEWBVRAM
-  
-  ld hl,#TILESET_COL
-  ld de,#BASE11 + 2048
-  call unRLEWBVRAM
-  
-  ld hl,#TILESET_COL
-  ld de,#BASE11 + 4096
-  jp unRLEWBVRAM
+	ld hl,#TILESET_PAT
+	ld de,#BASE12
+	call unRLEWBVRAM
+
+	ld hl,#TILESET_PAT
+	ld de,#BASE12 + 2048
+	call unRLEWBVRAM
+
+	ld hl,#TILESET_PAT
+	ld de,#BASE12 + 4096
+	call unRLEWBVRAM
+		   
+	ld hl,#TILESET_COL
+	ld de,#BASE11
+	call unRLEWBVRAM
+
+	ld hl,#TILESET_COL
+	ld de,#BASE11 + 2048
+	call unRLEWBVRAM
+
+	ld hl,#TILESET_COL
+	ld de,#BASE11 + 4096
+	jp unRLEWBVRAM
   
  
 
@@ -2471,10 +2486,10 @@ void setSprites(void) __naked
 {
 __asm
 
-  ld   HL,#SPRITES_DATA
-  ld   DE,#BASE14
-  jp   unRLEWBVRAM
-  
+	ld   HL,#SPRITES_DATA
+	ld   DE,#BASE14
+	jp   unRLEWBVRAM
+
 
 ; Project: The Alan Random Project (TARP)
 ; SpriteSet Pattern Data - Size:16x16
@@ -2505,9 +2520,9 @@ void showMainScr(void) __naked
 {
 __asm
 
-  ld   HL,#SCR01
-  ld   DE,#BASE10
-  jp   unRLEWBVRAM
+	ld   HL,#SCR01
+	ld   DE,#BASE10
+	jp   unRLEWBVRAM
 
 
 ; Project: The Alan Random Project (TARP)
@@ -2551,9 +2566,9 @@ void showHelpScr(void) __naked
 {
 __asm
 
-  ld   HL,#SCR02
-  ld   DE,#BASE10
-  jp   unRLEWBVRAM
+	ld   HL,#SCR02
+	ld   DE,#BASE10
+	jp   unRLEWBVRAM
 
 
 ; Project: The Alan Random Project (TARP)
@@ -2586,29 +2601,29 @@ void SetPalette(char number) __naked
 number;	//A <-- numero de paleta
 __asm
 //recoge la posicion de los datos del mapa usando un indice 
-  ld   IY,#palIndex
+	ld   IY,#palIndex
   
 //get ADDR of page data
-  add  A
-  ld   E,A
-  ld   D,#0
-  add  IY,DE
+	add  A
+	ld   E,A
+	ld   D,#0
+	add  IY,DE
 
-  ld   H,1(IY)
-  ld   L,(IY)
+	ld   H,1(IY)
+	ld   L,(IY)
 
 // HL <-- Color Palette Data (32B)
 SetV9938Palette:    
-  xor  A
-  di
-  out  (#0x99),A
-  ld   A,#144
-  out  (#0x99),A
-  ld   BC,#0x209A
-  otir
-  ei
-  
-  ret 
+	xor  A
+	di
+	out  (#0x99),A
+	ld   A,#144
+	out  (#0x99),A
+	ld   BC,#0x209A
+	otir
+	ei
+
+	ret 
   
   
 palIndex:

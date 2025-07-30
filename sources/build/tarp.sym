@@ -1,0 +1,172 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 1
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 $Num1                                                          0016B6 R
+  0 $Num2                                                          0016B8 R
+    .__.$$$.                                                    =  002710 L
+    .__.ABS.                                                    =  000000 G
+    .__.CPU.                                                    =  000000 L
+    .__.H$L.                                                    =  000000 L
+  0 HELP_PAL                                                       002EB3 R
+  0 HELP_TEXT                                                      00176A R
+  0 ILOOP                                                          000FE9 R
+  0 MAIN_PAL                                                       002E93 R
+  0 Mult16                                                         001AEE R
+  0 Mult16_Loop                                                    001AF1 R
+  0 Mult16_NoAdd                                                   001AF8 R
+  0 PSGinternal                                                    000FE6 R
+  0 SCR01                                                          002C15 R
+  0 SCR02                                                          002DAB R
+  0 SPRITES_DATA                                                   002B54 R
+  0 SetV9938Palette                                                002E5E R
+  0 TILESET_COL                                                    002A22 R
+  0 TILESET_PAT                                                    002318 R
+  0 TITLE_PAL                                                      002E73 R
+  0 VNOTAS                                                         001541 R
+  0 _APPCODE                                                       000033 GR
+  1 _AYREGS                                                        000028 GR
+    _COLOR                                                         ****** GX
+  0 _ChangePattern                                                 00118C GR
+    _ClearSprites                                                  ****** GX
+  0 _CopyPattern                                                   0011C8 GR
+    _CopyToVRAM                                                    ****** GX
+  0 _FXwipe2theMiddle                                              000194 GR
+    _FillRAM                                                       ****** GX
+    _FillVRAM                                                      ****** GX
+  0 _GUI_switcher                                                  0016C1 GR
+    _GetKeyMatrix                                                  ****** GX
+  0 _GetVAddressByPosition                                         001603 GR
+  1 _HELP_TXTADDR                                                  00010E GR
+  0 _Help                                                          000ABA GR
+    _PEEK                                                          ****** GX
+    _POKE                                                          ****** GX
+    _PUTSPRITE                                                     ****** GX
+  0 _Play                                                          001138 GR
+  0 _PlayAY                                                        000FC6 GR
+  0 _PlaySomething                                                 000CCA GR
+  0 _PlayerDecode                                                  000E21 GR
+  0 _PlayerInit                                                    000DE5 GR
+  0 _Rnd                                                           001175 GR
+    _SCREEN                                                        ****** GX
+  1 _SEED                                                          00010B GR
+    _STICK                                                         ****** GX
+    _STRIG                                                         ****** GX
+  0 _SetDrumKit                                                    00106F GR
+  0 _SetMixer                                                      000FFF GR
+  0 _SetPalette                                                    002E4E GR
+  0 _SetPattern                                                    0011A4 GR
+  0 _SetPatternLenght                                              000C8A GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+    _SetSpriteVisible                                              ****** GX
+    _SetSpritesSize                                                ****** GX
+    _SetSpritesZoom                                                ****** GX
+  0 _ShowDrumPattern                                               001425 GR
+  0 _ShowPattern                                                   001413 GR
+  0 _ShowPatternRadioButton                                        001277 GR
+  0 _ShowSequenceCursor                                            000C49 GR
+  0 _ShowTonePattern                                               00144B GR
+  0 _Silence                                                       001135 GR
+  0 _Stop                                                          001156 GR
+  0 _TransposeDown                                                 00150D GR
+  0 _TransposeUp                                                   0014E9 GR
+  1 _VDP_type                                                      000000 GR
+    _VPOKE                                                         ****** GX
+  0 _VPRINT                                                        001614 GR
+  0 _VPokeString                                                   001625 GR
+  0 _VPrintNum                                                     001639 GR
+  0 _WorkWin                                                       0002C3 GR
+  1 __Drum                                                         00000E GR
+  1 __DrumEnabled                                                  00000B GR
+  1 __DrumKit                                                      000010 GR
+  1 __ENDstep                                                      000007 GR
+  1 __ToneEnabled                                                  00000A GR
+  1 __cursor_pos                                                   00010C GR
+    __divuint                                                      ****** GX
+  1 __env_step                                                     00000C GR
+  1 __isDrumKitB                                                   00010D GR
+  1 __last_step                                                    000006 GR
+  1 __newENDstep                                                   000008 GR
+  1 __pattern                                                      000037 GR
+  1 __pattern_step                                                 000005 GR
+  1 __playPatternNumber                                            000036 GR
+  1 __playerHardware                                               000001 GR
+  1 __playerStatus                                                 000002 GR
+  1 __songSpeed                                                    000003 GR
+  1 __songSpeedStep                                                000004 GR
+  1 __toneAmp                                                      00000D GR
+  1 __transpose                                                    000009 GR
+  0 _app_author                                                    000053 GR
+  0 _app_name                                                      00003A GR
+  0 _app_version                                                   000060 GR
+  0 _checkMSX                                                      000BD0 GR
+  0 _downOctave                                                    0014A6 GR
+  0 _drumcolor                                                     0000EC GR
+  0 _enve_data                                                     000064 GR
+  0 _enve_loop                                                     0000E4 GR
+  1 _envelope_list                                                 000083 GR
+  0 _genDrumPattern                                                0012A7 GR
+  0 _genTonePattern                                                00135C GR
+  0 _getFreq                                                       001530 GR
+  0 _initGUI                                                       000BDA GR
+  0 _initHelpText                                                  001761 GR
+  0 _initPatternsData                                              000D87 GR
+  0 _initWaveEnvelopes                                             000D21 GR
+  0 _invertDrumChannel                                             000CFF GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 3
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 _invertToneChannel                                             000D10 GR
+  0 _logoScreen                                                    00020A GR
+  0 _main                                                          000000 GR
+  0 _num2Dec16                                                     00169A GR
+  1 _patternA                                                      000039 GR
+  1 _patternB                                                      00005E GR
+  0 _pressKey                                                      001189 GR
+  0 _setSprites                                                    002B4B GR
+  0 _setTileset                                                    0022E2 GR
+  0 _showABmix                                                     0014C6 GR
+  0 _showABoffset                                                  0014D5 GR
+  0 _showEnv                                                       0016FB GR
+  0 _showHelpScr                                                   002DA2 GR
+  0 _showHelpText                                                  001AC3 GR
+  0 _showLogoScreen                                                001B6C GR
+  0 _showMainScr                                                   002C0C GR
+  0 _showOctave                                                    0014B4 GR
+  0 _showScrollbar                                                 001AFB GR
+  0 _showSpeaker                                                   001742 GR
+  0 _upOctave                                                      001499 GR
+  0 _vaddr_cursor                                                  0000F0 GR
+  0 _xvalues                                                       000154 GR
+  0 _yvalues                                                       000114 GR
+  0 palIndex                                                       002E6D R
+  0 printAline                                                     001AD5 R
+  0 titlescreen_COL                                                00207D R
+  0 titlescreen_PAT                                                001B87 R
+  0 titlescreen_SPRPATTERNS                                        00226E R
+    unRLEWBRAM                                                     ****** GX
+    unRLEWBVRAM                                                    ****** GX
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 4
+Hexadecimal [24-Bits]
+
+Area Table
+
+   0 _CODE                                      size   2ED3   flags    0
+   1 _DATA                                      size    53F   flags    0
+   2 _INITIALIZED                               size      0   flags    0
+   3 _DABS                                      size      0   flags    8
+   4 _HOME                                      size      0   flags    0
+   5 _GSINIT                                    size      0   flags    0
+   6 _GSFINAL                                   size      0   flags    0
+   7 _INITIALIZER                               size      0   flags    0
+   8 _CABS                                      size      0   flags    8
+

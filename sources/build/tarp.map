@@ -1,0 +1,246 @@
+ASxxxx Linker V03.00/V05.40 + sdld,  page 1.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  .__.ABS.                           
+     00000000  l__CABS                         
+     00000000  l__DABS                         
+     00000000  l__GSFINAL                      
+     00000000  l__GSINIT                       
+     00000000  l__HEADER                       
+     00000000  l__HOME                         
+     00000000  l__INITIALIZED                  
+     00000000  l__INITIALIZER                  
+     00000000  s__CABS                         
+     00000000  s__DABS                         
+     00000000  s__HEADER                       
+     00000000  s__HEADER0                      
+     0000001A  l__HEADER0                      
+     00000563  l__DATA                         
+     00003193  l__CODE                         
+     00004020  s__CODE                         
+     0000C000  s__DATA                         
+     0000C563  s__GSFINAL                      
+     0000C563  s__GSINIT                       
+     0000C563  s__HOME                         
+     0000C563  s__INITIALIZED                  
+     0000C563  s__INITIALIZER                  
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               00004020    00003193 =       12691. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00004020  _main                              tarp
+     00004053  _APPCODE                           tarp
+     0000405A  _app_name                          tarp
+     00004073  _app_author                        tarp
+     00004080  _app_version                       tarp
+     00004084  _enve_data                         tarp
+     00004104  _enve_loop                         tarp
+     0000410C  _drumcolor                         tarp
+     00004110  _vaddr_cursor                      tarp
+     00004134  _yvalues                           tarp
+     00004174  _xvalues                           tarp
+     000041B4  _FXwipe2theMiddle                  tarp
+     0000422A  _logoScreen                        tarp
+     000042E3  _WorkWin                           tarp
+     00004ADA  _Help                              tarp
+     00004BF0  _checkMSX                          tarp
+     00004BFA  _initGUI                           tarp
+     00004C69  _ShowSequenceCursor                tarp
+     00004CAA  _SetPatternLenght                  tarp
+     00004CEA  _PlaySomething                     tarp
+     00004D1F  _invertDrumChannel                 tarp
+     00004D30  _invertToneChannel                 tarp
+     00004D41  _initWaveEnvelopes                 tarp
+     00004DA7  _initPatternsData                  tarp
+     00004E05  _PlayerInit                        tarp
+     00004E41  _PlayerDecode                      tarp
+     00004FE6  _PlayAY                            tarp
+     0000501F  _SetMixer                          tarp
+     0000508F  _SetDrumKit                        tarp
+     00005155  _Silence                           tarp
+     00005158  _Play                              tarp
+     00005176  _Stop                              tarp
+     00005195  _Rnd                               tarp
+     000051A9  _pressKey                          tarp
+     000051AC  _ChangePattern                     tarp
+     000051C4  _SetPattern                        tarp
+     000051E8  _CopyPattern                       tarp
+     00005297  _ShowPatternRadioButton            tarp
+     000052C7  _genDrumPattern                    tarp
+     0000537C  _genTonePattern                    tarp
+     00005433  _ShowPattern                       tarp
+     00005445  _ShowDrumPattern                   tarp
+     0000546B  _ShowTonePattern                   tarp
+     000054B9  _upOctave                          tarp
+     000054C6  _downOctave                        tarp
+     000054D4  _showOctave                        tarp
+     000054E6  _showABmix                         tarp
+     000054F5  _showABoffset                      tarp
+     00005509  _TransposeUp                       tarp
+     0000552D  _TransposeDown                     tarp
+ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               00004020    00003193 =       12691. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00005550  _getFreq                           tarp
+     00005623  _GetVAddressByPosition             tarp
+     00005634  _VPRINT                            tarp
+     00005645  _VPokeString                       tarp
+     00005659  _VPrintNum                         tarp
+     000056BA  _num2Dec16                         tarp
+     000056E1  _GUI_switcher                      tarp
+     0000571B  _showEnv                           tarp
+     00005762  _showSpeaker                       tarp
+     00005781  _initHelpText                      tarp
+     00005AE3  _showHelpText                      tarp
+     00005B1B  _showScrollbar                     tarp
+     00005B8C  _showLogoScreen                    tarp
+     00006302  _setTileset                        tarp
+     00006B6B  _setSprites                        tarp
+     00006C2C  _showMainScr                       tarp
+     00006DC2  _showHelpScr                       tarp
+     00006E6E  _SetPalette                        tarp
+     00006EF3  _PEEK                              memory_Z80
+     00006EF5  _PEEKW                             memory_Z80
+     00006EF9  _POKE                              memory_Z80
+     00006F0A  _POKEW                             memory_Z80
+     00006F0E  _CopyRAM                           memory_Z80
+     00006F23  _FillRAM                           memory_Z80
+     00006F3C  _STICK                             joystick_MSXBIOS
+     00006F3F  _STRIG                             joystick_MSXBIOS
+     00006F47  _KillBuffer                        keyboard_MSXBIOS
+     00006F4A  _INKEY                             keyboard_MSXBIOS
+     00006F4D  _GetKeyMatrix                      keyboard_MSXBIOS
+     00006F50  _SCREEN                            VDP_TMS9918A_MSXBIOS
+     00006F61  _COLOR                             VDP_TMS9918A_MSXBIOS
+     00006F7E  _CLS                               VDP_TMS9918A_MSXBIOS
+     00006F99  _VPOKE                             VDP_TMS9918A_MSXBIOS
+     00006FAC  ReadByteFromVRAM                   VDP_TMS9918A_MSXBIOS
+     00006FAC  _VPEEK                             VDP_TMS9918A_MSXBIOS
+     00006FAF  WriteByteToVRAM                    VDP_TMS9918A_MSXBIOS
+     00006FB2  _FillVRAM                          VDP_TMS9918A_MSXBIOS
+     00006FC7  _CopyToVRAM                        VDP_TMS9918A_MSXBIOS
+     00006FDD  _CopyFromVRAM                      VDP_TMS9918A_MSXBIOS
+     00006FF3  _GetVDP                            VDP_TMS9918A_MSXBIOS
+     00007000  _SetVDP                            VDP_TMS9918A_MSXBIOS
+     00007005  _ClearSprites                      VDP_TMS9918A_MSXBIOS
+     0000700D  _SetSpritesSize                    VDP_TMS9918A_MSXBIOS
+     0000701D  _SetSpritesZoom                    VDP_TMS9918A_MSXBIOS
+     0000702F  _PUTSPRITE                         VDP_TMS9918A_MSXBIOS
+     00007063  _GetSPRattrVRAM                    VDP_TMS9918A_MSXBIOS
+     00007068  GetSPRattrVADDR                    VDP_TMS9918A_MSXBIOS
+     0000706B  GetSpritePattern                   VDP_TMS9918A_MSXBIOS
+     00007075  _SetSpritePattern                  VDP_SPRITES
+     00007082  _SetSpriteColor                    VDP_SPRITES
+     00007097  _SetSpritePosition                 VDP_SPRITES
+ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               00004020    00003193 =       12691. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000070B3  _SetSpriteVisible                  VDP_SPRITES
+     000070D9  _SetEarlyClock                     VDP_SPRITES
+     000070F0  _unRLEWBtoVRAM                     
+     0000710A  unRLEWBVRAM                        
+     00007146  _unRLEWBtoRAM                      
+     00007160  unRLEWBRAM                         
+     0000717F  __divuchar                         
+     00007181  __divu8                            
+     00007184  __divu16                           
+     00007184  __divuint                          
+ASxxxx Linker V03.00/V05.40 + sdld,  page 5.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_DATA                               0000C000    00000563 =        1379. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     0000C000  _VDP_type                          tarp
+     0000C001  __playerHardware                   tarp
+     0000C002  __playerStatus                     tarp
+     0000C003  __songSpeed                        tarp
+     0000C004  __songSpeedStep                    tarp
+     0000C005  __pattern_step                     tarp
+     0000C006  __last_step                        tarp
+     0000C007  __ENDstep                          tarp
+     0000C008  __newENDstep                       tarp
+     0000C009  __transpose                        tarp
+     0000C00A  __ToneEnabled                      tarp
+     0000C00B  __DrumEnabled                      tarp
+     0000C00C  __env_step                         tarp
+     0000C00D  __toneAmp                          tarp
+     0000C00E  __Drum                             tarp
+     0000C010  __DrumKit                          tarp
+     0000C028  _AYREGS                            tarp
+     0000C036  __playPatternNumber                tarp
+     0000C037  __pattern                          tarp
+     0000C039  _patternA                          tarp
+     0000C05E  _patternB                          tarp
+     0000C083  _envelope_list                     tarp
+     0000C10B  _SEED                              tarp
+     0000C10C  __cursor_pos                       tarp
+     0000C10D  __isDrumKitB                       tarp
+     0000C10E  _HELP_TXTADDR                      tarp
+     0000C53F  _SPRITE_BF                         VDP_TMS9918A_MSXBIOS
+     0000C543  _SPRITEYBUFF                       VDP_SPRITES
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 6.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_HEADER0                            00000000    0000001A =          26. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00/V05.40 + sdld,  page 7.
+
+Files Linked                              [ module(s) ]
+
+build\tarp.rel                            [ tarp ]
+libs\crt_MSX816kROM4000.rel               [  ]
+libs\memory_Z80.rel                       [ memory_Z80 ]
+libs\joystick_MSXBIOS.rel                 [ joystick_MSXBIOS ]
+libs\keyboard_MSXBIOS.rel                 [ keyboard_MSXBIOS ]
+libs\VDP_TMS9918A_MSXBIOS.rel             [ VDP_TMS9918A_MSXBIOS ]
+libs\VDP_SPRITES.rel                      [ VDP_SPRITES ]
+libs\unRLEWBtoVRAM.rel                    [  ]
+libs\unRLEWBtoRAM.rel                     [  ]
+
+
+Libraries Linked                          [ object file ]
+
+C:\Program Files\SDCC\bin\..\lib\z80/z80.lib
+                                          [ divunsigned.rel ]
+
+ASxxxx Linker V03.00/V05.40 + sdld,  page 8.
+
+User Base Address Definitions
+
+_CODE = 0x4020
+_DATA = 0xc000
+
+
